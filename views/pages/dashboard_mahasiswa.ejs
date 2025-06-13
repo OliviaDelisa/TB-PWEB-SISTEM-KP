@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard Mahasiswa</title>
+  <link rel="stylesheet" href="/upload/dashboard_mahasiswa.css" />
+</head>
+<body>
+  <header class="header">
+    <div class="logo"></div>
+    <h1 class="title">Departemen Sistem Informasi</h1>
+    <nav class="nav-links">
+      <a href="#">Home</a>
+      <a href="#">Contact</a>
+      <a href="#">Profil</a>
+    </nav>
+  </header>
+
+  <main class="main-container">
+    <div class="sidebar">
+      <button>Pengajuan KP</button>
+      <button>Pelaksanaan KP</button>
+      <button>Seminar KP</button>
+      <button>Dokumen & Template</button>
+      <button>Riwayat & Monitoring</button>
+      <button>Feedback/Saran</button>
+    </div>
+
+    <div class="content">
+      <div class="seminar-box">
+        <p><strong>Seminar Terdekat</strong></p>
+        <p><em><%= seminarTerdekat.judul %></em></p>
+        <p><em><%= seminarTerdekat.tanggal %></em></p>
+        <p class="status">Status KP</p>
+      </div>
+    </div>
+  </main>
+</body>
+</html>

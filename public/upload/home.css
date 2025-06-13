@@ -1,0 +1,146 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background: linear-gradient(to right, #fff, #fef4ec);
+  color: #333;
+}
+
+/* ========== Navbar ========== */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 50px; /* Decreased padding for a more compact look */
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  font-size: 24px; /* Reduced font size */
+  font-weight: bold;
+  color: #d26500;
+}
+
+.logo-box {
+  width: 60px; /* Smaller logo box */
+  height: 60px; /* Smaller logo box */
+  background-color: #d26500;
+  border-radius: 24px;
+  margin-right: 10px; /* Reduced spacing */
+}
+
+nav {
+  display: flex;
+  align-items: center;
+  gap: 25px; /* Reduced gap between menu items */
+}
+
+nav a {
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+  font-size: 18px; /* Reduced font size for a more compact look */
+}
+
+.dropbtn {
+  background: none;
+  border: none;
+  font-size: 18px; /* Reduced font size */
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.dropdown {
+  position: relative;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: rgb(237, 234, 231);
+  min-width: 170px; /* Increased dropdown width */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  border-radius: 12px;
+  margin-top: 10px;
+  right: 0;
+  z-index: 1;
+}
+
+.dropdown-content a {
+  display: block;
+  padding: 14px 20px; /* Added padding */
+  text-decoration: none;
+  color: #333;
+  font-size: 16px; /* Reduced font size */
+}
+
+.dropdown-content a:hover {
+  background-color: #c0801a;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+/* ========== Main Content ========== */
+.content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 80px 80px 100px; /* Menambah padding sedikit */
+}
+
+.left {
+  flex: 1;
+  padding-right: 80px;
+}
+
+.left h1 {
+  font-size: 60px; /* Sedikit lebih besar */
+  font-weight: 800;
+  line-height: 1.2;
+  margin-bottom: 30px;
+  color: #000;
+}
+
+.left p {
+  font-size: 20px; /* Sedikit lebih besar */
+  color: #555;
+  margin-bottom: 35px; /* Sedikit lebih besar */
+  line-height: 1.8;
+}
+
+.buttons {
+  display: flex;
+  gap: 25px; /* Menambah jarak antar tombol */
+}
+
+.buttons .btn {
+  background-color: #d26500;
+  color: white;
+  padding: 16px 40px; /* Sedikit lebih besar padding */
+  font-size: 18px; /* Sedikit lebih besar font */
+  font-weight: bold;
+  border: none;
+  border-radius: 28px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.buttons .btn:hover {
+  background-color: #bd5700;
+}
+
+.right {
+  flex-shrink: 0;
+}
+
+.right img {
+  width: 320px; /* Sedikit lebih besar gambar */
+  height: auto;
+}
