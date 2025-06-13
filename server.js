@@ -1,63 +1,103 @@
 const express = require('express');
 const path = require('path');
+const expressLayouts = require('express-ejs-layouts');
+const authRoutes = require('./routes/auth'); // 
+const db = require('./config/db');  
 
 const app = express();
 const port = 3000;
 
-// Set EJS sebagai view engine
+// ------------------ MIDDLEWARE ------------------
+app.use(express.urlencoded({ extended: true }));
+app.use(expressLayouts);
+app.set('layout', 'layouts/main');
 app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, 'views/pages'));  // Pastikan views berada di folder 'views/pages'
-
-// Middleware untuk melayani file statis seperti CSS, gambar, dll.
+app.set('views', path.join(__dirname, 'views'));
 app.use(express.static(path.join(__dirname, 'public')));
+// ------------------ ROUTES ------------------
 
-// Rute untuk halaman utama (home)
+//Routh auth
+app.use('/', authRoutes);
+
+// Halaman Utama
 app.get('/home', (req, res) => {
-  res.render('home');  // Menampilkan home.ejs
+  res.render('pages/home', {
+    layout: false,  
+  });
 });
 
-// Rute untuk halaman login mahasiswa
+
+// Login Mahasiswa (tanpa layout)
 app.get('/login_mahasiswa', (req, res) => {
-  res.render('login_mahasiswa');  // Menampilkan login_mahasiswa.ejs
+  res.render('pages/login_mahasiswa', { layout: false });
 });
 
-// Rute untuk halaman login admin
+// Login Admin
 app.get('/login_admin', (req, res) => {
-  res.render('login_admin');  // Menampilkan login_admin.ejs
+  res.render('pages/login_admin', { layout: false });
 });
 
-// Rute untuk halaman login dosen
+// Login Dosen
 app.get('/login_dosen', (req, res) => {
-  res.render('login_dosen');  // Menampilkan login_dosen.ejs
+  res.render('pages/login_dosen', { layout: false });
 });
 
-// Rute untuk halaman signup mahasiswa
+// Signup Mahasiswa
 app.get('/signup_mahasiswa', (req, res) => {
-  res.render('signup_mahasiswa');  // Menampilkan signup_mahasiswa.ejs
+  res.render('pages/signup_mahasiswa', { layout: false });
 });
 
-// Rute untuk halaman contact
+// Contact Page
 app.get('/contact', (req, res) => {
-  res.render('contact');  // Menampilkan contact.ejs
+  res.render('pages/contact');
 });
 
-// Rute untuk halaman dashboard
+// Dashboard Mahasiswa 
 app.get('/dashboard_mahasiswa', (req, res) => {
   const seminarTerdekat = {
     judul: "Seminar KP - Sistem Pemesanan Kantin",
     tanggal: "21 Juni 2025"
   };
 
-  res.render('dashboard_mahasiswa', { seminarTerdekat }); // <-- kirim data ke EJS
+  res.render('pages/dashboard_mahasiswa', {
+  layout: false,                     // ← NONAKTIFKAN layout
+  title: 'Dashboard Mahasiswa',
+  seminarTerdekat
+});
 });
 
+// Pengajuan KP
+app.get('/pengajuan_kp', (req, res) => {
+  res.render('pages/pengajuan_kp', {
+    layout: 'layouts/main',
+    title: 'Pengajuan KP',
+    customCss: '/upload/pengajuan_kp.css'
+  });
+});
 
-// Rute default atau halaman utama (root)
+//Root formulir pengjuan kp
+app.get('/formulir_pengajuan_kp', (req, res) => {
+  res.render('pages/formulir_pengajuan_kp', {
+    layout: 'layouts/main',
+    title: 'Formulir Pengajuan KP',
+    customCss: '/upload/upload_dokumen_pengajuan_kp.css' // opsional
+  });
+});
+
+//Root upload dokumen pengajuan kp
+app.get('/upload_dokumen_pengajuan_kp', (req, res) => {
+  res.render('pages/upload_dokumen_pengajuan_kp', {
+    layout: 'layouts/main',
+    title: 'Upload Dokumen Pengajuan KP',
+    customCss: '/upload/upload_dokumen_pengajuan_kp.css' // opsional
+  });
+});
+// Root redirect
 app.get('/', (req, res) => {
-  res.redirect('/home');  // Mengarahkan root ke /home
+  res.redirect('/home');
 });
 
-// Menjalankan server pada port yang telah ditentukan
+// Jalankan server
 app.listen(port, () => {
   console.log(`Server berjalan di http://localhost:${port}`);
 });

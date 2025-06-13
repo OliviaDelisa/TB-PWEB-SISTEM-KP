@@ -1,0 +1,55 @@
+/* === Bagian Utama === */
+.main-section {
+  padding: 20px;
+  background-color: #ffffff;
+  flex-grow: 1;
+   padding-top: 0px;
+  margin: 10px;
+ 
+}
+
+
+h2 {
+    margin-top: 0px;
+    margin-bottom: 25px;
+    color: #d26500;
+}
+
+/* === Card === */
+.card {
+background-color: #fcebd9;
+  padding: 20px;
+  border-radius: 16px;
+  max-width: 1100px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+
+.card-title {
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+/* === Tombol Biru === */
+.blue-btn {
+    background-color: #2d7ff9;
+    color: white;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 6px;
+    transition: background-color 0.3s;
+    text-decoration: none;
+
+
+}
+
+.blue-btn:hover {
+    background-color: #1967d2;
+}
+
+/* === Status Text === */
+.status {
+    font-style: italic;
+    color: gray;
+}

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title><%= title %></title>
+  <link rel="stylesheet" href="/upload/sidebar_navigation.css">
+
+  <% if (typeof customCss !== 'undefined') { %>
+    <link rel="stylesheet" href="<%= customCss %>">
+  <% } %>
+</head>
+<body>
+  <%- include('../partials/sidebar_mahasiswa') %>
+
+  <main class="content">
+    <%- body %>
+  </main>
+</body>
+</html>
+

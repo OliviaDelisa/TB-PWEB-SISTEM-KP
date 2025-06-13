@@ -1,0 +1,27 @@
+<section class="main-section">
+  <h2>Pengajuan KP</h2>
+  <div class="form-wrapper">
+    <h3>Formulir Pengajuan KP</h3>
+    <form action="/submit_pengajuan" method="POST" class="kp-form">
+      <label>Nama</label>
+      <input type="text" name="nama" required />
+
+      <label>NIM</label>
+      <input type="text" name="nim" required />
+
+      <label>Alamat Mahasiswa <span class="required">*</span></label>
+      <input type="text" name="alamat_mahasiswa" required />
+
+      <label>Perusahaan <span class="required">*</span></label>
+      <input type="text" name="perusahaan" required />
+
+      <label>Alamat Perusahaan <span class="required">*</span></label>
+      <input type="text" name="alamat_perusahaan" required />
+
+      <div class="form-actions">
+        <a href="#" class="back-btn" onclick="window.history.back()">← Back</a>
+        <button type="submit" class="submit-btn">Ajukan KP</button>
+      </div>
+    </form>
+  </div>
+</section>

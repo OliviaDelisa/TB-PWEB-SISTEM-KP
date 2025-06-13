@@ -1,0 +1,104 @@
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #f5f5f5;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+}
+
+.main-section {
+  padding: 20px;
+  padding-top: 0px;
+  background-color: #ffffff;
+  flex-grow: 1;
+  margin: 10px;
+  animation: fadeIn 0.2s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+h2 {
+    margin-top: 0px;
+    margin-bottom: 25px;
+    color: #d26500;
+}
+
+h3 {
+  margin-top: 0;
+  margin-bottom: 20px;
+  color: #4a3a28;
+}
+
+.form-wrapper {
+  background-color: #fcebd9;
+  padding: 20px;
+  border-radius: 16px;
+  max-width: 1100px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  margin: auto;
+}
+
+.kp-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.kp-form label {
+  margin-top: 15px;
+  font-weight: bold;
+  color: #3b2f22;
+}
+
+.kp-form input[type="text"],
+.kp-form input[type="file"] {
+  padding: 10px;
+  margin-top: 5px;
+  border-radius: 6px;
+  border: 1px solid #d18b4a;
+  background-color: #fefefe;
+  transition: border 0.3s;
+}
+
+.kp-form input:focus {
+  outline: none;
+  border-color: #d26500;
+}
+
+.required {
+  color: red;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 25px;
+}
+
+.back-link, .back-btn {
+  text-decoration: none;
+  color: #333;
+  font-weight: bold;
+}
+
+.back-link:hover, .back-btn:hover {
+  text-decoration: underline;
+}
+
+.submit-btn {
+  background-color: #467af0;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-weight: bold;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.submit-btn:hover {
+  background-color: #305dcf;
+}

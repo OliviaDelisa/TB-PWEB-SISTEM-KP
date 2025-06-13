@@ -14,15 +14,16 @@
       <a href="#">Home</a>
       <a href="#">Contact</a>
       <div class="dropdown">
-        <button class="dropbtn">Login ▼</button>
-        <div class="dropdown-content">
-          <a href="#">Mahasiswa</a>
-          <a href="#">Dosen</a>
-          <a href="#">Admin</a>
-        </div>
-      </div>
+  <button class="dropbtn">Login ▼</button>
+  <div class="dropdown-content">
+    <a href="/login/mahasiswa">Mahasiswa</a>
+    <a href="/login/dosen">Dosen</a>
+    <a href="/login/admin">Admin</a>
+  </div>
+</div>
     </nav>
   </header>
+  
 
   <main class="content">
     <div class="left">
@@ -32,9 +33,9 @@
         Silakan masuk ke sistem menggunakan akun Anda untuk melanjutkan.
       </p>
       <div class="buttons">
-        <button class="btn">Mahasiswa</button>
-        <button class="btn">Dosen</button>
-        <button class="btn">Admin</button>
+        <a href="/login/mahasiswa" class="btn">Mahasiswa</a>
+        <a href="/login/dosen" class="btn">Dosen</a>
+        <a href="/login/admin" class="btn">Admin</a>
       </div>
     </div>
     <div class="right">
@@ -45,3 +46,22 @@
   <%- include('../partials/footer') %>
 </body>
 </html>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const dropbtn = document.querySelector('.dropbtn');
+    const dropdown = document.querySelector('.dropdown-content');
+
+    dropbtn.addEventListener('click', function (e) {
+      e.stopPropagation();
+      dropdown.classList.toggle('show');
+    });
+
+    document.addEventListener('click', function (e) {
+      if (!dropdown.contains(e.target)) {
+        dropdown.classList.remove('show');
+      }
+    });
+  });
+</script>
+

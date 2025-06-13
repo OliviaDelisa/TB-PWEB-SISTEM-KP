@@ -15,42 +15,42 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px 50px; /* Decreased padding for a more compact look */
+  padding: 20px 50px;
 }
 
 .logo {
   display: flex;
   align-items: center;
-  font-size: 24px; /* Reduced font size */
+  font-size: 24px;
   font-weight: bold;
   color: #d26500;
 }
 
 .logo-box {
-  width: 60px; /* Smaller logo box */
-  height: 60px; /* Smaller logo box */
+  width: 60px;
+  height: 60px;
   background-color: #d26500;
   border-radius: 24px;
-  margin-right: 10px; /* Reduced spacing */
+  margin-right: 10px;
 }
 
 nav {
   display: flex;
   align-items: center;
-  gap: 25px; /* Reduced gap between menu items */
+  gap: 25px;
 }
 
 nav a {
   text-decoration: none;
   color: #333;
   font-weight: 500;
-  font-size: 18px; /* Reduced font size for a more compact look */
+  font-size: 18px;
 }
 
 .dropbtn {
   background: none;
   border: none;
-  font-size: 18px; /* Reduced font size */
+  font-size: 18px;
   font-weight: 500;
   cursor: pointer;
 }
@@ -63,27 +63,30 @@ nav a {
   display: none;
   position: absolute;
   background-color: rgb(237, 234, 231);
-  min-width: 170px; /* Increased dropdown width */
+  min-width: 170px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
   border-radius: 12px;
   margin-top: 10px;
   right: 0;
   z-index: 1;
+  pointer-events: auto;
+  transition: opacity 0.2s ease;
 }
 
 .dropdown-content a {
   display: block;
-  padding: 14px 20px; /* Added padding */
+  padding: 14px 20px;
   text-decoration: none;
   color: #333;
-  font-size: 16px; /* Reduced font size */
+  font-size: 16px;
 }
 
 .dropdown-content a:hover {
   background-color: #c0801a;
 }
 
-.dropdown:hover .dropdown-content {
+/* Untuk toggle dari JavaScript */
+.dropdown-content.show {
   display: block;
 }
 
@@ -92,7 +95,7 @@ nav a {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 80px 80px 100px; /* Menambah padding sedikit */
+  padding: 80px 80px 100px;
 }
 
 .left {
@@ -101,7 +104,7 @@ nav a {
 }
 
 .left h1 {
-  font-size: 60px; /* Sedikit lebih besar */
+  font-size: 60px;
   font-weight: 800;
   line-height: 1.2;
   margin-bottom: 30px;
@@ -109,27 +112,28 @@ nav a {
 }
 
 .left p {
-  font-size: 20px; /* Sedikit lebih besar */
+  font-size: 20px;
   color: #555;
-  margin-bottom: 35px; /* Sedikit lebih besar */
+  margin-bottom: 35px;
   line-height: 1.8;
 }
 
 .buttons {
   display: flex;
-  gap: 25px; /* Menambah jarak antar tombol */
+  gap: 25px;
 }
 
 .buttons .btn {
   background-color: #d26500;
   color: white;
-  padding: 16px 40px; /* Sedikit lebih besar padding */
-  font-size: 18px; /* Sedikit lebih besar font */
+  padding: 16px 40px;
+  font-size: 18px;
   font-weight: bold;
   border: none;
   border-radius: 28px;
   cursor: pointer;
   transition: background 0.3s ease;
+  text-decoration: none;
 }
 
 .buttons .btn:hover {
@@ -141,6 +145,6 @@ nav a {
 }
 
 .right img {
-  width: 320px; /* Sedikit lebih besar gambar */
+  width: 320px;
   height: auto;
 }

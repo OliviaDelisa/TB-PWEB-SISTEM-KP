@@ -1,0 +1,97 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<!-- Sidebar -->
+<aside class="sidebar">
+  <div class="logo">
+    <img src="/image/LogoUnand.png" alt="Logo Unand"> SIPRAKTI
+  </div>
+  <ul class="menu">
+    <li><a href="/dashboard_mahasiswa">Home</a></li>
+    <li><a href="/pengajuan_kp">Pengajuan KP</a></li>
+    <li><a href="#">Pelaksanaan KP</a></li>
+    <li><a href="#">Seminar KP</a></li>
+    <li><a href="#">Dokumen & Template</a></li>
+    <li><a href="#">Riwayat & Monitoring</a></li>
+    <li><a href="#">Bimbingan KP</a></li>
+    <li><a href="#">Feedback</a></li>
+  </ul>
+</aside>
+
+<header class="navbar">
+  <button class="hamburger" onclick="toggleSidebar()">☰</button>
+  <h1>Sistem Informasi Kerja Praktik</h1>
+  <div class="nav-icons">
+    <a href="/notifikasi" class="icon-link"><i class="fas fa-bell"></i></a>
+    <a href="/profile" class="icon-link"><i class="fas fa-user-circle"></i></a>
+  </div>
+</header>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const toggleBtn = document.querySelector('.hamburger');
+    const sidebar = document.querySelector('.sidebar');
+    const content = document.querySelector('.content');
+    const navbar = document.querySelector('.navbar');
+
+    // Fungsi untuk mengatur status sidebar
+    function updateSidebar(status) {
+      if (status === 'open') {
+        sidebar.classList.add('open');
+        document.body.classList.add('sidebar-open');
+        content?.classList.remove('expanded');
+        navbar.style.marginLeft = '250px';
+      } else {
+        sidebar.classList.remove('open');
+        document.body.classList.remove('sidebar-open');
+        content?.classList.add('expanded');
+        navbar.style.marginLeft = '0';
+      }
+    }
+
+    const savedStatus = localStorage.getItem('sidebarStatus') || 'open';
+    updateSidebar(savedStatus);
+
+    toggleBtn.addEventListener('click', function () {
+      const isOpen = sidebar.classList.contains('open');
+      const newStatus = isOpen ? 'closed' : 'open';
+      localStorage.setItem('sidebarStatus', newStatus);
+      updateSidebar(newStatus);
+    });
+
+    // ==== Highlight menu aktif (support halaman anak/child path) ====
+
+    const currentPath = window.location.pathname;
+
+    // Mapping menu ke path yang terkait
+    const pathGroup = {
+      '/pengajuan_kp': [
+        '/pengajuan_kp',
+        '/formulir_pengajuan_kp',
+        '/upload_dokumen_pengajuan_kp',
+        '/pembagian_dosen'
+      ],
+      '/dashboard_mahasiswa': ['/dashboard_mahasiswa'],
+      '/pelaksanaan_kp': ['/pelaksanaan_kp'],
+      '/seminar_kp': ['/seminar_kp'],
+      '/dokumen_template': ['/dokumen_template'],
+      '/riwayat_monitoring': ['/riwayat_monitoring'],
+      '/bimbingan_kp': ['/bimbingan_kp'],
+      '/feedback': ['/feedback']
+    };
+
+    const menuLinks = document.querySelectorAll('.menu a');
+
+    menuLinks.forEach(link => {
+      const href = link.getAttribute('href');
+      const relatedPaths = pathGroup[href];
+
+      if (relatedPaths && relatedPaths.some(path => currentPath.startsWith(path))) {
+        link.parentElement.classList.add('active');
+      }
+    });
+  });
+</script>
+
+
+
+
+
