@@ -1,0 +1,32 @@
+<% if (typeof message !== 'undefined' && message) { %> 
+  <script>
+    alert("<%= message %>");
+  </script>
+<% } %>
+
+<section class="main-section">
+  <h2>Pelaksanaan KP</h2>
+
+  <div class="form-wrapper">
+    <h3>Laporan Akhir</h3>
+
+    <form action="/upload_laporan_akhir" method="POST" enctype="multipart/form-data" class="kp-form">
+      <label for="file_laporan">Upload File Laporan</label>
+      <input type="file" name="file_laporan" id="file_laporan" required />
+
+      <% if (typeof laporanAkhir !== 'undefined' && laporanAkhir) { %>
+        <p style="color: green; margin-bottom: 10px;">
+          File saat ini:
+          <a href="/uploads_dokumen/<%= laporanAkhir %>" target="_blank">
+            <%= namaFileLaporan %>
+          </a>
+        </p>
+      <% } %>
+
+      <div class="form-actions">
+        <a href="dashboard_mahasiswa" class="back-btn">← Back</a>
+        <button type="submit" class="submit-btn">Upload Laporan</button>
+      </div>
+    </form>
+  </div>
+</section>

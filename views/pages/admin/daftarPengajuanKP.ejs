@@ -1,0 +1,31 @@
+<section class="main-content">
+      <h2>Daftar Pengajuan KP</h2>
+      <div class="search-bar">
+        <input type="text" placeholder="Cari" />
+        <button><i class="fas fa-search"></i></button>
+      </div>
+
+      <table class="pengajuanKP-table">
+        <thead>
+          <tr>
+            <th>NIM</th>
+            <th>Nama</th>
+            <th>Status</th>
+            <th>Aksi</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% pengajuanKP.forEach(function(p) { %>
+  <tr>
+    <td><%= p.nim %></td>
+    <td><%= p.nama_mahasiswa %></td>
+    <td><%= p.status %></td>
+      <td><a href="pengajuanKP/detail/<%= p.id %>" class="btn-detail">Lihat Detail</a></td>
+  </tr>
+<% }); %>
+
+        </tbody>
+      </table>
+
+    </section>
+    

@@ -1,0 +1,62 @@
+<div class="container">
+  <aside id="sidebar" class="sidebar expanded">
+    <div class="logo">
+      <img src="/image/LogoUnand.png" alt="Logo" />
+      <span class="logo-text">SIUNAND</span>
+    </div>
+    <nav>
+      <ul>
+        <li><a href="/home"><i class="fas fa-house"></i> <span class="text">Home</span></a></li>
+        <li><i class="fas fa-check-circle"></i> <span class="text">Persetujuan KP</span></li>
+        <li><i class="fas fa-file-alt"></i> <span class="text">Penilaian Laporan</span></li>
+        <li><a href="/jadwalseminar"><i class="fas fa-calendar-alt"></i> <span class="text">Jadwal Seminar</span></a></li>
+        <li class="active"><a href="/bimbingan"><i class="fas fa-chalkboard-teacher"></i> <span class="text">Bimbingan</span></a></li>
+        <li><a href="/informasipenting"><i class="fas fa-info-circle"></i> <span class="text">Informasi Penting</span></a></li>
+      </ul>
+    </nav>
+  </aside>
+
+  <div class="main-content">
+    <header>
+      <link rel="stylesheet" href="/upload/bimbingan.css">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+      <div class="topbar">
+        <button id="toggleSidebar"><i class="fas fa-bars"></i></button>
+        <h1>Sistem Informasi Kerja Praktik</h1>
+        <div class="icons">
+          <button class="icon-btn"><i class="fas fa-bell"></i></button>
+          <button class="icon-btn"><i class="fas fa-user-circle"></i></button>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <div class="bg-logo"></div>
+      <h2>Bimbingan</h2>
+      <div class="cards">
+        <div class="card">
+          <span>Mahasiswa Bimbingan</span>
+          <button class="lihat" onclick="window.location.href='/mahasiswabimbingan'">Lihat</button>
+        </div>
+        <div class="card">
+          <span>Materi Bimbingan</span>
+          <button class="unggah" onclick="window.location.href='/materibimbingan'">Unggah Materi</button>
+        </div>
+        <div class="card">
+          <span>Jadwal Bimbingan</span>
+          <button class="lihat" onclick="window.location.href='/jadwalbimbingan'">Lihat</button>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<script>
+  const toggleBtn = document.getElementById("toggleSidebar");
+  const sidebar = document.getElementById("sidebar");
+
+  toggleBtn.addEventListener("click", () => {
+    sidebar.classList.toggle("collapsed");
+  });
+</script>

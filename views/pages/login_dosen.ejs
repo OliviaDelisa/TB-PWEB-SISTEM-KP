@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login Dosen</title>
-    <link rel="stylesheet" href="/upload/login_mahasiswa.css"> <!-- Path CSS -->
+    <link rel="stylesheet" href="/upload/login_dosen.css"> <!-- Path CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"> <!-- Font Awesome -->
 </head>
 <body>
@@ -20,17 +20,22 @@
                 <input type="password" name="password" id="password" placeholder="Password" required>
                 <i id="toggle-password" class="fa fa-eye-slash"></i> <!-- Ikon mata untuk toggle password -->
             </div>
+             <% if (typeof error !== 'undefined') { %>
+            <div class="error-message">
+                <%= error %>
+            </div>
+            <% } %>
 
             <div class="checkbox-container">
                 <input type="checkbox" name="remember" id="remember">
                 <label for="remember">Remember Me</label>
             </div>
-
+           
             <button type="submit">Log In</button>
         </form>
     </div>
 
-    <script>
+     <script>
         const togglePassword = document.getElementById('toggle-password');
         const passwordField = document.getElementById('password');
 
@@ -43,5 +48,6 @@
     </script>
 
     <%- include('../partials/footer') %>
+    
 </body>
 </html>

@@ -1,21 +1,22 @@
 <section class="main-section">
   <h2>Pengajuan KP</h2>
-  <div class="form-wrapper">
-    <h3>Upload Dokumen KP</h3>
-    <form action="/upload_dokumen_pengajuan_kp" method="POST" enctype="multipart/form-data" class="kp-form">
-      <label for="surat_permohonan">Upload Surat Permohonan</label>
-      <input type="file" id="surat_permohonan" name="surat_permohonan" required />
+    <div class="form-wrapper">
+      <h3>Upload Dokumen KP</h3>
+      <form action="/upload_dokumen_pengajuan_kp" method="POST" enctype="multipart/form-data" class="kp-form">
+        <label for="surat_pengajuan_kp">Upload Surat Permohonan</label>
+        <input type="file" id="surat_pengajuan_kp" name="surat_pengajuan_kp" required />
 
-      <label for="proposal_kp">Upload Proposal KP</label>
-      <input type="file" id="proposal_kp" name="proposal_kp" required />
+        <label for="proposal_kp">Upload Proposal KP</label>
+        <input type="file" id="proposal_kp" name="proposal_kp" required />
 
-      <label for="transkrip_nilai">Upload Transkrip Nilai</label>
-      <input type="file" id="transkrip_nilai" name="transkrip_nilai" required />
+        <label for="transkrip_nilai">Upload Transkrip Nilai</label>
+        <input type="file" id="transkrip_nilai" name="transkrip_nilai" required />
 
-      <div class="form-actions">
-        <a href="/pengajuan_kp" class="back-link">← Back</a>
-        <button type="submit" class="submit-btn">Kirim</button>
-      </div>
-    </form>
-  </div>
+        <div class="form-actions">
+          <a href="/pengajuan_kp" class="back-link">← Kembali</a>
+          <button type="submit" class="submit-btn">Kirim</button>
+        </div>
+      </form>
+    </div>
+
 </section>

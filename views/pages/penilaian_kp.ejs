@@ -1,0 +1,98 @@
+<%- include('../partials/header') %>
+<link rel="stylesheet" href="/upload/penilaian_kp.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <div class="left">
+    <i class="fas fa-bars menu-icon" id="toggleSidebar"></i>
+    <span class="title">Sistem Informasi Kerja Praktik</span>
+  </div>
+  <div class="right">
+    <i class="fas fa-bell icon"></i>
+    <i class="fas fa-user icon"></i>
+  </div>
+</div>
+
+<!-- MAIN WRAPPER -->
+<div class="container">
+  <!-- SIDEBAR -->
+  <div class="sidebar" id="sidebar">
+    <div class="logo">
+      <img src="/image/LogoUnand.png" alt="Logo" />
+      <span>SIUNAND</span>
+    </div>
+    <ul class="menu">
+      <li><a href="/home"><i class="fas fa-home"></i> Home</a></li>
+      <li><a href="/persetujuan_kp"><i class="fas fa-check-circle"></i> Persetujuan KP</a></li>
+      <li class="active"><a href="/penilaian"><i class="fas fa-pen-alt"></i> Penilaian</a></li>
+      <li><a href="/seminar_kp"><i class="fas fa-calendar-alt"></i> Jadwal Seminar</a></li>
+      <li><a href="/bimbingan"><i class="fas fa-user-friends"></i> Bimbingan</a></li>
+      <li><a href="/informasi"><i class="fas fa-info-circle"></i> Informasi Penting</a></li>
+    </ul>
+  </div>
+
+  <!-- CONTENT -->
+  <div class="content-box">
+    <h2>Penilaian KP</h2>
+    <p><strong><%= mahasiswa.nama %></strong><br /><%= mahasiswa.nim %></p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Kategori</th>
+          <th>Persentase</th>
+          <th>Nilai</th>
+          <th>Aksi</th>
+        </tr>
+      </thead>
+      <tbody id="nilai-table">
+        <% if (penilaian.length > 0) { %>
+          <% penilaian.forEach((item) => { %>
+            <tr data-id="<%= item.id %>">
+              <td class="kategori"><%= item.kategori %></td>
+              <td class="persentase"><%= item.persentase %>%</td>
+              <td>
+                <input
+                  type="number"
+                  class="nilai-input"
+                  value="<%= item.nilai %>"
+                  min="0"
+                  max="100"
+                  readonly
+                />
+              </td>
+              <td>
+                <button class="btn-edit"><i class="fas fa-pen"></i> Edit</button>
+                <button class="btn-hapus"><i class="fas fa-trash"></i> Hapus</button>
+              </td>
+            </tr>
+          <% }); %>
+        <% } else { %>
+          <tr>
+            <td colspan="4">Tidak ada data penilaian.</td>
+          </tr>
+        <% } %>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td><strong>Nilai Akhir</strong></td>
+          <td colspan="3" id="total-nilai">0</td>
+        </tr>
+      </tfoot>
+    </table>
+
+    <div class="action-buttons">
+      <button id="btn-tambah" class="btn-tambah">
+        <i class="fas fa-plus"></i> Tambah
+      </button>
+      <a href="/dashboard" class="btn-back">&larr; Back</a>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Kirim id mahasiswa ke JS frontend
+  const idMahasiswa = "<%= mahasiswa.id %>";
+</script>
+<script src="/js/penilaian_kp.js"></script>

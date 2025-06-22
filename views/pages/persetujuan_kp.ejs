@@ -1,0 +1,69 @@
+<%- include('../partials/header') %>
+<link rel="stylesheet" href="/upload/persetujuan_kp.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <div class="left">
+    <i class="fas fa-bars menu-icon" id="toggleSidebar"></i>
+    <span class="title">Sistem Informasi Kerja Praktik</span>
+  </div>
+  <div class="right">
+    <i class="fas fa-bell icon"></i>
+    <i class="fas fa-user icon"></i>
+  </div>
+</div>
+
+<!-- MAIN WRAPPER -->
+<div class="container">
+  <!-- SIDEBAR -->
+  <div class="sidebar" id="sidebar">
+    <div class="logo">
+      <img src="/image/LogoUnand.png" alt="Logo">
+      <span>SIUNAND</span>
+    </div>
+    <ul class="menu">
+      <li><a href="/dashboard_dosen"><i class="fas fa-home"></i> Home</a></li>
+      <li class="active"><a href="/persetujuan_kp"><i class="fas fa-check-circle"></i> Persetujuan KP</a></li>
+      <li><a href="/penilaian"><i class="fas fa-pen-alt"></i> Penilaian Laporan</a></li>
+      <li><a href="/seminar_kp"><i class="fas fa-calendar-alt"></i> Jadwal Seminar</a></li>
+      <li><a href="/bimbingan"><i class="fas fa-user-friends"></i> Bimbingan</a></li>
+      <li><a href="/informasi"><i class="fas fa-info-circle"></i> Informasi Penting</a></li>
+    </ul>
+  </div>
+
+  <!-- CONTENT -->
+  <div class="content-box">
+    <div class="header-table">
+      <h2>Persetujuan Kerja Praktik</h2>
+      <a href="/riwayat_persetujuan_kp" class="link-riwayat">Riwayat Persetujuan</a>
+    </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th>NIM</th>
+          <th>Nama</th>
+          <th>Aksi</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% data.forEach(item => { %>
+          <tr>
+            <td><%= item.nim %></td>
+            <td><%= item.nama %></td>
+            <td><a href="/detail_persetujuan?nim=<%= item.nim %>" class="btn-tambah">Lihat Detail</a></td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+    <a href="/dashboard_dosen" class="btn-back">&larr; Back</a>
+  </div>
+</div>
+
+<script>
+  document.getElementById('toggleSidebar').addEventListener('click', () => {
+    document.getElementById('sidebar').classList.toggle('collapsed');
+    document.querySelector('.content-box').classList.toggle('full');
+  });
+</script>

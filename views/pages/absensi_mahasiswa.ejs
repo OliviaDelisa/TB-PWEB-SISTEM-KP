@@ -1,0 +1,84 @@
+<%- include('../partials/header') %>
+<link rel="stylesheet" href="/upload/absensi.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+<!-- Main Content -->
+<div class="main-content">
+  <h1>Pelaksanaan KP</h1>
+
+  <!-- Form Absensi -->
+  <div class="form-container">
+    <h2>Absensi</h2>
+    <form action="/absensi_mahasiswa/upload" method="POST" enctype="multipart/form-data">
+      <!-- Pilih Pertemuan -->
+      <label for="pertemuan">Pertemuan Ke-
+        <select name="pertemuan" id="pertemuan" required>
+          <option value="1">Pertemuan 1</option>
+          <option value="2">Pertemuan 2</option>
+        </select>
+      </label>
+
+      <!-- Upload Bukti -->
+      <label for="bukti">Upload Bukti
+        <div class="file-container">
+          <input type="file" name="bukti" id="bukti" accept="image/*" required />
+          <button type="button" id="cancelBtn" class="cancel-button">Batal</button>
+        </div>
+      </label>
+
+      <!-- Tombol Aksi -->
+      <div class="buttons">
+        <a href="/pelaksanaan_kp" class="back-button">Back</a>
+        <button type="submit" class="submit-button">Ambil Absensi</button>
+      </div>
+    </form>
+  </div>
+
+<!-- Report Absensi -->
+<div class="report">
+  <h3>Report Absensi</h3>
+  <table class="absensi-table">
+    <thead>
+      <tr>
+        <th>Tanggal</th>
+        <th>Pertemuan</th>
+        <th>Bukti</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% data.forEach(row => { %>
+        <tr>
+          <td><%= new Date(row.tanggal).toLocaleDateString('id-ID') %></td>
+          <td>Pertemuan <%= row.pertemuan %></td>
+          <td>
+            <% if (row.bukti) { %>
+              <a href="/upload/<%= row.bukti %>" download="<%= row.bukti %>" title="Download Bukti">
+                <img src="/upload/<%= row.bukti %>" alt="Bukti" width="60" style="border-radius: 5px; border: 1px solid #ccc;">
+              </a>
+            <% } else { %>
+              -
+            <% } %>
+          </td>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+</div>
+
+
+<%- include('../partials/footer') %>
+
+<script>
+  // Batalkan file input
+  document.getElementById('cancelBtn')?.addEventListener('click', function () {
+    document.getElementById('bukti').value = '';
+  });
+
+  // Toggle sidebar
+  document.getElementById('toggleSidebar')?.addEventListener('click', function () {
+    const sidebar = document.getElementById('sidebar');
+    const mainContent = document.querySelector('.main-content');
+    sidebar.classList.toggle('collapsed');
+    mainContent.classList.toggle('collapsed');
+  });
+</script>

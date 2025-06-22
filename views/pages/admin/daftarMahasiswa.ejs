@@ -1,0 +1,49 @@
+<section class="main-content">
+  <h2>Daftar Mahasiswa</h2>
+
+  <div class="all-bar">
+  <div class="toolbar">
+    <select>
+        <option disabled selected>Pilih</option>
+        <option value="Belum Verifikasi">Belum Verifikasi</option>
+        <option value="Terverifikasi">Terverifikasi</option>
+        <option value="Sedang">Sedang KP</option>
+        <option value="Selesai">Selesai KP</option>
+        <option value="Revisi">Ditolak/revisi</option>
+    </select>
+  </div>
+      <div class="search-bar">
+    <input type="text" placeholder="Cari">
+    <button><i class="fas fa-search"></i></button>
+      </div>
+
+  </div>
+
+  <table class="mahasiswa-table">
+    <thead>
+      <tr>
+        <th>NIM</th>
+        <th>Nama</th>
+        <th>Total SKS</th>
+        <th>Tgl Mulai KP</th>
+        <th>Tgl Selesai KP</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% mahasiswaList.forEach(m => { %>
+        <tr>
+          <td><%= m.nim %></td>
+          <td><%= m.nama %></td>
+          <td><%= m.totalSks %></td>
+          <td><%= m.tglMulai %></td>
+          <td><%= m.tglSelesai %></td>
+          <td><%= m.status %></td>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+
+
+
+</section>

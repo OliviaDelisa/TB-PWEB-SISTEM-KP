@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Daftar Dosen Pembimbing</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+    th, td { border: 1px solid #999; padding: 8px; text-align: left; }
+    th { background-color: #f2a154; color: white; }
+  </style>
+</head>
+<body>
+  <h2>Daftar Dosen Pembimbing</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>No</th>
+        <th>Mahasiswa</th>
+        <th>NIM</th>
+        <th>Dosen Pembimbing</th>
+        <th>NIP</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% dospemList.forEach((d, i) => { %>
+        <tr>
+          <td><%= i + 1 %></td>
+          <td><%= d.nama_mahasiswa %></td>
+          <td><%= d.nim %></td>
+          <td><%= d.nama_dosen %></td>
+          <td><%= d.nip %></td>
+        </tr>
+      <% }); %>
+    </tbody>
+  </table>
+</body>
+</html>

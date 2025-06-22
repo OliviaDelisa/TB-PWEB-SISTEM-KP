@@ -1,0 +1,33 @@
+<h2 class="title">Edit Periode KP</h2>
+
+<form class="form-periodeKP" action="/periodeKP/edit/<%= periode.id %>" method="POST">
+  <div class="form-group">
+    <label for="nama_periode">Nama Periode</label>
+    <input type="text" name="nama_periode" value="<%= periode.nama_periode %>" required>
+  </div>
+
+  <div class="form-group">
+    <label for="tanggal_mulai_pendaftaran">Tanggal Mulai Pendaftaran</label>
+    <input type="date" name="tanggal_mulai_pendaftaran" value="<%= periode.tanggal_mulai_pendaftaran.toISOString().split('T')[0] %>" required>
+  </div>
+
+  <div class="form-group">
+    <label for="tanggal_akhir_pendaftaran">Tanggal Akhir Pendaftaran</label>
+    <input type="date" name="tanggal_akhir_pendaftaran" value="<%= periode.tanggal_akhir_pendaftaran.toISOString().split('T')[0] %>" required>
+  </div>
+
+  <div class="form-group">
+    <label for="tanggal_mulai_kp">Tanggal Mulai KP</label>
+    <input type="date" name="tanggal_mulai_kp" value="<%= periode.tanggal_mulai_kp.toISOString().split('T')[0] %>" required>
+  </div>
+
+  <div class="form-group">
+    <label for="tanggal_akhir_kp">Tanggal Akhir KP</label>
+    <input type="date" name="tanggal_akhir_kp" value="<%= periode.tanggal_akhir_kp.toISOString().split('T')[0] %>" required>
+  </div>
+
+  <div class="form-buttons">
+    <a href="/periodeKP" class="btn-cancel">Batal</a>
+    <button type="submit" class="btn-submit">Simpan</button>
+  </div>
+</form>

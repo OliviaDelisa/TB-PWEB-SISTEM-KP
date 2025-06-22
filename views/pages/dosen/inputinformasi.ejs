@@ -1,0 +1,130 @@
+<div class="container">
+  <aside id="sidebar" class="sidebar expanded">
+    <div class="logo">
+      <img src="/image/LogoUnand.png" alt="Logo" />
+      <span class="logo-text">SIUNAND</span>
+    </div>
+    <nav>
+      <ul>
+        <li><a href="/home"><i class="fas fa-house"></i> <span class="text">Home</span></a></li>
+        <li><i class="fas fa-check-circle"></i> <span class="text">Persetujuan KP</span></li>
+        <li><i class="fas fa-file-alt"></i> <span class="text">Penilaian Laporan</span></li>
+        <li><a href="/jadwalseminar"><i class="fas fa-calendar-alt"></i> <span class="text">Jadwal Seminar</span></a></li>
+        <li><a href="/bimbingan"><i class="fas fa-chalkboard-teacher"></i> <span class="text">Bimbingan</span></a></li>
+        <li class="active"><a href="/informasipenting"><i class="fas fa-info-circle"></i> <span class="text">Informasi Penting</span></a></li>
+      </ul>
+    </nav>
+  </aside>
+
+  <div class="main-content">
+    <header>
+      <link rel="stylesheet" href="/upload/inputinformasi.css" />
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+      <div class="topbar">
+        <button id="toggleSidebar"><i class="fas fa-bars"></i></button>
+        <h1>Sistem Informasi Kerja Praktik</h1>
+        <div class="icons">
+          <button class="icon-btn"><i class="fas fa-bell"></i></button>
+          <button class="icon-btn"><i class="fas fa-user-circle"></i></button>
+        </div>
+      </div>
+    </header>
+
+    <main class="informasi-container">
+      <h2>Tambahkan Informasi Penting</h2>
+
+      <div class="form-wrapper">
+        <form id="informasiForm" enctype="multipart/form-data">
+          <div class="form-group">
+            <label for="judul">Judul Informasi/Berita</label>
+            <input type="text" id="judul" name="judul" required />
+          </div>
+
+          <div class="form-group">
+            <label for="isi">Isi Informasi</label>
+            <textarea id="isi" name="isi" rows="5" required></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="gambar">Upload Gambar (Opsional)</label>
+            <div class="upload-wrapper">
+              <label class="upload-btn">
+                <i class="fas fa-upload"></i> Tambahkan file
+                <input type="file" id="gambar" name="gambar" hidden onchange="updateFileName()" accept="image/*" />
+              </label>
+              <span id="file-name" style="margin-left:10px;"></span>
+            </div>
+          </div>
+
+          <div class="submit-area">
+            <a href="/informasipenting" class="back-btn">
+              <i class="fas fa-arrow-left"></i> Kembali
+            </a>
+            <button type="submit" class="submit-btn" id="submitBtn">
+              <span class="btn-text">Kirim</span>
+              <span class="btn-loading" style="display: none;">
+                <i class="fas fa-spinner fa-spin"></i> Mengirim...
+              </span>
+            </button>
+          </div>
+        </form>
+      </div>
+    </main>
+  </div>
+</div>
+
+<script>
+  const toggleBtn = document.getElementById("toggleSidebar");
+  const sidebar = document.getElementById("sidebar");
+  const informasiForm = document.getElementById("informasiForm");
+  const submitBtn = document.getElementById("submitBtn");
+
+  toggleBtn.addEventListener("click", () => {
+    sidebar.classList.toggle("collapsed");
+  });
+
+  function updateFileName() {
+    const fileInput = document.getElementById("gambar");
+    const fileNameDisplay = document.getElementById("file-name");
+    const fileName = fileInput.files[0]?.name || "Belum ada file dipilih";
+    fileNameDisplay.textContent = fileName;
+  }
+
+  // Handle form submission
+  informasiForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    // Show loading state
+    const btnText = submitBtn.querySelector('.btn-text');
+    const btnLoading = submitBtn.querySelector('.btn-loading');
+    btnText.style.display = 'none';
+    btnLoading.style.display = 'inline-block';
+    submitBtn.disabled = true;
+    
+    try {
+      const formData = new FormData(informasiForm);
+      
+      const response = await fetch('/api/informasi-penting', {
+        method: 'POST',
+        body: formData
+      });
+      
+      const result = await response.json();
+      
+      if (result.success) {
+        alert('Informasi berhasil ditambahkan!');
+        window.location.href = '/informasipenting';
+      } else {
+        alert('Error: ' + result.message);
+      }
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      alert('Terjadi kesalahan saat mengirim informasi');
+    } finally {
+      // Reset loading state
+      btnText.style.display = 'inline-block';
+      btnLoading.style.display = 'none';
+      submitBtn.disabled = false;
+    }
+  });
+</script>

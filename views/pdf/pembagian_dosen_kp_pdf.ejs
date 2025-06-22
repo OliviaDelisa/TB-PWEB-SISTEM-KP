@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>Pembagian Dosen KP</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      color: #333;
+    }
+    h1 {
+      text-align: center;
+      color: #2c3e50;
+      margin-bottom: 30px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+      font-size: 14px;
+    }
+    thead {
+      background-color: #f58220;
+      color: white;
+    }
+    th, td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: left;
+    }
+    tbody tr:nth-child(even) {
+      background-color: #f2f2f2;
+    }
+    tbody tr:hover {
+      background-color: #d1ecf1;
+    }
+    td[colspan] {
+      text-align: center;
+      font-style: italic;
+      color: #888;
+    }
+  </style>
+</head>
+<body>
+  <h1>Daftar Pembagian Dosen KP</h1>
+  <table>
+    <thead>
+      <tr>
+        <th>NIM</th>
+        <th>Mahasiswa</th>
+        <th>Perusahaan</th>
+        <th>Dosen KP</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% if (data && data.length > 0) { %>
+        <% data.forEach(row => { %>
+          <tr>
+            <td><%= row.nim %></td>
+            <td><%= row.nama_mahasiswa %></td>
+            <td><%= row.nama_perusahaan || '-' %></td>
+            <td><%= row.nama_dosen %></td>
+          </tr>
+        <% }) %>
+      <% } else { %>
+        <tr>
+          <td colspan="4">Tidak ada data</td>
+        </tr>
+      <% } %>
+    </tbody>
+  </table>
+</body>
+</html>

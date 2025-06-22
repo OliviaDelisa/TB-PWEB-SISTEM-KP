@@ -1,0 +1,320 @@
+<div class="container">
+  <aside id="sidebar" class="sidebar expanded">
+    <div class="logo">
+      <img src="/image/LogoUnand.png" alt="Logo" />
+      <span class="logo-text">SIUNAND</span>
+    </div>
+    <nav>
+      <ul>
+        <li><a href="/home"><i class="fas fa-house"></i> <span class="text">Home</span></a></li>
+        <li><i class="fas fa-check-circle"></i> <span class="text">Persetujuan KP</span></li>
+        <li><i class="fas fa-file-alt"></i> <span class="text">Penilaian Laporan</span></li>
+        <li><a href="/jadwalseminar"><i class="fas fa-calendar-alt"></i> <span class="text">Jadwal Seminar</span></a></li>
+        <li class="active"><a href="/bimbingan"><i class="fas fa-chalkboard-teacher"></i> <span class="text">Bimbingan</span></a></li>
+        <li><a href="/informasipenting"><i class="fas fa-info-circle"></i> <span class="text">Informasi Penting</span></a></li>
+      </ul>
+    </nav>
+  </aside>
+
+  <div class="main-content">
+    <header>
+      <link rel="stylesheet" href="/upload/catatanbimbingan.css" />
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+      <div class="topbar">
+        <button id="toggleSidebar"><i class="fas fa-bars"></i></button>
+        <h1>Sistem Informasi Kerja Praktik</h1>
+        <div class="icons">
+          <button class="icon-btn"><i class="fas fa-bell"></i></button>
+          <button class="icon-btn"><i class="fas fa-user-circle"></i></button>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <div class="bg-logo"></div>
+      <h2>Bimbingan</h2>
+
+      <div class="bimbingan-wrapper">
+        <!-- Loading indicator -->
+        <div id="loading" style="text-align: center; padding: 20px; display: none;">
+          <i class="fas fa-spinner fa-spin"></i> Memuat data...
+        </div>
+        
+        <!-- Error message -->
+        <div id="errorMessage" style="color: red; text-align: center; padding: 10px; display: none;"></div>
+
+        <div class="identitas" id="identitasMahasiswa">
+          <!-- Data identitas akan diisi oleh JavaScript -->
+        </div>
+
+        <div class="table-wrapper">
+          <table class="bimbingan-table">
+            <thead>
+              <tr>
+                <th>Tanggal</th>
+                <th>Waktu</th>
+                <th>Topik Bimbingan</th>
+                <th>Catatan</th>
+                <th>Progress</th>
+                <th>Status</th>
+                <th>Aksi</th>
+              </tr>
+            </thead>
+            <tbody id="bimbinganBody">
+              <!-- Data akan ditampilkan oleh JavaScript -->
+            </tbody>
+          </table>
+        </div>
+
+        <div class="button-actions">
+          <a href="mahasiswabimbingan" class="back-btn"><i class="fas fa-arrow-left"></i> Back</a>
+          <a href="inputcatatanbimbingan?mahasiswa_id=<%= mahasiswa_id %>&nim=<%= nim %>&nama=<%= nama %>" class="bimbingan-btn"><i class="fas fa-edit"></i> Input Catatan</a>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<script>
+  const toggleBtn = document.getElementById("toggleSidebar");
+  const sidebar = document.getElementById("sidebar");
+  
+  // Ambil parameter dari URL
+  const urlParams = new URLSearchParams(window.location.search);
+  const mahasiswaId = urlParams.get('mahasiswa_id');
+  const nim = urlParams.get('nim');
+  const nama = urlParams.get('nama');
+  
+  // ID dosen yang sedang login (untuk demo)
+  const dosenId = 1;
+
+  toggleBtn.addEventListener("click", () => {
+    sidebar.classList.toggle("collapsed");
+  });
+
+  // Load data saat halaman dimuat
+  document.addEventListener("DOMContentLoaded", () => {
+    if (mahasiswaId && nim && nama) {
+      displayIdentitas();
+      loadCatatanBimbingan();
+    } else {
+      showError('Data mahasiswa tidak ditemukan');
+    }
+  });
+
+  // Fungsi untuk menampilkan identitas mahasiswa
+  function displayIdentitas() {
+    const identitasDiv = document.getElementById('identitasMahasiswa');
+    identitasDiv.innerHTML = `<span><strong>${nim}</strong></span> - <strong>${decodeURIComponent(nama)}</strong>`;
+  }
+
+  // Fungsi untuk memuat data catatan bimbingan
+  async function loadCatatanBimbingan() {
+    showLoading(true);
+    try {
+      const response = await fetch(`/api/catatan-bimbingan/${mahasiswaId}`);
+      const result = await response.json();
+      
+      if (result.success) {
+        renderTable(result.data);
+      } else {
+        showError('Gagal memuat data catatan bimbingan');
+      }
+    } catch (error) {
+      console.error('Error loading catatan bimbingan:', error);
+      showError('Terjadi kesalahan saat memuat data');
+    } finally {
+      showLoading(false);
+    }
+  }
+
+  // Fungsi untuk render tabel
+  function renderTable(catatanData) {
+    const tbody = document.getElementById("bimbinganBody");
+    tbody.innerHTML = "";
+    
+    if (catatanData.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="7" style="text-align: center; padding: 20px; color: #666;">Belum ada catatan bimbingan</td></tr>';
+      return;
+    }
+    
+    catatanData.forEach((catatan) => {
+      const waktuText = catatan.waktu_mulai && catatan.waktu_selesai 
+        ? `${catatan.waktu_mulai} - ${catatan.waktu_selesai}`
+        : '-';
+      
+      // Format tanggal untuk input date (YYYY-MM-DD)
+      let formattedDate = '';
+      if (catatan.tanggal_bimbingan) {
+        const date = new Date(catatan.tanggal_bimbingan);
+        if (!isNaN(date.getTime())) {
+          formattedDate = date.toISOString().split('T')[0];
+        }
+      }
+      
+      tbody.innerHTML += `
+        <tr id="row-${catatan.id}">
+          <td><input type="date" value="${formattedDate}" disabled></td>
+          <td><input type="text" value="${waktuText}" disabled></td>
+          <td><input type="text" value="${catatan.topik_bimbingan}" disabled></td>
+          <td><textarea disabled>${catatan.catatan}</textarea></td>
+          <td><input type="number" value="${catatan.progress}" disabled>%</td>
+          <td><input type="text" value="${catatan.status}" disabled></td>
+          <td style="white-space: nowrap;">
+            <button class="edit-btn" onclick="editRow(${catatan.id})" style="display: inline-block;"><i class="fas fa-pen"></i></button>
+            <button class="save-btn simpan-btn" onclick="saveRow(${catatan.id})" style="display: none;"><i class="fas fa-save"></i> Simpan</button>
+            <button class="delete-btn" onclick="deleteRow(${catatan.id})" style="display: inline-block;"><i class="fas fa-trash"></i></button>
+          </td>
+        </tr>`;
+    });
+    
+    console.log('Table rendered with', catatanData.length, 'rows');
+    
+    // Debug: periksa button di setiap row
+    catatanData.forEach((catatan) => {
+      const row = document.getElementById(`row-${catatan.id}`);
+      if (row) {
+        const editBtn = row.querySelector(".edit-btn");
+        const saveBtn = row.querySelector(".save-btn");
+        const deleteBtn = row.querySelector(".delete-btn");
+        
+        console.log(`Row ${catatan.id}:`, {
+          editBtn: editBtn ? 'found' : 'not found',
+          saveBtn: saveBtn ? 'found' : 'not found',
+          deleteBtn: deleteBtn ? 'found' : 'not found',
+          editDisplay: editBtn ? editBtn.style.display : 'N/A',
+          saveDisplay: saveBtn ? saveBtn.style.display : 'N/A',
+          deleteDisplay: deleteBtn ? deleteBtn.style.display : 'N/A'
+        });
+      }
+    });
+  }
+
+  // Fungsi untuk edit row
+  function editRow(id) {
+    const row = document.getElementById(`row-${id}`);
+    const editBtn = row.querySelector(".edit-btn");
+    const saveBtn = row.querySelector(".save-btn");
+    const deleteBtn = row.querySelector(".delete-btn");
+    
+    console.log('Edit row:', id);
+    console.log('Edit button:', editBtn);
+    console.log('Save button:', saveBtn);
+    
+    // Enable semua input dan textarea
+    row.querySelectorAll("input, textarea").forEach(el => el.disabled = false);
+    
+    // Tampilkan button save, sembunyikan button edit
+    if (saveBtn) saveBtn.style.display = "inline-block";
+    if (editBtn) editBtn.style.display = "none";
+    
+    // Pastikan button delete tetap terlihat
+    if (deleteBtn) deleteBtn.style.display = "inline-block";
+    
+    console.log('After edit - Save button display:', saveBtn ? saveBtn.style.display : 'not found');
+    console.log('After edit - Edit button display:', editBtn ? editBtn.style.display : 'not found');
+  }
+
+  // Fungsi untuk save row
+  async function saveRow(id) {
+    const row = document.getElementById(`row-${id}`);
+    const editBtn = row.querySelector(".edit-btn");
+    const saveBtn = row.querySelector(".save-btn");
+    const deleteBtn = row.querySelector(".delete-btn");
+    const inputs = row.querySelectorAll("input, textarea");
+    
+    console.log('Save row:', id);
+    console.log('Save button:', saveBtn);
+    console.log('Edit button:', editBtn);
+    
+    // Pastikan tanggal dalam format yang benar
+    const tanggalInput = inputs[0];
+    const tanggalValue = tanggalInput.value;
+    
+    const data = {
+      tanggal_bimbingan: tanggalValue,
+      waktu_mulai: inputs[1].value.split(' - ')[0] || null,
+      waktu_selesai: inputs[1].value.split(' - ')[1] || null,
+      topik_bimbingan: inputs[2].value,
+      catatan: inputs[3].value,
+      progress: inputs[4].value,
+      status: inputs[5].value
+    };
+
+    try {
+      const response = await fetch(`/api/catatan-bimbingan/${id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data)
+      });
+
+      const result = await response.json();
+      
+      if (result.success) {
+        alert('Catatan bimbingan berhasil diperbarui');
+        
+        // Disable semua input dan textarea
+        inputs.forEach(el => el.disabled = true);
+        
+        // Sembunyikan button save, tampilkan button edit
+        if (saveBtn) saveBtn.style.display = "none";
+        if (editBtn) editBtn.style.display = "inline-block";
+        
+        // Pastikan button delete tetap terlihat
+        if (deleteBtn) deleteBtn.style.display = "inline-block";
+        
+        console.log('After save - Save button display:', saveBtn ? saveBtn.style.display : 'not found');
+        console.log('After save - Edit button display:', editBtn ? editBtn.style.display : 'not found');
+        
+        loadCatatanBimbingan();
+      } else {
+        alert(result.message || 'Gagal memperbarui catatan bimbingan');
+      }
+    } catch (error) {
+      console.error('Error updating catatan bimbingan:', error);
+      alert('Terjadi kesalahan saat memperbarui data');
+    }
+  }
+
+  // Fungsi untuk delete row
+  async function deleteRow(id) {
+    if (confirm("Yakin ingin menghapus catatan bimbingan ini?")) {
+      try {
+        const response = await fetch(`/api/catatan-bimbingan/${id}`, {
+          method: 'DELETE'
+        });
+
+        const result = await response.json();
+        
+        if (result.success) {
+          alert('Catatan bimbingan berhasil dihapus');
+          loadCatatanBimbingan();
+        } else {
+          alert(result.message || 'Gagal menghapus catatan bimbingan');
+        }
+      } catch (error) {
+        console.error('Error deleting catatan bimbingan:', error);
+        alert('Terjadi kesalahan saat menghapus data');
+      }
+    }
+  }
+
+  // Fungsi untuk menampilkan loading
+  function showLoading(show) {
+    document.getElementById('loading').style.display = show ? 'block' : 'none';
+  }
+
+  // Fungsi untuk menampilkan error
+  function showError(message) {
+    const errorDiv = document.getElementById('errorMessage');
+    errorDiv.textContent = message;
+    errorDiv.style.display = 'block';
+    setTimeout(() => {
+      errorDiv.style.display = 'none';
+    }, 5000);
+  }
+</script>
+

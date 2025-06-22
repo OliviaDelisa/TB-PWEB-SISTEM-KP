@@ -1,0 +1,95 @@
+.main-content {
+  padding: 20px;
+  background-color: #ffffff;
+  flex-grow: 1;
+  padding-top: 0px;
+  margin: 10px;
+ 
+}
+
+h2 {
+  font-size: 30px;
+    margin-top: 0px;
+    margin-bottom: 25px;
+    color: #d26500;
+}
+
+.seminar-card {
+  background-color: #fdebd0;
+  border-radius: 16px;
+  padding: 30px;
+  border: 1px solid #f1ab6d;
+}
+
+.seminar-card p {
+  margin: 10px 0;
+  line-height: 1.6;
+  font-size: 20px;
+}
+
+.dokumen-link {
+  background-color: white;
+  padding: 4px 12px;
+  margin-left: 16px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-size: 20px;
+  color: #d96704;
+  border: 1px solid #d96704;
+}
+
+.dokumen-link:hover {
+  background-color: #d96704;
+  color: white;
+}
+
+.form-jadwal {
+  margin-top: 22px;
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  
+}
+
+input[type="date"],
+input[type="time"] {
+  padding: 8px;
+  border-radius: 8px;
+  border: 1px solid #f1ab6d;
+  font-size: 20px;
+}
+
+.form-actions {
+  display: flex; 
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 25px;
+  
+}
+
+.back-link, .back-btn {
+  text-decoration: none;
+  color: #333;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.back-link:hover, .back-btn:hover {
+  text-decoration: underline;
+}
+
+.submit-btn {
+  background-color: #346ef7;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-weight: 600;
+  font-size: 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.submit-btn:hover {
+  background-color: #2a55b8;
+}

@@ -1,0 +1,63 @@
+<div class="container">
+  <% if (success) { %>
+    <script>
+      alert("Dokumen berhasil diupload!");
+    </script>
+  <% } %>
+
+  <h1>Dokumen KP</h1>
+
+  <div class="documents-grid">
+    <!-- Template Dokumen KP -->
+    <div class="document-card">
+      <form action="/dokumen/upload" method="POST" enctype="multipart/form-data">
+        <div class="document-icon">
+          <i class="fas fa-file-alt"></i>
+        </div>
+        <h3>Template Dokumen KP</h3>
+        <input type="hidden" name="judul" value="Template Dokumen KP">
+        <input type="file" name="file" accept=".pdf,.doc,.docx" required>
+        <button type="submit" class="btn btn-upload">Upload</button>
+      </form>
+    </div>
+
+    <!-- Dokumen Pembagian Dosen Pembimbing KP -->
+    <div class="document-card">
+      <form action="/dokumen/upload" method="POST" enctype="multipart/form-data">
+        <div class="document-icon">
+          <i class="fas fa-file-alt"></i>
+        </div>
+        <h3>Dokumen Pembagian Dosen Pembimbing KP</h3>
+        <input type="hidden" name="judul" value="Dokumen Pembagian Dosen Pembimbing KP">
+        <input type="file" name="file" accept=".pdf,.doc,.docx" required>
+        <button type="submit" class="btn btn-upload">Upload</button>
+      </form>
+    </div>
+
+    <!-- Surat Tugas KP -->
+    <div class="document-card">
+      <form action="/dokumen/upload" method="POST" enctype="multipart/form-data">
+      <div class="document-icon">
+        <i class="fas fa-file-alt"></i>
+      </div>
+      <h3>Surat Tugas KP</h3>
+      <input type="hidden" name="judul" value="Surat Tugas KP">
+        <input type="file" name="file" accept=".pdf,.doc,.docx" required>
+        <button type="submit" class="btn btn-upload">Upload</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Gambar dekoratif -->
+  <div class="decorative-image">
+    <img src="/images/LogoUnand.png" alt="Universitas Andalas">
+  </div>
+</div>
+
+<script>
+  document.querySelectorAll('.btn-print').forEach(button => {
+    button.addEventListener('click', () => {
+      alert('Fungsi cetak akan diimplementasikan.');
+    });
+  });
+</script>

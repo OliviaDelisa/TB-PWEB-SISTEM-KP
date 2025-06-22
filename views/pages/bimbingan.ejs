@@ -1,0 +1,31 @@
+<%- include('../partials/header') %>
+<link rel="stylesheet" href="/upload/bimbingan.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+<div class="main-content">
+  <!-- Header dan Icon -->
+  <div class="page-header">
+    <h1>Bimbingan KP</h1>
+  </div>
+
+  <!-- Reminder Bimbingan (Dummy) -->
+  <div class="card-box">
+    <h2>Reminder Jadwal Bimbingan KP</h2>
+    <p><i class="fas fa-calendar-alt"></i> 21/06/2025 &nbsp; <i class="fas fa-clock"></i> 10.00 – 12.00</p>
+    <button class="btn btn-danger">Batalkan Bimbingan</button>
+  </div>
+
+  <!-- Pengajuan Bimbingan -->
+  <div class="card-box">
+    <h2>Pengajuan Bimbingan</h2>
+    <button class="btn" onclick="location.href='/pengajuan_bimbingan'">Ajukan Bimbingan</button>
+  </div>
+
+  <!-- Riwayat Bimbingan -->
+  <div class="card-box">
+    <h2>Riwayat Bimbingan</h2>
+    <button class="btn" onclick="location.href='/'">Lihat Riwayat Bimbingan</button>
+  </div>
+</div>
+
+<%- include('../partials/footer') %>

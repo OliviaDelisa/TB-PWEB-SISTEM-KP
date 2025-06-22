@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Input Catatan Bimbingan</title>
+  <link rel="stylesheet" href="/upload/inputcatatanbimbingan.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <div class="container">
+    <aside id="sidebar" class="sidebar expanded">
+      <div class="logo">
+        <img src="/image/LogoUnand.png" alt="Logo" />
+        <span class="logo-text">SIUNAND</span>
+      </div>
+      <nav>
+        <ul>
+          <li><a href="/home"><i class="fas fa-house"></i> <span class="text">Home</span></a></li>
+          <li><i class="fas fa-check-circle"></i> <span class="text">Persetujuan KP</span></li>
+          <li><i class="fas fa-file-alt"></i> <span class="text">Penilaian Laporan</span></li>
+          <li><a href="/jadwalseminar"><i class="fas fa-calendar-alt"></i> <span class="text">Jadwal Seminar</span></a></li>
+          <li class="active"><a href="/bimbingan"><i class="fas fa-chalkboard-teacher"></i> <span class="text">Bimbingan</span></a></li>
+          <li><a href="/informasipenting"><i class="fas fa-info-circle"></i> <span class="text">Informasi Penting</span></a></li>
+        </ul>
+      </nav>
+    </aside>
+
+    <div class="main-content">
+      <header>
+          <link rel="stylesheet" href="/upload/inputcatatanbimbingan.css" />
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+        
+          <div class="topbar">
+          <button id="toggleSidebar"><i class="fas fa-bars"></i></button>
+          <h1>Sistem Informasi Kerja Praktik</h1>
+          <div class="icons">
+            <button class="icon-btn"><i class="fas fa-bell"></i></button>
+            <button class="icon-btn"><i class="fas fa-user-circle"></i></button>
+          </div>
+        </div>
+      </header>
+<main>
+  <div class="bg-logo"></div>
+  <div class="bimbingan-wrapper">
+    <h2 class="bimbingan-title">Bimbingan</h2>
+
+    <!-- BOX 1: Data Mahasiswa -->
+    <div class="box-identitas">
+      <p class="identitas-text" id="identitasMahasiswa">Loading...</p>
+    </div>
+
+    <!-- BOX 2: Form Catatan Bimbingan -->
+    <div class="box-catatan">
+      <h3 class="judul-catatan">Catatan Bimbingan</h3>
+
+      <form class="form-bimbingan" id="catatanForm">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="tanggal"><i class="fas fa-calendar-alt"></i> Tanggal Bimbingan</label>
+            <input type="date" id="tanggal" name="tanggal_bimbingan" required />
+          </div>
+          <div class="form-group">
+            <label for="waktu_mulai">Waktu Mulai</label>
+            <input type="time" id="waktu_mulai" name="waktu_mulai" />
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="waktu_selesai">Waktu Selesai</label>
+            <input type="time" id="waktu_selesai" name="waktu_selesai" />
+          </div>
+          <div class="form-group">
+            <label for="topik_bimbingan">Topik Bimbingan</label>
+            <input type="text" id="topik_bimbingan" name="topik_bimbingan" required />
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="progress">Progress (%)</label>
+            <input type="number" id="progress" name="progress" min="0" max="100" value="0" />
+          </div>
+          <div class="form-group">
+            <label for="status">Status</label>
+            <select id="status" name="status">
+              <option value="terjadwal">Terjadwal</option>
+              <option value="berlangsung">Berlangsung</option>
+              <option value="selesai" selected>Selesai</option>
+              <option value="batal">Batal</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group full">
+          <label for="catatan">Catatan</label>
+          <textarea id="catatan" name="catatan" placeholder="Ketik catatan bimbingan disini" required></textarea>
+        </div>
+
+        <div class="form-buttons">
+          <a href="catatanbimbingan?mahasiswa_id=<%= mahasiswa_id %>&nim=<%= nim %>&nama=<%= nama %>" class="btn-back"><i class="fas fa-arrow-left"></i> Back</a>
+          <button type="submit" class="btn-submit">Simpan dan Kirim</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</main>
+
+      <script>
+    const toggleBtn = document.getElementById("toggleSidebar");
+    const sidebar = document.getElementById("sidebar");
+
+    toggleBtn.addEventListener("click", () => {
+      sidebar.classList.toggle("collapsed");
+    });
+
+    // Ambil parameter dari URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const mahasiswaId = urlParams.get('mahasiswa_id');
+    const nim = urlParams.get('nim');
+    const nama = urlParams.get('nama');
+    
+    // ID dosen yang sedang login (untuk demo)
+    const dosenId = 1;
+
+    // Load data saat halaman dimuat
+    document.addEventListener("DOMContentLoaded", () => {
+      if (mahasiswaId && nim && nama) {
+        displayIdentitas();
+      } else {
+        document.getElementById('identitasMahasiswa').textContent = 'Data mahasiswa tidak ditemukan';
+      }
+    });
+
+    // Fungsi untuk menampilkan identitas mahasiswa
+    function displayIdentitas() {
+      const identitasDiv = document.getElementById('identitasMahasiswa');
+      identitasDiv.textContent = `${nim} - ${decodeURIComponent(nama)}`;
+    }
+
+    // Event listener untuk form
+    document.getElementById("catatanForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      
+      const formData = new FormData(e.target);
+      const data = {
+        mahasiswa_id: mahasiswaId,
+        dosen_id: dosenId,
+        tanggal_bimbingan: formData.get('tanggal_bimbingan'),
+        waktu_mulai: formData.get('waktu_mulai') || null,
+        waktu_selesai: formData.get('waktu_selesai') || null,
+        topik_bimbingan: formData.get('topik_bimbingan'),
+        catatan: formData.get('catatan'),
+        progress: formData.get('progress'),
+        status: formData.get('status')
+      };
+
+      try {
+        const response = await fetch('/api/catatan-bimbingan', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        });
+
+        const result = await response.json();
+        
+        if (result.success) {
+          alert('Catatan bimbingan berhasil ditambahkan');
+          // Redirect ke halaman catatan bimbingan
+          window.location.href = `catatanbimbingan?mahasiswa_id=${mahasiswaId}&nim=${nim}&nama=${nama}`;
+        } else {
+          alert(result.message || 'Gagal menambahkan catatan bimbingan');
+        }
+      } catch (error) {
+        console.error('Error adding catatan bimbingan:', error);
+        alert('Terjadi kesalahan saat menambahkan data');
+      }
+    });
+      </script>
+    

@@ -1,0 +1,35 @@
+<section class="main-content">
+  <h2>Jadwal Seminar KP</h2>
+
+  <div class="seminar-card">
+    <p><strong>Judul</strong><br>
+      "<%= seminar.judul %>"
+      <a href="<%= seminar.dokumenUrl %>" class="dokumen-link" target="_blank">📄 Dokumen</a>
+    </p>
+
+    <p><strong>Nama Mahasiswa</strong><br>
+      <%= seminar.mahasiswa.nama %> (<%= seminar.mahasiswa.nim %>)
+    </p>
+
+    <p><strong>Dosen pembimbing</strong><br>
+      <%= seminar.dosen %>
+    </p>
+
+    <p><strong>Perusahaan</strong><br>
+      <%= seminar.perusahaan %>
+    </p>
+
+    <div class="form-jadwal">
+      
+      <input type="date" id="tanggal" name="tanggal">
+
+      
+      <input type="time" id="jam" name="jam">
+    </div>
+
+   <div class="form-actions">
+        <a href="/jadwalSeminar" class="back-link">← Back</a>
+        <button type="submit" class="submit-btn">Jadwalkan</button>
+   </div>
+  </div>
+</section>

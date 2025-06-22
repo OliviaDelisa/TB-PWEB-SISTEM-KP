@@ -1,0 +1,57 @@
+
+  <div class="wrapper">
+   
+
+    <!-- Main Content -->
+    <div class="main-content">
+      <h1>Periode KP</h1>
+
+      <!-- Filter dan Pencarian -->
+      <div class="top-controls">
+
+        <div class="search-wrapper">
+          <form action="/periodeKP" method="GET" class="search-wrapper">
+            <input type="text" name="search" class="search-box" placeholder="Cari" value="<%= typeof search !== 'undefined' ? search : '' %>">
+            <button type="submit" class="search-btn"><i class="fas fa-search"></i></button>
+          </form>
+        </div>
+      </div>
+
+      <!-- Tabel Data Periode -->
+      <table class="periode-table">
+        <thead>
+          <tr>
+            <th>Periode KP</th>
+            <th>Tanggal Mulai Pendaftaran</th>
+            <th>Tanggal Berakhir Pendaftaran</th>
+            <th>Tanggal Mulai KP</th>
+            <th>Tanggal Berakhir KP</th>
+            <th>Aksi</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% periode_kpList.forEach((p, i) => { %>
+          <tr>
+            <td><%= p.nama_periode %></td>
+            <td><%= p.tanggal_mulai_pendaftaran %></td>
+            <td><%= p.tanggal_akhir_pendaftaran %></td>
+             <td><%= p.tanggal_mulai_kp %></td>
+            <td><%= p.tanggal_akhir_kp %></td>
+             <td>
+          <a href="/periodeKP/edit/<%= p.id %>" class="btn edit"><i class="fas fa-edit"></i></a>
+            <form action="/periodeKP/hapus/<%= p.id %>" method="POST" style="display:inline;">
+          <button type="submit" class="btn delete" onclick="return confirm('Yakin ingin hapus?')"><i class="fas fa-trash"></i></button>
+          </form></td>
+          </tr>
+           <% }) %>
+        </tbody>
+      </table>
+
+      <!-- Tombol Aksi -->
+      <div class="action-buttons">
+         <a href="/periodeKP/tambah" class="btn add"><i class="fas fa-plus"></i> Tambah</a>
+      </div>
+    </div>
+  </div>
+
+ 

@@ -1,0 +1,241 @@
+  <div class="container">
+  <aside id="sidebar" class="sidebar expanded">
+    <div class="logo">
+      <img src="/image/LogoUnand.png" alt="Logo" />
+      <span class="logo-text">SIUNAND</span>
+    </div>
+    <nav>
+      <ul>
+        <li><a href="/home"><i class="fas fa-house"></i> <span class="text">Home</span></a></li>
+        <li><i class="fas fa-check-circle"></i> <span class="text">Persetujuan KP</span></li>
+        <li><i class="fas fa-file-alt"></i> <span class="text">Penilaian Laporan</span></li>
+        <li><a href="/jadwalseminar"><i class="fas fa-calendar-alt"></i> <span class="text">Jadwal Seminar</span></a></li>
+        <li><a href="/bimbingan"><i class="fas fa-chalkboard-teacher"></i> <span class="text">Bimbingan</span></a></li>
+        <li class="active"><a href="/informasipenting"><i class="fas fa-info-circle"></i> <span class="text">Informasi Penting</span></a></li>
+      </ul>
+    </nav>
+  </aside>
+
+  <div class="main-content">
+    <header>
+    <link rel="stylesheet" href="/upload/informasipenting.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+      <div class="topbar">
+        <button id="toggleSidebar"><i class="fas fa-bars"></i></button>
+        <h1>Sistem Informasi Kerja Praktik</h1>
+        <div class="icons">
+          <button class="icon-btn"><i class="fas fa-bell"></i></button>
+          <button class="icon-btn"><i class="fas fa-user-circle"></i></button>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <div class="bg-logo"></div>
+      <section class="info-section">
+        <h2>Informasi Penting</h2>
+
+        <div class="info-card-container" id="infoCardContainer">
+          <!-- Data informasi akan dimuat dari database -->
+        </div>
+
+        <button class="add-info-btn" onclick="window.location.href='/inputinformasi'">
+          <i class="fas fa-plus"></i> Tambah Informasi
+        </button>
+      </section>
+    </main>
+  </div>
+
+  <!-- Modal Edit Informasi -->
+  <div id="editModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Edit Informasi</h3>
+        <span class="close" onclick="closeEditModal()">&times;</span>
+      </div>
+      <div class="modal-body">
+        <form id="editForm" enctype="multipart/form-data">
+          <input type="hidden" id="editId" name="id">
+          
+          <div class="form-group">
+            <label for="editJudul">Judul Informasi</label>
+            <input type="text" id="editJudul" name="judul" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="editIsi">Isi Informasi</label>
+            <textarea id="editIsi" name="isi" rows="5" required></textarea>
+          </div>
+          
+          <div class="form-group">
+            <label for="editGambar">Gambar (Opsional)</label>
+            <input type="file" id="editGambar" name="gambar" accept="image/*">
+            <small>Biarkan kosong jika tidak ingin mengubah gambar</small>
+          </div>
+          
+          <div class="form-actions">
+            <button type="button" class="btn btn-secondary" onclick="closeEditModal()">Batal</button>
+            <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const toggleBtn = document.getElementById("toggleSidebar");
+  const sidebar = document.getElementById("sidebar");
+  const editModal = document.getElementById("editModal");
+  const editForm = document.getElementById("editForm");
+
+  toggleBtn.addEventListener("click", () => {
+    sidebar.classList.toggle("collapsed");
+  });
+
+  // Load informasi data
+  async function loadInformasi() {
+    try {
+      const response = await fetch('/api/informasi-penting');
+      const result = await response.json();
+      
+      if (result.success) {
+        displayInformasi(result.data);
+      } else {
+        console.error('Error loading informasi:', result.message);
+      }
+    } catch (error) {
+      console.error('Error fetching informasi:', error);
+    }
+  }
+
+  // Display informasi cards
+  function displayInformasi(informasiList) {
+    const container = document.getElementById('infoCardContainer');
+    container.innerHTML = '';
+
+    if (informasiList.length === 0) {
+      container.innerHTML = '<p style="text-align: center; color: #666;">Belum ada informasi penting</p>';
+      return;
+    }
+
+    informasiList.forEach(informasi => {
+      const card = document.createElement('div');
+      card.className = 'info-card';
+      
+      const imageSrc = informasi.gambar ? `/api/informasi-penting/image/${informasi.gambar.split('/').pop()}` : '/uploads/kp-jadwal.jpg';
+      
+      card.innerHTML = `
+        <img src="${imageSrc}" alt="Gambar Informasi" class="info-image" onerror="this.src='/uploads/kp-jadwal.jpg'" />
+        <h3>${informasi.judul}</h3>
+        <p>${informasi.isi}</p>
+        <div class="info-meta">
+          <small>Dibuat oleh: ${informasi.nama_dosen}</small>
+          <small>Tanggal: ${new Date(informasi.tanggal_dibuat).toLocaleDateString('id-ID')}</small>
+        </div>
+        <div class="card-actions">
+          <button class="edit-btn" onclick="openEditModal(${informasi.id})">
+            <i class="fas fa-pen"></i> Edit
+          </button>
+          <button class="delete-btn" onclick="deleteInformasi(${informasi.id})">
+            <i class="fas fa-trash"></i> Hapus
+          </button>
+        </div>
+      `;
+      
+      container.appendChild(card);
+    });
+  }
+
+  // Open edit modal
+  async function openEditModal(id) {
+    try {
+      const response = await fetch(`/api/informasi-penting/${id}`);
+      const result = await response.json();
+      
+      if (result.success) {
+        const info = result.data;
+        document.getElementById('editId').value = info.id;
+        document.getElementById('editJudul').value = info.judul;
+        document.getElementById('editIsi').value = info.isi;
+        editModal.style.display = 'block';
+      } else {
+        alert('Error loading informasi: ' + result.message);
+      }
+    } catch (error) {
+      console.error('Error loading informasi for edit:', error);
+      alert('Error loading informasi');
+    }
+  }
+
+  // Close edit modal
+  function closeEditModal() {
+    editModal.style.display = 'none';
+    editForm.reset();
+  }
+
+  // Handle edit form submission
+  editForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    const formData = new FormData(editForm);
+    const id = formData.get('id');
+    
+    try {
+      const response = await fetch(`/api/informasi-penting/${id}`, {
+        method: 'PUT',
+        body: formData
+      });
+      
+      const result = await response.json();
+      
+      if (result.success) {
+        alert('Informasi berhasil diupdate!');
+        closeEditModal();
+        loadInformasi();
+      } else {
+        alert('Error updating informasi: ' + result.message);
+      }
+    } catch (error) {
+      console.error('Error updating informasi:', error);
+      alert('Error updating informasi');
+    }
+  });
+
+  // Delete informasi
+  async function deleteInformasi(id) {
+    if (!confirm('Apakah Anda yakin ingin menghapus informasi ini?')) {
+      return;
+    }
+    
+    try {
+      const response = await fetch(`/api/informasi-penting/${id}`, {
+        method: 'DELETE'
+      });
+      
+      const result = await response.json();
+      
+      if (result.success) {
+        alert('Informasi berhasil dihapus!');
+        loadInformasi();
+      } else {
+        alert('Error deleting informasi: ' + result.message);
+      }
+    } catch (error) {
+      console.error('Error deleting informasi:', error);
+      alert('Error deleting informasi');
+    }
+  }
+
+  // Close modal when clicking outside
+  window.onclick = function(event) {
+    if (event.target === editModal) {
+      closeEditModal();
+    }
+  };
+
+  // Load data when page loads
+  document.addEventListener('DOMContentLoaded', () => {
+    loadInformasi();
+  });
+</script>

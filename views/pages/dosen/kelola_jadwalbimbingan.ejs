@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kelola Jadwal Bimbingan</title>
+  <link rel="stylesheet" href="/upload/kelola_jadwalbimbingan.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+<div class="container">
+  <aside id="sidebar" class="sidebar expanded">
+    <div class="logo">
+      <img src="/image/LogoUnand.png" alt="Logo" />
+      <span class="logo-text">SIUNAND</span>
+    </div>
+    <nav>
+      <ul>
+        <li><a href="/home"><i class="fas fa-house"></i> <span class="text">Home</span></a></li>
+        <li><i class="fas fa-check-circle"></i> <span class="text">Persetujuan KP</span></li>
+        <li><i class="fas fa-file-alt"></i> <span class="text">Penilaian Laporan</span></li>
+        <li><a href="/jadwalseminar"><i class="fas fa-calendar-alt"></i> <span class="text">Jadwal Seminar</span></a></li>
+        <li class="active"><a href="/bimbingan"><i class="fas fa-chalkboard-teacher"></i> <span class="text">Bimbingan</span></a></li>
+        <li><a href="/informasipenting"><i class="fas fa-info-circle"></i> <span class="text">Informasi Penting</span></a></li>
+      </ul>
+    </nav>
+  </aside>
+
+  <div class="main-content">
+    <header>
+      <div class="topbar">
+        <button id="toggleSidebar"><i class="fas fa-bars"></i></button>
+        <h1>Sistem Informasi Kerja Praktik</h1>
+        <div class="icons">
+          <button class="icon-btn"><i class="fas fa-bell"></i></button>
+          <button class="icon-btn"><i class="fas fa-user-circle"></i></button>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <div class="bg-logo"></div>
+      <h2>Bimbingan</h2>
+
+      <div class="cards-wrapper">
+        <h3 class="section-title">Kelola Jadwal Bimbingan</h3>
+        
+        <!-- Navigation buttons for connected pages -->
+        <div class="page-navigation">
+          <a href="/jadwalbimbingan" class="nav-btn">
+            <i class="fas fa-calendar"></i> Jadwal Bimbingan
+          </a>
+          <a href="/jb_waktudekat" class="nav-btn">
+            <i class="fas fa-clock"></i> Jadwal Waktu Dekat
+          </a>
+        </div>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Tanggal</th>
+              <th>Waktu</th>
+              <th>Kapasitas</th>
+              <th>Status</th>
+              <th>Aksi</th>
+            </tr>
+          </thead>
+          <tbody id="jadwalBody">
+            <!-- Data akan ditampilkan oleh JavaScript -->
+          </tbody>
+        </table>
+
+        <!-- Loading indicator -->
+        <div id="loading" style="text-align: center; padding: 20px; display: none;">
+          <i class="fas fa-spinner fa-spin"></i> Memuat data...
+        </div>
+        
+        <!-- Error message -->
+        <div id="errorMessage" style="color: red; text-align: center; padding: 10px; display: none;"></div>
+
+        <div class="modal-actions">
+          <a href="jadwalbimbingan" class="back-btn"><i class="fas fa-arrow-left"></i> Back</a>
+          <button class="add-btn"><i class="fas fa-plus-circle"></i> Tambah Bimbingan</button>
+        </div>
+
+        <!-- Modal Tambah -->
+        <div id="addModal" class="modal">
+          <div class="modal-content">
+            <h3>Tambah Jadwal Bimbingan KP</h3>
+            <form id="addForm">
+              <label for="tanggal">Pilih Tanggal</label>
+              <input type="date" id="tanggal" name="tanggal" required />
+
+              <label for="waktuMulai">Waktu Mulai</label>
+              <input type="time" id="waktuMulai" name="waktu_mulai" required />
+
+              <label for="waktuSelesai">Waktu Selesai</label>
+              <input type="time" id="waktuSelesai" name="waktu_selesai" required />
+
+              <label for="kapasitas">Kapasitas</label>
+              <input type="number" id="kapasitas" name="kapasitas" min="1" value="1" required />
+
+              <label for="keterangan">Keterangan</label>
+              <textarea id="keterangan" name="keterangan" rows="3" placeholder="Jenis bimbingan atau keterangan lainnya"></textarea>
+
+              <div class="modal-actions">
+                <button type="button" class="btn cancel-btn" onclick="closeModal('addModal')">Batal</button>
+                <button type="submit" class="btn submit-btn">Simpan</button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <!-- Modal Edit -->
+        <div id="editModal" class="modal">
+          <div class="modal-content">
+            <h3>Edit Jadwal Bimbingan</h3>
+            <form id="editForm">
+              <input type="hidden" id="editId" name="id" />
+
+              <label for="editTanggal">Pilih Tanggal</label>
+              <input type="date" id="editTanggal" name="tanggal" required />
+
+              <label for="editFromTime">Dari Waktu</label>
+              <input type="time" id="editFromTime" name="waktu_mulai" required />
+
+              <label for="editToTime">Hingga Waktu</label>
+              <input type="time" id="editToTime" name="waktu_selesai" required />
+
+              <label for="editKapasitas">Kapasitas</label>
+              <input type="number" id="editKapasitas" name="kapasitas" required />
+
+              <label for="editKeterangan">Keterangan</label>
+              <textarea id="editKeterangan" name="keterangan"></textarea>
+
+              <label for="editStatus">Status</label>
+              <select id="editStatus" name="status" required>
+                <option value="tersedia">Tersedia</option>
+                <option value="penuh">Penuh</option>
+                <option value="dibatalkan">Dibatalkan</option>
+              </select>
+
+              <div class="modal-actions">
+                <button type="button" class="btn cancel-btn" onclick="closeModal('editModal')">Batal</button>
+                <button type="submit" class="btn submit-btn">Update</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<script>
+  const toggleBtn = document.getElementById("toggleSidebar");
+  const sidebar = document.getElementById("sidebar");
+  const dosenId = 1; // ID dosen yang sedang login (untuk demo)
+
+  toggleBtn.addEventListener("click", () => {
+    sidebar.classList.toggle("collapsed");
+  });
+
+  // Load jadwal bimbingan saat halaman dimuat
+  document.addEventListener("DOMContentLoaded", () => {
+    loadJadwalBimbingan();
+  });
+
+  // Fungsi untuk memuat data jadwal bimbingan
+  async function loadJadwalBimbingan() {
+    showLoading(true);
+    try {
+      const response = await fetch(`/api/jadwal-bimbingan/dosen/${dosenId}`);
+      const result = await response.json();
+      
+      if (result.success) {
+        renderJadwalTable(result.data);
+      } else {
+        showError('Gagal memuat data jadwal bimbingan');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      showError('Terjadi kesalahan saat memuat data');
+    } finally {
+      showLoading(false);
+    }
+  }
+
+  // Fungsi untuk menampilkan loading
+  function showLoading(show) {
+    const loading = document.getElementById('loading');
+    const errorMessage = document.getElementById('errorMessage');
+    
+    if (show) {
+      loading.style.display = 'block';
+      errorMessage.style.display = 'none';
+    } else {
+      loading.style.display = 'none';
+    }
+  }
+
+  // Fungsi untuk menampilkan error
+  function showError(message) {
+    const errorMessage = document.getElementById('errorMessage');
+    errorMessage.textContent = message;
+    errorMessage.style.display = 'block';
+  }
+
+  // Fungsi untuk render tabel jadwal
+  function renderJadwalTable(data) {
+    const tbody = document.getElementById('jadwalBody');
+    tbody.innerHTML = '';
+
+    if (data.length === 0) {
+      tbody.innerHTML = `
+        <tr>
+          <td colspan="5" style="text-align: center; padding: 20px; color: #666;">
+            Tidak ada jadwal bimbingan
+          </td>
+        </tr>
+      `;
+      return;
+    }
+
+    data.forEach(jadwal => {
+      const row = document.createElement('tr');
+      row.setAttribute('data-id', jadwal.id);
+      
+      const statusClass = getStatusClass(jadwal.status);
+      const statusText = getStatusText(jadwal.status);
+      
+      row.innerHTML = `
+        <td>${jadwal.tanggal_formatted}</td>
+        <td>${jadwal.waktu_bimbingan}</td>
+        <td>${jadwal.jumlah_booking}/${jadwal.kapasitas}</td>
+        <td><span class="status-badge ${statusClass}">${statusText}</span></td>
+        <td>
+          <button class="edit-btn" onclick="editJadwal(${jadwal.id})">
+            <i class="fas fa-edit"></i> Edit
+          </button>
+          <button class="delete-btn" onclick="deleteJadwal(${jadwal.id})">
+            <i class="fas fa-trash"></i> Hapus
+          </button>
+        </td>
+      `;
+      
+      tbody.appendChild(row);
+    });
+  }
+
+  // Fungsi untuk mendapatkan class CSS status
+  function getStatusClass(status) {
+    switch (status) {
+      case 'tersedia': return 'status-available';
+      case 'penuh': return 'status-full';
+      case 'dibatalkan': return 'status-cancelled';
+      default: return 'status-available';
+    }
+  }
+
+  // Fungsi untuk mendapatkan teks status
+  function getStatusText(status) {
+    switch (status) {
+      case 'tersedia': return 'Tersedia';
+      case 'penuh': return 'Penuh';
+      case 'dibatalkan': return 'Dibatalkan';
+      default: return 'Tersedia';
+    }
+  }
+
+  // Fungsi untuk edit jadwal
+  async function editJadwal(id) {
+    try {
+      const response = await fetch(`/api/jadwal-bimbingan/${id}`);
+      const result = await response.json();
+      
+      if (result.success) {
+        const jadwal = result.data;
+        document.getElementById('editId').value = jadwal.id;
+        document.getElementById('editTanggal').value = jadwal.tanggal;
+        document.getElementById('editFromTime').value = jadwal.waktu_mulai;
+        document.getElementById('editToTime').value = jadwal.waktu_selesai;
+        document.getElementById('editKapasitas').value = jadwal.kapasitas;
+        document.getElementById('editKeterangan').value = jadwal.keterangan || '';
+        document.getElementById('editStatus').value = jadwal.status;
+        
+        openModal('editModal');
+      } else {
+        alert('Gagal mengambil data jadwal');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      alert('Terjadi kesalahan saat mengambil data jadwal');
+    }
+  }
+
+  // Fungsi untuk hapus jadwal
+  async function deleteJadwal(id) {
+    if (confirm('Yakin ingin menghapus jadwal bimbingan ini?')) {
+      try {
+        const response = await fetch(`/api/jadwal-bimbingan/${id}`, {
+          method: 'DELETE'
+        });
+        
+        const result = await response.json();
+        
+        if (result.success) {
+          alert('Jadwal bimbingan berhasil dihapus');
+          loadJadwalBimbingan(); // Reload data
+        } else {
+          alert('Gagal menghapus jadwal: ' + result.message);
+        }
+      } catch (error) {
+        console.error('Error:', error);
+        alert('Terjadi kesalahan saat menghapus jadwal');
+      }
+    }
+  }
+
+  function openModal(modalId) {
+    document.getElementById(modalId).style.display = "block";
+  }
+
+  function closeModal(modalId) {
+    document.getElementById(modalId).style.display = "none";
+  }
+
+  // Event listener untuk tombol tambah
+  document.querySelector('.add-btn').addEventListener('click', function () {
+    openModal('addModal');
+  });
+
+  // Event listener untuk form tambah
+  document.getElementById('addForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    
+    const formData = new FormData(this);
+    const data = {
+      dosen_id: dosenId,
+      tanggal: formData.get('tanggal'),
+      waktu_mulai: formData.get('waktuMulai'),
+      waktu_selesai: formData.get('waktuSelesai'),
+      kapasitas: formData.get('kapasitas'),
+      keterangan: formData.get('keterangan')
+    };
+
+    try {
+      const response = await fetch('/api/jadwal-bimbingan', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      });
+      
+      const result = await response.json();
+      
+      if (result.success) {
+        alert('Jadwal bimbingan berhasil ditambahkan');
+        closeModal('addModal');
+        this.reset();
+        loadJadwalBimbingan(); // Reload data
+      } else {
+        alert('Gagal menambahkan jadwal: ' + result.message);
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      alert('Terjadi kesalahan saat menambahkan jadwal');
+    }
+  });
+
+  // Event listener untuk form edit
+  document.getElementById('editForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    
+    const formData = new FormData(this);
+    const id = formData.get('id');
+    const data = {
+      tanggal: formData.get('tanggal'),
+      waktu_mulai: formData.get('waktu_mulai'),
+      waktu_selesai: formData.get('waktu_selesai'),
+      kapasitas: formData.get('kapasitas'),
+      keterangan: formData.get('keterangan'),
+      status: formData.get('status')
+    };
+
+    try {
+      const response = await fetch(`/api/jadwal-bimbingan/${id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      });
+      
+      const result = await response.json();
+      
+      if (result.success) {
+        alert('Jadwal bimbingan berhasil diupdate');
+        closeModal('editModal');
+        loadJadwalBimbingan(); // Reload data
+      } else {
+        alert('Gagal mengupdate jadwal: ' + result.message);
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      alert('Terjadi kesalahan saat mengupdate jadwal');
+    }
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,58 @@
+.main-content {
+  padding: 20px;
+  background-color: #ffffff;
+  flex-grow: 1;
+  padding-top: 0px;
+  margin: 10px;
+ 
+}
+
+h2 {
+  font-size: 30px;
+    margin-top: 0px;
+    margin-bottom: 25px;
+    color: #d26500;
+}
+
+.card {
+  background: #fdebd0;
+  border-radius: 10px;
+  padding: 15px 20px;
+  margin-bottom: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid #f1ab6d;
+}
+
+.card .info 
+strong {
+  margin: 5px 0;
+  font-size: 20px;
+  color: #000000;
+}
+p {
+  margin: 5px 0;
+  font-size: 20px;
+  color: #555;
+}
+.doc-link {
+  font-size: 15px;
+  color: #d26500;
+  text-decoration: none;
+}
+
+.btn {
+  background: #d26500;
+  color: white;
+  padding: 8px 14px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 18px;
+  transition: 0.2s;
+}
+
+.btn:hover {
+  background: #a84300;
+}

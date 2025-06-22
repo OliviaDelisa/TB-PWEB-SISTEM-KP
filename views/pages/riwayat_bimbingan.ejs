@@ -1,0 +1,60 @@
+<%- include('../partials/header') %>
+<link rel="stylesheet" href="/upload/riwayat_bimbingan.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+<div class="content-box">
+  <h2>Bimbingan KP</h2>
+
+  <div class="riwayat-section">
+    <div class="riwayat-header">
+      <h3>Riwayat Bimbingan</h3>
+      <a href="/bimbingan" class="btn-back">&larr; Back</a>
+    </div>
+
+    <div class="riwayat-box">
+      <table class="tabel-riwayat">
+        <thead>
+          <tr>
+            <th>Nama Mahasiswa</th>
+            <th>Tanggal</th>
+            <th>Bimbingan</th>
+            <th>Dosen Pembimbing</th>
+            <th>Aksi</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Rizky Ananda</td>
+            <td>01/06/2025 09.00</td>
+            <td>Bimbingan 1</td>
+            <td>Husnil Kamil, M.T</td>
+            <td><button class="lihat-btn">Lihat Catatan</button></td>
+          </tr>
+          <tr>
+            <td>Salsa Melati</td>
+            <td>03/06/2025 13.30</td>
+            <td>Bimbingan 2</td>
+            <td>Husnil Kamil, M.T</td>
+            <td><button class="lihat-btn">Lihat Catatan</button></td>
+          </tr>
+          <tr>
+            <td>Fajar Pratama</td>
+            <td>06/06/2025 08.00</td>
+            <td>Bimbingan 3</td>
+            <td>Husnil Kamil, M.T</td>
+            <td><button class="lihat-btn">Lihat Catatan</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.getElementById('toggleSidebar').addEventListener('click', () => {
+    document.getElementById('sidebar').classList.toggle('collapsed');
+    document.querySelector('.content-box').classList.toggle('full');
+  });
+</script>
+
+<%- include('../partials/footer') %>

@@ -1,0 +1,65 @@
+<h2 class="title">Daftar Perusahaan</h2>
+
+<div class="top-bar">
+
+  <!-- Form pencarian -->
+  <form action="/perusahaan" method="GET" class="search-container">
+    <input
+      type="text"
+      name="search"
+      value="<%= typeof search !== 'undefined' ? search : '' %>"
+      placeholder="Cari"
+      class="search-input"
+    />
+    <button type="submit" class="search-button">
+      <i class="fas fa-search"></i>
+    </button>
+  </form>
+</div>
+
+<table class="data-table">
+  <thead>
+    <tr>
+      <th>No</th>
+      <th>Nama</th>
+      <th>Alamat</th>
+      <th>Email</th>
+      <th>Kontak</th>
+      <th>Kategori</th>
+      <th>Kuota</th>
+      <th>Aksi</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% perusahaanList.forEach((p, i) => { %>
+      <tr>
+        <td><%= i + 1 %></td>
+        <td><%= p.nama_perusahaan %></td>
+        <td><%= p.alamat_perusahaan %></td>
+        <td><%= p.email_perusahaan %></td>
+        <td><%= p.kontak %></td>
+        <td><%= p.kategori %></td>
+        <td><%= p.kuota %> Mahasiswa</td>
+        <td>
+          <a href="/perusahaan/edit/<%= p.id %>" class="btn-edit">
+            <i class="fas fa-edit"></i>
+          </a>
+          <form action="/perusahaan/hapus/<%= p.id %>" method="POST" style="display:inline;">
+            <button type="submit" class="btn-delete" onclick="return confirm('Yakin ingin hapus?')">
+              <i class="fas fa-trash"></i>
+            </button>
+          </form>
+        </td>
+      </tr>
+    <% }) %>
+  </tbody>
+</table>
+
+<div class="btn-container">
+  <a href="/perusahaan/download-pdf" class="btn-download" target="_blank">
+    <i class="fas fa-file-pdf"></i> Download PDF
+  </a>
+  <a href="/perusahaan/tambah" class="btn-tambah">
+    <i class="fas fa-plus"></i> Tambah
+  </a>
+</div>

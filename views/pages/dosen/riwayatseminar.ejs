@@ -1,0 +1,508 @@
+<div class="container">
+  <aside id="sidebar" class="sidebar expanded">
+    <div class="logo">
+      <img src="/image/LogoUnand.png" alt="Logo" />
+      <span class="logo-text">SIUNAND</span>
+    </div>
+    <nav>
+      <ul>
+        <li><a href="/home"><i class="fas fa-house"></i> <span class="text">Home</span></a></li>
+        <li><i class="fas fa-check-circle"></i> <span class="text">Persetujuan KP</span></li>
+        <li><i class="fas fa-file-alt"></i> <span class="text">Penilaian Laporan</span></li>
+        <li class="active"><a href="/jadwalseminar"><i class="fas fa-calendar-alt"></i> <span class="text">Jadwal Seminar</span></a></li>
+        <li><a href="/bimbingan"><i class="fas fa-chalkboard-teacher"></i> <span class="text">Bimbingan</span></a></li>
+        <li><a href="/informasipenting"><i class="fas fa-info-circle"></i> <span class="text">Informasi Penting</span></a></li>
+      </ul>
+    </nav>
+  </aside>
+
+  <div class="main-content">
+    <header>
+    <link rel="stylesheet" href="/upload/riwayatseminar.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+      <div class="topbar">
+        <button id="toggleSidebar"><i class="fas fa-bars"></i></button>
+        <h1>Sistem Informasi Kerja Praktik</h1>
+        <div class="icons">
+          <button class="icon-btn"><i class="fas fa-bell"></i></button>
+          <button class="icon-btn"><i class="fas fa-user-circle"></i></button>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <div class="bg-logo"></div>
+      <h2>Riwayat Seminar</h2>
+
+      <div class="seminar-card-container">
+        <h3 class="section-title">Riwayat Seminar Mahasiswa</h3>
+
+        <div style="display: flex; justify-content: flex-end; margin-bottom: 20px;">
+          <div class="dropdown">
+            <button class="dropbtn">Urutkan <i class="fas fa-chevron-down"></i></button>
+            <div class="dropdown-content">
+              <a href="#" onclick="sortRiwayat('name', 'asc')">Nama A - Z</a>
+              <a href="#" onclick="sortRiwayat('name', 'desc')">Nama Z - A</a>
+              <a href="#" onclick="sortRiwayat('date', 'desc')">Tanggal Terbaru</a>
+              <a href="#" onclick="sortRiwayat('date', 'asc')">Tanggal Terlama</a>
+              <a href="#" onclick="sortRiwayat('score', 'desc')">Nilai Tertinggi</a>
+              <a href="#" onclick="sortRiwayat('score', 'asc')">Nilai Terendah</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="riwayat-section">
+          <div class="riwayat-box" id="riwayatList">
+            <!-- Data riwayat seminar akan dimuat dari database -->
+          </div>
+        </div>
+
+        <a href="jadwalseminar" class="riwayat-link"><i class="fas fa-arrow-left"></i> Back</a>
+      </div>
+
+      <!-- Modal Input Nilai -->
+      <div id="inputNilaiModal" class="modal">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h3>Input Nilai Seminar</h3>
+            <div class="modal-controls">
+              <span class="drag-hint">Drag untuk pindah • Ctrl+R untuk reset</span>
+            </div>
+          </div>
+          <div class="modal-body">
+            <form id="inputNilaiForm">
+              <input type="hidden" id="seminar_id" name="seminar_id" />
+              <input type="hidden" id="dosen_id" name="dosen_id" value="1" /> <!-- Default dosen ID, bisa diubah sesuai login -->
+              
+              <div class="form-group">
+                <label for="mahasiswa_info">Mahasiswa</label>
+                <div id="mahasiswa_info" class="info-display"></div>
+              </div>
+              
+              <div class="form-group">
+                <label for="judul_seminar_info">Judul Seminar</label>
+                <div id="judul_seminar_info" class="info-display"></div>
+              </div>
+              
+              <div class="form-group">
+                <label for="tanggal_seminar_info">Tanggal Seminar</label>
+                <div id="tanggal_seminar_info" class="info-display"></div>
+              </div>
+              
+              <div class="form-group">
+                <label for="nilai">Nilai (0-100)</label>
+                <input type="number" id="nilai" name="nilai" min="0" max="100" step="0.01" placeholder="Masukkan Nilai (contoh: 85.5)" required />
+                <small style="color: #666;">Masukkan nilai antara 0-100 dengan maksimal 2 angka desimal</small>
+              </div>
+              
+              <div class="form-group">
+                <label for="keterangan">Komentar/Keterangan</label>
+                <textarea id="keterangan" name="keterangan" rows="4" placeholder="Masukkan komentar atau keterangan penilaian (opsional)"></textarea>
+              </div>
+              
+              <div class="form-actions">
+                <button type="button" class="btn close">Tutup</button>
+                <button type="submit" class="btn simpan">Simpan Nilai</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal Detail Nilai -->
+      <div id="detailNilaiModal" class="modal">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h3>Detail Nilai Seminar</h3>
+            <div class="modal-controls">
+              <span class="drag-hint">Drag untuk pindah • Ctrl+R untuk reset</span>
+            </div>
+          </div>
+          <div class="modal-body">
+            <div id="detailNilaiContent">
+              <!-- Detail nilai akan dimuat dari database -->
+            </div>
+            <div class="form-actions">
+              <button type="button" class="btn close">Tutup</button>
+              <button type="button" class="btn edit" onclick="editNilai()">Edit Nilai</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <script>
+      const toggleBtn = document.getElementById("toggleSidebar");
+      const sidebar = document.getElementById("sidebar");
+      const inputNilaiModal = document.getElementById("inputNilaiModal");
+      const detailNilaiModal = document.getElementById("detailNilaiModal");
+      const inputNilaiForm = document.getElementById("inputNilaiForm");
+      const closeBtns = document.querySelectorAll('.close');
+      
+      // Global variables for sorting
+      let currentSort = 'date';
+      let currentOrder = 'desc';
+      let currentRiwayatData = []; // Store current riwayat data
+
+      // Draggable modal functionality
+      function makeModalDraggable(modal) {
+        const modalContent = modal.querySelector('.modal-content');
+        const modalHeader = modal.querySelector('.modal-header');
+        let isDragging = false;
+        let currentX;
+        let currentY;
+        let initialX;
+        let initialY;
+        let xOffset = 0;
+        let yOffset = 0;
+
+        // Add draggable class for CSS positioning
+        modalContent.classList.add('draggable');
+
+        modalHeader.addEventListener('mousedown', dragStart);
+        document.addEventListener('mousemove', drag);
+        document.addEventListener('mouseup', dragEnd);
+
+        function dragStart(e) {
+          initialX = e.clientX - xOffset;
+          initialY = e.clientY - yOffset;
+
+          if (e.target === modalHeader) {
+            isDragging = true;
+          }
+        }
+
+        function drag(e) {
+          if (isDragging) {
+            e.preventDefault();
+            
+            currentX = e.clientX - initialX;
+            currentY = e.clientY - initialY;
+
+            xOffset = currentX;
+            yOffset = currentY;
+
+            setTranslate(currentX, currentY, modalContent);
+          }
+        }
+
+        function setTranslate(xPos, yPos, el) {
+          el.style.transform = `translate(calc(-50% + ${xPos}px), calc(-50% + ${yPos}px))`;
+        }
+
+        function dragEnd(e) {
+          initialX = currentX;
+          initialY = currentY;
+          isDragging = false;
+        }
+
+        // Add reset function to modal
+        modal.resetPosition = function() {
+          xOffset = 0;
+          yOffset = 0;
+          modalContent.style.transform = 'translate(-50%, -50%)';
+        };
+      }
+
+      // Initialize draggable functionality for modals
+      makeModalDraggable(inputNilaiModal);
+      makeModalDraggable(detailNilaiModal);
+
+      // Toggle sidebar
+      toggleBtn.addEventListener("click", () => {
+        sidebar.classList.toggle("collapsed");
+      });
+
+      // Modal functions
+      function openInputNilaiModal(seminarId, mahasiswaName, nim, judulSeminar, tanggalSeminar) {
+        console.log('=== openInputNilaiModal called ===');
+        console.log('Called from:', new Error().stack);
+        console.log('Parameters:', { seminarId, mahasiswaName, nim, judulSeminar, tanggalSeminar });
+        
+        document.getElementById('seminar_id').value = seminarId;
+        document.getElementById('mahasiswa_info').textContent = `${mahasiswaName} (${nim})`;
+        document.getElementById('judul_seminar_info').textContent = judulSeminar;
+        document.getElementById('tanggal_seminar_info').textContent = new Date(tanggalSeminar).toLocaleString('id-ID');
+        inputNilaiModal.style.display = "flex";
+        
+        // Reset modal position when opening
+        inputNilaiModal.resetPosition();
+      }
+
+      function openDetailNilaiModal(seminarId) {
+        console.log('=== openDetailNilaiModal called ===');
+        console.log('Called from:', new Error().stack);
+        console.log('Parameters:', { seminarId });
+        
+        loadDetailNilai(seminarId);
+        detailNilaiModal.style.display = "flex";
+        
+        // Reset modal position when opening
+        detailNilaiModal.resetPosition();
+      }
+
+      function closeModal() {
+        inputNilaiModal.style.display = "none";
+        detailNilaiModal.style.display = "none";
+        inputNilaiForm.reset();
+        
+        // Reset modal positions when closing
+        inputNilaiModal.resetPosition();
+        detailNilaiModal.resetPosition();
+      }
+
+      function editNilai() {
+        // Get the current seminar data and open input modal for editing
+        const currentSeminar = window.currentSeminarData;
+        if (currentSeminar) {
+          closeModal();
+          openInputNilaiModal(
+            currentSeminar.id, 
+            currentSeminar.nama_mahasiswa, 
+            currentSeminar.nim, 
+            currentSeminar.judul_seminar,
+            currentSeminar.tanggal_seminar
+          );
+          
+          // Pre-fill the form with existing values if available
+          if (currentSeminar.nilai) {
+            document.getElementById('nilai').value = currentSeminar.nilai;
+          }
+          if (currentSeminar.keterangan) {
+            document.getElementById('keterangan').value = currentSeminar.keterangan;
+          }
+        }
+      }
+
+      closeBtns.forEach(btn => {
+        btn.addEventListener('click', closeModal);
+      });
+
+      window.onclick = function(event) {
+        if (event.target == inputNilaiModal || event.target == detailNilaiModal) {
+          closeModal();
+        }
+      };
+
+      // Add keyboard shortcuts for modal control
+      document.addEventListener('keydown', function(event) {
+        // ESC key to close modal
+        if (event.key === 'Escape') {
+          if (inputNilaiModal.style.display === 'flex' || detailNilaiModal.style.display === 'flex') {
+            closeModal();
+          }
+        }
+        
+        // Ctrl + R to reset modal position
+        if (event.ctrlKey && event.key === 'r') {
+          event.preventDefault();
+          if (inputNilaiModal.style.display === 'flex') {
+            inputNilaiModal.resetPosition();
+          }
+          if (detailNilaiModal.style.display === 'flex') {
+            detailNilaiModal.resetPosition();
+          }
+        }
+      });
+
+      // Load riwayat seminar data
+      async function loadRiwayatSeminar() {
+        try {
+          console.log('Loading riwayat seminar...');
+          const response = await fetch(`/api/seminar/riwayat?sort=${currentSort}&order=${currentOrder}`);
+          
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+          
+          const riwayat = await response.json();
+          console.log('Riwayat seminar data:', riwayat);
+          
+          // Store current data globally
+          currentRiwayatData = riwayat;
+          
+          const riwayatList = document.getElementById('riwayatList');
+          riwayatList.innerHTML = '';
+
+          if (riwayat.length === 0) {
+            riwayatList.innerHTML = '<p style="text-align: center; color: #666;">Belum ada riwayat seminar</p>';
+            return;
+          }
+
+          riwayat.forEach(seminar => {
+            const riwayatItem = document.createElement('div');
+            riwayatItem.className = 'riwayat-item';
+            
+            const formattedDate = new Date(seminar.tanggal_seminar).toLocaleString('id-ID', {
+              weekday: 'long',
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric',
+              hour: '2-digit',
+              minute: '2-digit'
+            });
+
+            const hasNilai = seminar.nilai !== null && seminar.nilai !== undefined;
+            const nilaiDisplay = hasNilai ? `Nilai: ${seminar.nilai}` : 'Belum dinilai';
+            const buttonText = hasNilai ? 'Lihat Nilai' : 'Input Nilai';
+            const buttonClass = hasNilai ? 'lihat-btn' : 'nilai-btn';
+
+            riwayatItem.innerHTML = `
+              <div class="icon">
+                <i class="fas fa-user"></i>
+              </div>
+              <div class="info">
+                <div class="nama">${seminar.nama_mahasiswa} - ${seminar.nim}</div>
+                <div class="judul-seminar">${seminar.judul_seminar}</div>
+                <div class="tanggal">${formattedDate}</div>
+                <div class="lokasi">${seminar.lokasi || 'Lokasi tidak ditentukan'}</div>
+                <div class="nilai-info">${nilaiDisplay}</div>
+              </div>
+              <div class="action">
+                <button type="button" class="${buttonClass}" data-seminar-id="${seminar.id}" data-action="${hasNilai ? 'view' : 'input'}">${buttonText}</button>
+              </div>
+            `;
+            
+            // Add direct event listener to the button
+            const button = riwayatItem.querySelector('button');
+            button.addEventListener('click', function(e) {
+              // Prevent any default behavior
+              e.preventDefault();
+              e.stopPropagation();
+              e.stopImmediatePropagation();
+              
+              // Only proceed if this is actually a button click
+              if (e.target.tagName !== 'BUTTON') {
+                console.log('Click not on button, ignoring');
+                return;
+              }
+              
+              const seminarId = this.getAttribute('data-seminar-id');
+              const action = this.getAttribute('data-action');
+              
+              console.log('Direct button click:', action, 'for seminar ID:', seminarId);
+              
+              if (action === 'view') {
+                openDetailNilaiModal(seminarId);
+              } else if (action === 'input') {
+                openInputNilaiModal(
+                  seminarId, 
+                  seminar.nama_mahasiswa, 
+                  seminar.nim, 
+                  seminar.judul_seminar, 
+                  seminar.tanggal_seminar
+                );
+              }
+            });
+            
+            riwayatList.appendChild(riwayatItem);
+          });
+        } catch (error) {
+          console.error('Error loading riwayat seminar:', error);
+          document.getElementById('riwayatList').innerHTML = 
+            '<p style="text-align: center; color: red;">Error loading data riwayat seminar: ' + error.message + '</p>';
+        }
+      }
+
+      // Load detail nilai
+      async function loadDetailNilai(seminarId) {
+        try {
+          console.log('Loading detail nilai for seminar ID:', seminarId);
+          
+          // First get the seminar data
+          const seminarResponse = await fetch(`/api/seminar/riwayat`);
+          const seminarData = await seminarResponse.json();
+          const currentSeminar = seminarData.find(s => s.id == seminarId);
+          
+          if (currentSeminar) {
+            window.currentSeminarData = currentSeminar;
+          }
+          
+          const response = await fetch(`/api/seminar/nilai/${seminarId}`);
+          
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+          
+          const nilaiList = await response.json();
+          console.log('Nilai data:', nilaiList);
+          
+          const detailContent = document.getElementById('detailNilaiContent');
+          
+          if (nilaiList.length === 0) {
+            detailContent.innerHTML = '<p>Belum ada nilai untuk seminar ini</p>';
+            return;
+          }
+
+          let html = '';
+          nilaiList.forEach(nilai => {
+            const tanggalPenilaian = new Date(nilai.tanggal_penilaian).toLocaleString('id-ID');
+            html += `
+              <div class="nilai-detail">
+                <h4>Nilai dari: ${nilai.nama_dosen}</h4>
+                <p><strong>Nilai:</strong> ${nilai.nilai}</p>
+                <p><strong>Komentar:</strong> ${nilai.keterangan || '-'}</p>
+                <p><strong>Tanggal Penilaian:</strong> ${tanggalPenilaian}</p>
+              </div>
+            `;
+          });
+          
+          detailContent.innerHTML = html;
+        } catch (error) {
+          console.error('Error loading detail nilai:', error);
+          document.getElementById('detailNilaiContent').innerHTML = 
+            '<p style="color: red;">Error loading detail nilai: ' + error.message + '</p>';
+        }
+      }
+
+      // Submit nilai
+      inputNilaiForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        const formData = new FormData(inputNilaiForm);
+        const data = {
+          seminar_id: formData.get('seminar_id'),
+          dosen_id: formData.get('dosen_id'),
+          nilai: formData.get('nilai'),
+          keterangan: formData.get('keterangan')
+        };
+
+        try {
+          const response = await fetch('/api/seminar/nilai', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+          });
+
+          const result = await response.json();
+          
+          if (response.ok) {
+            alert('Nilai seminar berhasil disimpan!');
+            closeModal();
+            loadRiwayatSeminar();
+          } else {
+            alert('Error: ' + result.error);
+          }
+        } catch (error) {
+          console.error('Error submitting nilai:', error);
+          alert('Terjadi kesalahan saat menyimpan nilai');
+        }
+      });
+
+      // Sort riwayat
+      function sortRiwayat(type, order) {
+        currentSort = type;
+        currentOrder = order;
+        console.log('Sorting riwayat by:', type, order);
+        loadRiwayatSeminar(); // Reload data with new sorting
+      }
+
+      // Load data when page loads
+      document.addEventListener('DOMContentLoaded', () => {
+        loadRiwayatSeminar();
+      });
+    </script>
+  </div>
+</div>

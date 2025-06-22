@@ -1,0 +1,51 @@
+<%- include('../partials/header') %>
+<link rel="stylesheet" href="/upload/unggah_dokumen.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+<!-- Main Content -->
+<div class="main-content">
+  <h1>Pelaksanaan KP</h1>
+  <div class="form-container">
+    <h2>Upload Dokumen KP</h2>
+
+    <!-- ALERT BERHASIL -->
+    <% if (success) { %>
+      <div class="alert-success" style="background-color: #d4edda; padding: 10px; border-radius: 5px; margin-bottom: 15px; color: #155724; font-weight: 600;">
+        ✅ File berhasil dikirim.
+      </div>
+    <% } %>
+
+    <!-- FORM UPLOAD -->
+    <form action="/unggah_dokumen" method="post" enctype="multipart/form-data">
+      <label>Upload Surat Keterangan/Sertifikat Telah Menyelesaikan KP
+        <input type="file" name="surat_keterangan">
+      </label>
+
+      <label>Upload Tanda Terima Telah Menyerahkan Laporan KP Ke Perusahaan
+        <input type="file" name="tanda_terima">
+      </label>
+
+      <label>Upload Nilai KP dari Pembimbing Lapangan
+        <input type="file" name="nilai_pembimbing">
+      </label>
+
+      <label>Upload Laporan Kegiatan Harian KP
+        <input type="file" name="laporan_harian">
+      </label>
+
+      <div class="buttons">
+        <a href="/pelaksanaan_kp" class="back-button">Back</a>
+        <button type="submit" class="submit-button">Kirim</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+  function toggleSidebar() {
+    const sidebar = document.getElementById("sidebar");
+    sidebar.classList.toggle("closed");
+  }
+</script>
+
+<%- include('../partials/footer') %>

@@ -1,0 +1,470 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Inter', sans-serif;
+}
+
+main {
+  position: relative;
+  z-index: 1;
+}
+
+.bg-logo {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('/image/LogoUnand.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 400px;
+  opacity: 0.1;
+  z-index: -1;
+  pointer-events: none;
+}
+
+
+body {
+  display: flex;
+  height: 100vh;
+  background-color: #f9f9f9;
+  font-size: 16px;
+}
+
+.container {
+  display: flex;
+  width: 100%;
+}
+
+/* Sidebar */
+.sidebar {
+  width: 320px;
+  background: linear-gradient(to bottom, #e88d2a, #d56b1b);
+  color: white;
+  padding: 20px;
+  transition: transform 0.3s ease;
+  font-size: 17px;
+}
+
+.sidebar.hide {
+  transform: translateX(-100%);
+}
+
+.sidebar .logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 22px;
+  font-weight: bold;
+  margin-bottom: 30px;
+}
+
+.sidebar .logo img {
+  width: 40px;
+  height: 40px;
+}
+
+.sidebar nav ul {
+  list-style: none;
+}
+
+.sidebar nav ul li {
+  padding: 14px 12px;
+  cursor: pointer;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  transition: background 0.3s;
+  font-size: 17px;
+}
+
+.sidebar nav ul li:hover,
+.sidebar nav ul .active {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.sidebar nav ul li i {
+  width: 22px;
+  font-size: 18px;
+}
+
+
+/* ketika sidebar dikompres */
+.sidebar.collapsed {
+  width: 80px;
+}
+
+.sidebar.collapsed .logo-text,
+.sidebar.collapsed nav ul li .text {
+  display: none;
+}
+
+/* opsional: sentralkan ikon saat sidebar collapse */
+.sidebar nav ul li {
+  transition: padding 0.3s;
+}
+.sidebar.collapsed nav ul li {
+  padding: 14px 10px;
+  justify-content: center;
+}
+
+/* Menghilangkan garis bawah pada link di sidebar */
+.sidebar nav ul li a {
+  text-decoration: none !important;
+  color: inherit;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+}
+
+.sidebar nav ul li a:hover {
+  text-decoration: none !important;
+}
+
+.sidebar nav ul li a:visited {
+  text-decoration: none !important;
+}
+
+.sidebar nav ul li a:focus {
+  text-decoration: none !important;
+}
+
+/* Memastikan tidak ada garis bawah pada semua elemen sidebar */
+.sidebar * {
+  text-decoration: none;
+}
+
+.sidebar nav ul li {
+  text-decoration: none;
+}
+
+/* Reset CSS untuk sidebar - memastikan tidak ada garis bawah */
+.sidebar,
+.sidebar *,
+.sidebar nav,
+.sidebar nav ul,
+.sidebar nav ul li,
+.sidebar nav ul li a,
+.sidebar nav ul li span,
+.sidebar nav ul li i {
+  text-decoration: none !important;
+  border-bottom: none !important;
+  border: none !important;
+}
+
+.sidebar nav ul li a:hover,
+.sidebar nav ul li a:visited,
+.sidebar nav ul li a:focus,
+.sidebar nav ul li a:active {
+  text-decoration: none !important;
+  border-bottom: none !important;
+}
+
+/* Main Content */
+.main-content {
+  flex-grow: 1;
+  background-color: #fff;
+  font-size: 17px;
+}
+
+header .topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #e88d2a;
+  color: white;
+  padding: 20px 25px;
+  font-size: 18px;
+}
+
+header .topbar button {
+  background: none;
+  border: none;
+  font-size: 22px;
+  color: white;
+  cursor: pointer;
+}
+
+header .topbar h1 {
+  font-size: 20px;
+  flex-grow: 1;
+  margin-left: 25px;
+}
+
+header .topbar .icons {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.icon-btn {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 22px;
+  cursor: pointer;
+}
+
+/* Content */
+main {
+  padding: 35px;
+  background-color: #f9f9f9;
+  min-height: calc(100vh - 70px);
+}
+
+main h2 {
+  color: #d56b1b;
+  margin-bottom: 25px;
+  font-size: 24px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  background-color: white;
+}
+
+table thead {
+  background-color: #e88d2a;
+  color: white;
+}
+
+table th, table td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+table th {
+  background-color: #e88d2a;
+  color: white;
+  font-weight: bold;
+}
+
+table td button {
+  padding: 8px 15px;
+  background-color: #e88d2a;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+table td button:hover {
+  background-color: #d56b1b;
+}
+
+.add-btn {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #e88d2a;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  justify-content: flex-end;
+}
+
+.add-btn:hover {
+  background-color: #d56b1b;
+}
+
+.cards-wrapper {
+  background-color: #feefd9;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  border: 1px solid #ddd;    /* Border tipis */
+  align-items: center;
+}
+
+.cards-wrapper h3 {
+  color: #e88d2a;
+  margin-bottom: 20px;
+  font-size: 22px;
+  border-bottom: 2px solid #e88d2a;
+  padding-bottom: 10px;
+}
+
+.edit-btn{
+  background-color: #e88d2a;
+  color: white;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  align-items: center;
+  margin-left: 5px;
+
+}
+
+.add-btn{
+  background-color: #e88d2a;
+  color: white;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  align-items: center;
+  margin-right: 12px;
+}
+
+.delete-btn{
+  background-color: #e82a2a;
+  color: white;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  align-items: center;
+  margin-left: 5px;
+}
+
+.back-btn {
+  text-decoration: none;
+  color: #727272;
+  font-weight: 600;
+  font-size: 15px;
+  
+  margin-left: 5px;
+}
+
+
+.back-btn:hover {
+  text-decoration: underline;
+  color: #3b3b3b;
+  font-weight: 600;
+  font-size: 15px;
+}
+
+.back-btn i {
+  margin-right: 6px;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.modal-actions .btn {
+  font-size: 14px;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+/* Modal Styles */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed;
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.modal-content {
+  background-color: #fff;
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 30%;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px rgba(219, 204, 204, 0.1);
+}
+
+.modal-content h3{
+  font-size: 17px;
+  font-weight: 500;
+  color: #383838;
+}  
+.modal-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px;
+}
+
+.btn {
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.cancel-btn {
+  background-color: #727272;
+  color: white;
+}
+
+.submit-btn {
+  background-color: #2a66e8;
+  color: white;
+}
+
+.cancel-btn:hover, .submit-btn:hover {
+  background-color: #d56b1b;
+}
+
+/* Page Navigation Styles */
+.page-navigation {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 25px;
+  flex-wrap: wrap;
+}
+
+.nav-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 20px;
+  background: linear-gradient(135deg, #e88d2a, #d56b1b);
+  color: white;
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 14px;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(232, 141, 42, 0.3);
+  border: none;
+  cursor: pointer;
+}
+
+.nav-btn:hover {
+  background: linear-gradient(135deg, #d56b1b, #b85a1a);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(232, 141, 42, 0.4);
+  color: white;
+  text-decoration: none;
+}
+
+.nav-btn i {
+  font-size: 16px;
+}
+
+/* Status Badge Styles */
+.status-badge {
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.status-available {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.status-full {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+.status-cancelled {
+  background-color: #d1ecf1;
+  color: #0c5460;
+}

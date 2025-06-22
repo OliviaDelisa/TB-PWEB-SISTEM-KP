@@ -1,0 +1,86 @@
+<%- include('../partials/header') %>
+<link rel="stylesheet" href="/upload/jadwal_pengajuanBimbingan.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+<div class="content-area">
+  <!-- Title dan Back Button -->
+  <div class="title-row">
+    <h1 class="title">Bimbingan KP</h1>
+    <a href="/pengajuan_bimbingan" class="btn-back">&larr; Kembali</a>
+  </div>
+
+  <div class="card">
+    <h2>Ajukan Jadwal Bimbingan</h2>
+
+    <!-- ALERT JIKA BERHASIL -->
+    <% if (pesan === 'ajukan') { %>
+      <div style="background-color: #d4edda; padding: 10px; margin-bottom: 15px; color: #155724; border-radius: 5px;">
+        ✅ Jadwal berhasil diajukan.
+      </div>
+    <% } else if (pesan === 'batal') { %>
+      <div style="background-color: #f8d7da; padding: 10px; margin-bottom: 15px; color: #721c24; border-radius: 5px;">
+        ❌ Jadwal berhasil dibatalkan.
+      </div>
+    <% } %>
+
+    <!-- FORM -->
+    <form action="/jadwal_pengajuanBimbingan/ajukan" method="POST">
+      <div class="form-group">
+        <div class="form-input">
+          <label for="tanggal">Pilih Tanggal</label>
+          <input type="date" id="tanggal" name="tanggal" required>
+        </div>
+
+        <div class="form-input">
+          <label for="waktu">Pilih Waktu</label>
+          <input type="time" id="waktu" name="waktu" required>
+        </div>
+
+        <button class="btn-ajukan" type="submit">Ajukan Jadwal Bimbingan</button>
+      </div>
+    </form>
+
+    <!-- DATA JADWAL YANG DIAJUKAN -->
+    <div class="jadwal-diajukan">
+      <h3>Jadwal Bimbingan yang Diajukan</h3>
+
+      <% if (jadwal && jadwal.length > 0) { %>
+        <% jadwal.forEach(item => { %>
+          <div class="item-jadwal">
+            <p><strong><%= item.tanggal %></strong> pukul <%= item.waktu %></p>
+            <p>Dosen Pembimbing: <%= item.dosen %></p>
+            <p>Status:
+              <span class="status <%= item.status.toLowerCase() %>">
+                <%= item.status %>
+              </span>
+            </p>
+            <% if(item.status === 'Menunggu') { %>
+              <form action="/jadwal_pengajuanBimbingan/batal_pengajuan/<%= item.id %>" method="POST">
+                <button class="btn-batal" type="submit">Batalkan Pengajuan Jadwal Bimbingan</button>
+              </form>
+            <% } %>
+          </div>
+        <% }); %>
+      <% } else { %>
+        <p>Belum ada jadwal bimbingan yang diajukan.</p>
+      <% } %>
+    </div>
+  </div>
+</div>
+</div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const menuIcon = document.querySelector('.menu-icon');
+    const sidebar = document.querySelector('.sidebar');
+    const mainContent = document.querySelector('.main-content');
+
+    menuIcon?.addEventListener('click', () => {
+      sidebar.classList.toggle('collapsed');
+      mainContent.classList.toggle('collapsed');
+    });
+  });
+</script>
+
+<%- include('../partials/footer') %>

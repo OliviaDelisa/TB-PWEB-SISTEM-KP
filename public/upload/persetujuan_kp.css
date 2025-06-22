@@ -1,0 +1,220 @@
+/* ===== Global Reset & Background ===== */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #fff;
+  overflow-x: hidden;
+  position: relative;
+}
+
+body::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('/image/LogoUnand.png');
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 30%;
+  background-attachment: fixed;
+  opacity: 0.05;
+  z-index: 0;
+}
+
+/* ===== Layout ===== */
+.container {
+  display: flex;
+}
+
+.sidebar {
+  width: 250px;
+  background: linear-gradient(to bottom, #e87e00, #cc6d00);
+  color: white;
+  height: 100vh;
+  position: fixed;
+  z-index: 10;
+  transition: transform 0.3s ease;
+}
+
+.sidebar.collapsed {
+  transform: translateX(-100%);
+}
+
+.sidebar .logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 20px;
+}
+
+.sidebar .logo img {
+  width: 40px;
+  height: 40px;
+}
+
+.sidebar .logo span {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.sidebar .menu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar .menu li {
+  padding: 15px 20px;
+  cursor: pointer;
+}
+
+.sidebar .menu li.active,
+.sidebar .menu li:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+  border-left: 5px solid white;
+}
+
+.sidebar .menu li a {
+  color: white;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* ===== Topbar ===== */
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 30px;
+  background-color: #f57c00;
+  color: white;
+  position: sticky;
+  top: 0;
+  z-index: 5;
+}
+
+.topbar .left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.topbar .title {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.topbar .icon {
+  margin-left: 20px;
+  cursor: pointer;
+}
+
+/* ===== Main Content ===== */
+.content-box {
+  margin-left: 250px;
+  width: calc(100% - 250px);
+  padding: 30px;
+  transition: margin-left 0.3s ease, width 0.3s ease;
+  position: relative;
+  z-index: 1;
+}
+
+.sidebar.collapsed ~ .content-box,
+.content-box.full {
+  margin-left: 0;
+  width: 100%;
+}
+
+/* ===== Table ===== */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  background-color: white;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+table th,
+table td {
+  border: 1px solid #ddd;
+  padding: 12px;
+  text-align: left;
+}
+
+table th {
+  background-color: #e87e00;
+  color: white;
+}
+
+/* ===== Buttons ===== */
+.btn-tambah,
+.btn-back {
+  margin-top: 20px;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 5px;
+  font-size: 14px;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+  transition: background-color 0.3s ease;
+}
+
+.btn-tambah {
+  background-color: #e87e00;
+  color: white;
+}
+
+.btn-tambah:hover {
+  background-color: #cf6f00;
+}
+
+.btn-back {
+  background-color: transparent;
+  color: #e87e00;
+  border: 1px solid #e87e00;
+  margin-top: 30px;
+}
+
+.btn-back:hover {
+  background-color: #e87e00;
+  color: white;
+}
+
+/* ===== Header Tabel ===== */
+.header-table {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.link-riwayat {
+  font-size: 14px;
+  color: #e87e00;
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.2s ease;
+}
+
+.link-riwayat:hover {
+  color: #cf6f00;
+  text-decoration: underline;
+}
+
+/* ===== Judul Halaman ===== */
+.content-box h2 {
+  font-size: 22px;
+  color: #e87e00;
+  margin-bottom: 10px;
+  font-weight: bold;
+  border-left: 5px solid #e87e00;
+  padding-left: 10px;
+}

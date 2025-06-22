@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Materi Bimbingan</title>
+  <link rel="stylesheet" href="/upload/materibimbingan.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+<div class="container">
+  <aside id="sidebar" class="sidebar show">
+    <div class="logo">
+      <img src="/image/LogoUnand.png" alt="Logo" />
+      <span class="logo-text">SIUNAND</span>
+    </div>
+    <nav>
+      <ul>
+        <li><a href="/home"><i class="fas fa-house"></i> <span class="text">Home</span></a></li>
+        <li><i class="fas fa-check-circle"></i> <span class="text">Persetujuan KP</span></li>
+        <li><i class="fas fa-file-alt"></i> <span class="text">Penilaian Laporan</span></li>
+        <li><a href="/jadwalseminar"><i class="fas fa-calendar-alt"></i> <span class="text">Jadwal Seminar</span></a></li>
+        <li class="active"><a href="/bimbingan"><i class="fas fa-chalkboard-teacher"></i> <span class="text">Bimbingan</span></a></li>
+        <li><a href="/informasipenting"><i class="fas fa-info-circle"></i> <span class="text">Informasi Penting</span></a></li>
+      </ul>
+    </nav>
+  </aside>
+
+  <div class="main-content">
+    <header>
+      <div class="topbar">
+        <button id="toggleSidebar"><i class="fas fa-bars"></i></button>
+        <h1>Sistem Informasi Kerja Praktik</h1>
+        <div class="icons">
+          <button class="icon-btn"><i class="fas fa-bell"></i></button>
+          <button class="icon-btn"><i class="fas fa-user-circle"></i></button>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <div class="bg-logo"></div>
+      <section class="bimbingan-section">
+        <h2 class="bimbingan-title">Bimbingan</h2>
+        <div class="bimbingan-box">
+          <h3 class="bimbingan-subtitle">Materi Bimbingan</h3>
+          
+          <!-- Loading indicator -->
+          <div id="loading" style="text-align: center; padding: 20px; display: none;">
+            <i class="fas fa-spinner fa-spin"></i> Memuat data...
+          </div>
+          
+          <!-- Error message -->
+          <div id="errorMessage" style="color: red; text-align: center; padding: 10px; display: none;"></div>
+          
+          <div class="bimbingan-list" id="bimbinganList">
+            <!-- Edit back button positioned inside the card at bottom left -->
+            <div id="editBackBtn" class="edit-back-btn" style="display: none;">
+              <button id="exitEditBtn" title="Kembali">
+                <i class="fas fa-arrow-left"></i>
+              </button>
+            </div>
+            <!-- Data akan ditampilkan oleh JavaScript -->
+          </div>
+          
+          <div class="bimbingan-actions">
+            <a href="bimbingan" class="back-btn"><i class="fas fa-arrow-left"></i> Back</a>
+            <div class="button-group">
+              <button class="edit-btn" id="editBtn"><i class="fas fa-edit"></i> Edit</button>
+              <button class="add-btn" id="addBtn"><i class="fas fa-plus-circle"></i> Tambah</button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+</div>
+
+<!-- Modal Tambah -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal-box">
+    <h3>Tambah Materi Bimbingan</h3>
+    <form id="uploadForm">
+      <div style="margin-bottom: 20px; text-align: left;">
+        <label for="judul" style="display: block; margin-bottom: 8px; font-weight: 600; color: #333;">Judul Materi:</label>
+        <input type="text" id="judul" name="judul" required style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; font-size: 14px; box-sizing: border-box;">
+      </div>
+      <div style="margin-bottom: 20px; text-align: left;">
+        <label for="deskripsi" style="display: block; margin-bottom: 8px; font-weight: 600; color: #333;">Deskripsi (opsional):</label>
+        <textarea id="deskripsi" name="deskripsi" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; font-size: 14px; height: 120px; resize: vertical; box-sizing: border-box; font-family: inherit;"></textarea>
+      </div>
+      <div style="margin-bottom: 20px; text-align: left;">
+        <label class="upload-label" style="display: inline-block; padding: 12px 18px; background-color: #f6f6f6; border: 1px solid #ccc; color: #727272; cursor: pointer; border-radius: 8px; font-size: 14px; transition: all 0.3s ease;">
+          <i class="fas fa-upload"></i> Pilih File
+          <input type="file" id="fileInput" name="file" hidden required>
+        </label>
+        <div id="fileInfo" style="margin-top: 10px; padding: 10px; background: #f0f0f0; border-radius: 5px; display: none;">
+          <strong>File yang dipilih:</strong> <span id="fileName"></span><br>
+          <strong>Ukuran:</strong> <span id="fileSize"></span>
+        </div>
+      </div>
+      <div class="modal-buttons">
+        <button type="button" class="ok-btn" onclick="closeModal()">Kembali</button>
+        <button type="submit" class="submit-btn">Simpan & Kirim</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Modal Edit -->
+<div class="modal-overlay" id="editModalOverlay">
+  <div class="modal-box">
+    <h3>Edit Materi Bimbingan</h3>
+    <form id="editForm">
+      <input type="hidden" id="editId">
+      <div style="margin-bottom: 20px; text-align: left;">
+        <label for="editJudul" style="display: block; margin-bottom: 8px; font-weight: 600; color: #333;">Judul Materi:</label>
+        <input type="text" id="editJudul" name="judul" required style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; font-size: 14px; box-sizing: border-box;">
+      </div>
+      <div style="margin-bottom: 20px; text-align: left;">
+        <label for="editDeskripsi" style="display: block; margin-bottom: 8px; font-weight: 600; color: #333;">Deskripsi (opsional):</label>
+        <textarea id="editDeskripsi" name="deskripsi" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; font-size: 14px; height: 120px; resize: vertical; box-sizing: border-box; font-family: inherit;"></textarea>
+      </div>
+      <div style="margin-bottom: 20px; text-align: left;">
+        <label style="display: block; margin-bottom: 8px; font-weight: 600; color: #333;">File Saat Ini:</label>
+        <div id="currentFileInfo" style="padding: 10px; background: #f8f9fa; border: 1px solid #e9ecef; border-radius: 8px; margin-bottom: 10px;">
+          <i class="fas fa-file-alt" style="color: #e88d2a; margin-right: 8px;"></i>
+          <span id="currentFileName">Nama file akan ditampilkan di sini</span>
+          <br>
+          <small style="color: #666;">Ukuran: <span id="currentFileSize">-</span></small>
+        </div>
+        <label class="upload-label" style="display: inline-block; padding: 12px 18px; background-color: #f6f6f6; border: 1px solid #ccc; color: #727272; cursor: pointer; border-radius: 8px; font-size: 14px; transition: all 0.3s ease;">
+          <i class="fas fa-upload"></i> Ganti File
+          <input type="file" id="editFileInput" name="file" hidden>
+        </label>
+        <div id="editFileInfo" style="margin-top: 10px; padding: 10px; background: #e8f5e8; border: 1px solid #c3e6c3; border-radius: 5px; display: none;">
+          <strong>File baru yang dipilih:</strong> <span id="editFileName"></span><br>
+          <strong>Ukuran:</strong> <span id="editFileSize"></span>
+        </div>
+      </div>
+      <div class="modal-buttons">
+        <button type="button" class="ok-btn" onclick="closeEditModal()">Kembali</button>
+        <button type="submit" class="submit-btn">Simpan Perubahan</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+  const toggleBtn = document.getElementById("toggleSidebar");
+  const sidebar = document.getElementById("sidebar");
+  const tambahBtn = document.getElementById('addBtn');
+  const editBtn = document.getElementById('editBtn');
+  const modal = document.getElementById('modalOverlay');
+  const editModal = document.getElementById('editModalOverlay');
+  const fileInput = document.getElementById('fileInput');
+  const bimbinganList = document.getElementById('bimbinganList');
+  const editBackBtn = document.getElementById('editBackBtn');
+  const exitEditBtn = document.getElementById('exitEditBtn');
+  const uploadForm = document.getElementById('uploadForm');
+  const editForm = document.getElementById('editForm');
+  
+  const dosenId = 1; // ID dosen yang sedang login (untuk demo)
+  let selectedFile = null;
+  let materiData = [];
+
+  // Load materi bimbingan saat halaman dimuat
+  document.addEventListener("DOMContentLoaded", () => {
+    loadMateriBimbingan();
+  });
+
+  // Fungsi untuk memuat data materi bimbingan
+  async function loadMateriBimbingan() {
+    showLoading(true);
+    try {
+      const response = await fetch(`/api/materi-bimbingan/${dosenId}`);
+      const result = await response.json();
+      
+      if (result.success) {
+        materiData = result.data;
+        renderMateriList(result.data);
+      } else {
+        showError('Gagal memuat data materi bimbingan');
+      }
+    } catch (error) {
+      console.error('Error loading materi bimbingan:', error);
+      showError('Terjadi kesalahan saat memuat data');
+    } finally {
+      showLoading(false);
+    }
+  }
+
+  // Fungsi untuk render daftar materi
+  function renderMateriList(materiList) {
+    const listContainer = bimbinganList;
+    
+    // Hapus semua item kecuali editBackBtn
+    const itemsToRemove = listContainer.querySelectorAll('.bimbingan-item');
+    itemsToRemove.forEach(item => item.remove());
+    
+    if (materiList.length === 0) {
+      const emptyMessage = document.createElement('div');
+      emptyMessage.style.textAlign = 'center';
+      emptyMessage.style.padding = '20px';
+      emptyMessage.style.color = '#666';
+      emptyMessage.textContent = 'Belum ada materi bimbingan';
+      listContainer.appendChild(emptyMessage);
+      return;
+    }
+    
+    materiList.forEach(materi => {
+      const item = document.createElement('div');
+      item.classList.add('bimbingan-item');
+      item.setAttribute('data-id', materi.id);
+      item.innerHTML = `
+        <i class="fas fa-file-alt"></i>
+        <div>
+          <p class="bimbingan-judul">${materi.judul}</p>
+          <p class="bimbingan-info">${materi.ukuran_file_mb} MB, Diubah oleh Dr. Ahmad Setiawan</p>
+        </div>
+        <div class="file-actions" style="display: none;">
+          <button class="rename-btn" onclick="editMateri(${materi.id})" title="Edit">
+            <i class="fas fa-pen"></i>
+          </button>
+          <button class="delete-btn" onclick="deleteMateri(${materi.id})" title="Hapus">
+            <i class="fas fa-trash"></i>
+          </button>
+          <button class="download-btn" onclick="downloadMateri(${materi.id})" title="Download">
+            <i class="fas fa-download"></i>
+          </button>
+        </div>
+        <div class="download-only" style="display: block;">
+          <button class="download-btn" onclick="downloadMateri(${materi.id})" title="Download">
+            <i class="fas fa-download"></i>
+          </button>
+        </div>
+      `;
+      listContainer.appendChild(item);
+    });
+  }
+
+  // Event listeners
+  toggleBtn.addEventListener("click", () => {
+    sidebar.classList.toggle("collapsed");
+  });
+
+  tambahBtn.addEventListener('click', () => {
+    modal.style.display = 'flex';
+    uploadForm.reset();
+    document.getElementById('fileInfo').style.display = 'none';
+  });
+
+  document.querySelector('.upload-label').addEventListener('click', () => {
+    fileInput.click();
+  });
+
+  // Event listener untuk file input pada modal edit
+  document.querySelector('#editFileInput').parentElement.addEventListener('click', () => {
+    document.getElementById('editFileInput').click();
+  });
+
+  fileInput.addEventListener('change', (e) => {
+    selectedFile = e.target.files[0];
+    if (selectedFile) {
+      const fileSizeMB = (selectedFile.size / (1024 * 1024)).toFixed(2);
+      document.getElementById('fileName').textContent = selectedFile.name;
+      document.getElementById('fileSize').textContent = fileSizeMB + ' MB';
+      document.getElementById('fileInfo').style.display = 'block';
+    }
+  });
+
+  // Event listener untuk file input pada modal edit
+  document.getElementById('editFileInput').addEventListener('change', (e) => {
+    const newFile = e.target.files[0];
+    if (newFile) {
+      const fileSizeMB = (newFile.size / (1024 * 1024)).toFixed(2);
+      document.getElementById('editFileName').textContent = newFile.name;
+      document.getElementById('editFileSize').textContent = fileSizeMB + ' MB';
+      document.getElementById('editFileInfo').style.display = 'block';
+    }
+  });
+
+  // Handle form upload
+  uploadForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    if (!selectedFile) {
+      alert("Silakan pilih file terlebih dahulu.");
+      return;
+    }
+
+    const judul = document.getElementById('judul').value.trim();
+    if (!judul) {
+      alert("Judul materi harus diisi.");
+      return;
+    }
+
+    // Tampilkan loading
+    const submitBtn = uploadForm.querySelector('.submit-btn');
+    const originalText = submitBtn.textContent;
+    submitBtn.textContent = 'Mengupload...';
+    submitBtn.disabled = true;
+
+    const formData = new FormData();
+    formData.append('file', selectedFile);
+    formData.append('dosen_id', dosenId);
+    formData.append('judul', judul);
+    formData.append('deskripsi', document.getElementById('deskripsi').value);
+
+    try {
+      console.log('Sending upload request...');
+      const response = await fetch('/api/materi-bimbingan', {
+        method: 'POST',
+        body: formData
+      });
+
+      console.log('Response status:', response.status);
+      const result = await response.json();
+      console.log('Response data:', result);
+      
+      if (result.success) {
+        alert('Materi bimbingan berhasil ditambahkan');
+        closeModal();
+        loadMateriBimbingan();
+      } else {
+        alert(result.message || 'Gagal menambahkan materi bimbingan');
+      }
+    } catch (error) {
+      console.error('Error uploading file:', error);
+      alert('Terjadi kesalahan saat mengupload file: ' + error.message);
+    } finally {
+      // Kembalikan tombol ke kondisi semula
+      submitBtn.textContent = originalText;
+      submitBtn.disabled = false;
+    }
+  });
+
+  // Handle form edit
+  editForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    const materiId = document.getElementById('editId').value;
+    const judul = document.getElementById('editJudul').value;
+    const deskripsi = document.getElementById('editDeskripsi').value;
+    const newFile = document.getElementById('editFileInput').files[0];
+
+    console.log('Edit form submitted:', { materiId, judul, deskripsi, hasNewFile: !!newFile });
+
+    // Validasi input
+    if (!judul.trim()) {
+      alert('Judul harus diisi');
+      return;
+    }
+
+    // Tampilkan loading
+    const submitBtn = editForm.querySelector('.submit-btn');
+    const originalText = submitBtn.textContent;
+    submitBtn.textContent = 'Menyimpan...';
+    submitBtn.disabled = true;
+
+    try {
+      const formData = new FormData();
+      formData.append('judul', judul.trim());
+      formData.append('deskripsi', deskripsi ? deskripsi.trim() : '');
+      
+      // Tambahkan file jika ada
+      if (newFile) {
+        console.log('Adding file to form data:', newFile.name, newFile.size);
+        formData.append('file', newFile);
+      }
+
+      console.log('Sending edit request to:', `/api/materi-bimbingan/${materiId}`);
+      const response = await fetch(`/api/materi-bimbingan/${materiId}`, {
+        method: 'PUT',
+        body: formData
+      });
+
+      console.log('Response status:', response.status);
+      
+      // Check if response is ok
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      
+      const result = await response.json();
+      console.log('Response data:', result);
+      
+      if (result.success) {
+        alert(result.message);
+        closeEditModal();
+        loadMateriBimbingan();
+      } else {
+        alert(result.message || 'Gagal memperbarui materi bimbingan');
+      }
+    } catch (error) {
+      console.error('Error updating materi:', error);
+      
+      // Handle different types of errors
+      if (error.name === 'TypeError' && error.message.includes('fetch')) {
+        alert('Terjadi kesalahan koneksi. Pastikan server berjalan.');
+      } else if (error.message.includes('HTTP error')) {
+        alert('Terjadi kesalahan server. Silakan coba lagi.');
+      } else {
+        alert('Terjadi kesalahan saat memperbarui materi: ' + error.message);
+      }
+    } finally {
+      // Kembalikan tombol ke kondisi semula
+      submitBtn.textContent = originalText;
+      submitBtn.disabled = false;
+    }
+  });
+
+  function closeModal() {
+    modal.style.display = 'none';
+    selectedFile = null;
+    fileInput.value = '';
+    document.getElementById('fileInfo').style.display = 'none';
+  }
+
+  function closeEditModal() {
+    editModal.style.display = 'none';
+    // Reset file input dan info
+    document.getElementById('editFileInput').value = '';
+    document.getElementById('editFileInfo').style.display = 'none';
+  }
+
+  // Fungsi untuk edit materi
+  function editMateri(materiId) {
+    const materi = materiData.find(m => m.id === materiId);
+    if (materi) {
+      document.getElementById('editId').value = materi.id;
+      document.getElementById('editJudul').value = materi.judul;
+      document.getElementById('editDeskripsi').value = materi.deskripsi || '';
+      
+      // Tampilkan informasi file saat ini
+      document.getElementById('currentFileName').textContent = materi.nama_file || 'File tidak tersedia';
+      document.getElementById('currentFileSize').textContent = materi.ukuran_file_mb + ' MB';
+      
+      // Reset file input dan info file baru
+      document.getElementById('editFileInput').value = '';
+      document.getElementById('editFileInfo').style.display = 'none';
+      
+      editModal.style.display = 'flex';
+    }
+  }
+
+  // Fungsi untuk delete materi
+  async function deleteMateri(materiId) {
+    if (confirm("Yakin ingin menghapus materi bimbingan ini?")) {
+      try {
+        const response = await fetch(`/api/materi-bimbingan/${materiId}`, {
+          method: 'DELETE'
+        });
+
+        const result = await response.json();
+        
+        if (result.success) {
+          alert('Materi bimbingan berhasil dihapus');
+          loadMateriBimbingan();
+        } else {
+          alert(result.message || 'Gagal menghapus materi bimbingan');
+        }
+      } catch (error) {
+        console.error('Error deleting materi:', error);
+        alert('Terjadi kesalahan saat menghapus materi');
+      }
+    }
+  }
+
+  // Fungsi untuk download materi
+  function downloadMateri(materiId) {
+    window.open(`/api/materi-bimbingan/download/${materiId}`, '_blank');
+  }
+
+  editBtn.addEventListener('click', () => {
+    const items = bimbinganList.querySelectorAll('.bimbingan-item');
+
+    editBtn.disabled = true;
+    tambahBtn.disabled = true;
+    editBackBtn.style.display = 'flex';
+
+    items.forEach(item => {
+      const actions = item.querySelector('.file-actions');
+      const downloadOnly = item.querySelector('.download-only');
+      if (actions) {
+        actions.style.display = 'flex';
+      }
+      if (downloadOnly) {
+        downloadOnly.style.display = 'none';
+      }
+    });
+  });
+
+  exitEditBtn.addEventListener('click', () => {
+    // Sembunyikan semua file-actions
+    document.querySelectorAll('.file-actions').forEach(el => {
+      el.style.display = 'none';
+    });
+
+    // Tampilkan kembali download-only buttons
+    document.querySelectorAll('.download-only').forEach(el => {
+      el.style.display = 'block';
+    });
+
+    // Aktifkan tombol edit dan tambah
+    editBtn.disabled = false;
+    tambahBtn.disabled = false;
+
+    // Sembunyikan tombol kembali
+    editBackBtn.style.display = 'none';
+  });
+
+  window.addEventListener('click', (e) => {
+    if (e.target === modal) {
+      closeModal();
+    }
+    if (e.target === editModal) {
+      closeEditModal();
+    }
+  });
+
+  // Fungsi untuk menampilkan loading
+  function showLoading(show) {
+    document.getElementById('loading').style.display = show ? 'block' : 'none';
+  }
+
+  // Fungsi untuk menampilkan error
+  function showError(message) {
+    const errorDiv = document.getElementById('errorMessage');
+    errorDiv.textContent = message;
+    errorDiv.style.display = 'block';
+    setTimeout(() => {
+      errorDiv.style.display = 'none';
+    }, 5000);
+  }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,130 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<!-- Sidebar -->
+<aside class="sidebar">
+  <div class="logo">
+    <img src="/image/LogoUnand.png" alt="Logo Unand"> SIPRAKTI
+  </div>
+  <ul class="menu">
+    <li>
+      <a href="/dashboard"><i class="fas fa-home"></i><span>Home</span></a>
+    </li>
+
+    <li class="has-submenu">
+      <a href="#"><i class="fas fa-user-graduate"></i><span>Mahasiswa</span><i class="fas fa-chevron-down chevron"></i></a>
+      <ul class="submenu">
+        <li><a href="/mahasiswa">Daftar Mahasiswa</a></li>
+      </ul>
+    </li>
+
+    <li class="has-submenu">
+      <a href="#"><i class="fas fa-chalkboard-teacher"></i><span>Dosen</span><i class="fas fa-chevron-down chevron"></i></a>
+      <ul class="submenu">
+        <li><a href="/dosen_pembimbing">Daftar Dosen Pembimbing</a></li>
+        <li><a href="/dosen_pengganti">Daftar Pengajuan Dosen Pengganti</a></li>
+      </ul>
+    </li>
+
+    <li class="has-submenu">
+      <a href="#"><i class="fas fa-building"></i><span>Perusahaan</span><i class="fas fa-chevron-down chevron"></i></a>
+      <ul class="submenu">
+        <li><a href="/perusahaan">Daftar Perusahaan</a></li>
+      </ul>
+    </li>
+
+    <li class="has-submenu">
+      <a href="#"><i class="fas fa-briefcase"></i><span>Kerja Praktik</span><i class="fas fa-chevron-down chevron"></i></a>
+      <ul class="submenu">
+        <li><a href="/periodeKP">Periode KP</a></li>
+        <li><a href="/pengajuan_kp">Daftar Pengajuan KP</a></li>
+        <li><a href="/jadwal_seminar">Jadwal Seminar</a></li>
+        <li><a href="/uploadDokumen">Dokumen KP</a></li>
+      </ul>
+    </li>
+
+    <li>
+      <a href="/pengumuman"><i class="fas fa-bullhorn"></i><span>Pengumuman</span></a>
+    </li>
+    <li>
+      <a href="/feedback"><i class="fas fa-comments"></i><span>Feedback</span></a>
+    </li>
+  </ul>
+</aside>
+
+<header class="navbar">
+  <button class="hamburger" onclick="toggleSidebar()">☰</button>
+  <h1>Sistem Informasi Kerja Praktik</h1>
+  <div class="nav-icons">
+    <a href="/notifikasi" class="icon-link"><i class="fas fa-bell"></i></a>
+    <a href="/profile" class="icon-link"><i class="fas fa-user-circle"></i></a>
+  </div>
+</header>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const toggleBtn = document.querySelector('.hamburger');
+    const sidebar = document.querySelector('.sidebar');
+    const content = document.querySelector('.content');
+    const navbar = document.querySelector('.navbar');
+
+    // Fungsi untuk mengatur status sidebar
+    function updateSidebar(status) {
+      if (status === 'open') {
+        sidebar.classList.add('open');
+        document.body.classList.add('sidebar-open');
+        content?.classList.remove('expanded');
+        navbar.style.marginLeft = '250px';
+      } else {
+        sidebar.classList.remove('open');
+        document.body.classList.remove('sidebar-open');
+        content?.classList.add('expanded');
+        navbar.style.marginLeft = '0';
+      }
+    }
+
+    const savedStatus = localStorage.getItem('sidebarStatus') || 'open';
+    updateSidebar(savedStatus);
+
+    toggleBtn.addEventListener('click', function () {
+      const isOpen = sidebar.classList.contains('open');
+      const newStatus = isOpen ? 'closed' : 'open';
+      localStorage.setItem('sidebarStatus', newStatus);
+      updateSidebar(newStatus);
+    });
+
+    // Toggle submenu saat menu diklik
+const submenuToggles = document.querySelectorAll('.has-submenu > a');
+
+submenuToggles.forEach(toggle => {
+  toggle.addEventListener('click', function (e) {
+    e.preventDefault();
+    const parent = this.parentElement;
+    parent.classList.toggle('active');
+
+    // Optional: tutup semua submenu lainnya
+    submenuToggles.forEach(otherToggle => {
+      const otherParent = otherToggle.parentElement;
+      if (otherParent !== parent) {
+        otherParent.classList.remove('active');
+      }
+    });
+  });
+});
+  
+
+    const menuLinks = document.querySelectorAll('.menu a');
+
+    menuLinks.forEach(link => {
+      const href = link.getAttribute('href');
+      const relatedPaths = pathGroup[href];
+
+      if (relatedPaths && relatedPaths.some(path => currentPath.startsWith(path))) {
+        link.parentElement.classList.add('active');
+      }
+    });
+  });
+</script>
+
+
+
+
+

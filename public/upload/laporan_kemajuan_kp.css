@@ -1,0 +1,89 @@
+.main-section {
+  padding: 20px;
+  padding-top: 0px;
+  background-color: #ffffff;
+  flex-grow: 1;
+  margin: 10px;
+}
+
+.laporan-wrapper {
+  background-color: #fff6ef;
+  padding: 25px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+h2 {
+    margin-top: 0px;
+    margin-bottom: 25px;
+    color: #d26500;
+}
+
+h3 {
+  margin-top: 0;
+  margin-bottom: 20px;
+  color: #050504;
+}
+
+.laporan-wrapper h3, .laporan-wrapper h4 {
+  margin-top: 0;
+}
+
+.laporan-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.laporan-form label {
+  font-weight: bold;
+}
+
+.laporan-form input[type="text"],
+.laporan-form input[type="file"],
+.laporan-form select {
+  padding: 8px;
+  font-size: 1em;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.submit-btn {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.back-btn {
+  color: #000000;
+  text-decoration: none;
+}
+
+.riwayat-table {
+  margin-top: 20px;
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #ffffff;
+}
+
+.riwayat-table th,
+.riwayat-table td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: left;
+}
+
+.riwayat-table th {
+ background-color: #e07000;
+  color: white;
+}

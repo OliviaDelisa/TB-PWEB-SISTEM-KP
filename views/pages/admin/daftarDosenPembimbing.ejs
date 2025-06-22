@@ -1,0 +1,39 @@
+<section class="main-content">
+  <h2>Daftar Dosen Pembimbing</h2>
+
+    <div class="search-bar">
+  <form action="/daftarDospem" method="GET">
+    <input type="text" name="cari" placeholder="Cari" value="<%= keyword || '' %>">
+    <button type="submit"><i class="fas fa-search"></i></button>
+  </form>
+</div>
+
+  <table class="dospem-table">
+    <thead>
+      <tr>
+        <th>No</th>
+        <th>Mahasiswa</th>
+        <th>NIM</th>
+        <th>Dosen Pembimbing</th>
+        <th>NIP</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% dospemList.forEach((item, index) => { %>
+        <tr>
+          <td><%= index + 1 %></td>
+          <td><%= item.nama %></td>
+          <td><%= item.nim %></td>
+          <td><%= item.dosen %></td>
+          <td><%= item.nip %></td>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+
+  <div class="actions">
+    
+    <a href="/daftarDospem/cetak-pdf" class="edit-btn">Cetak</a>
+
+  </div>
+</section>

@@ -1,0 +1,32 @@
+<section class="main-content">
+      <h2>Pengumuman</h2>
+      <div class="search-bar">
+        <input type="text" placeholder="Cari" />
+        <button><i class="fas fa-search"></i></button>
+      </div>
+
+      <table class="announcement-table">
+        <thead>
+          <tr>
+            <th>Judul</th>
+            <th>Tanggal Upload</th>
+            <th>Kategori</th>
+            <th>Aksi</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% pengumuman.forEach(function(item) { %>
+            <tr>
+              <td><%= item.judul %></td>
+              <td><%= new Date(item.tanggal_tayang).toLocaleDateString('id-ID') %></td>
+              <td><%= item.kategori %></td>
+              <td>
+                <a href="/pengumuman/edit/<%= item.id %>" class="edit-btn">Edit</a>
+              </td>
+            </tr>
+          <% }); %>
+        </tbody>
+      </table>
+
+      <a href="/pengumuman/tambah" class="btn">Buat</a>
+    </section>

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title || 'Dashboard Admin - Sistem Informasi' %></title>
+    <link rel="stylesheet" href="/upload/admincss/dashboard_admin.css">
+</head>
+<body>
+
+    <div class="container">
+        <!-- Welcome Section -->
+        <div class="welcome-section">
+            <h1 class="welcome-title">Selamat Datang, <%= user.name || 'Admin' %>!</h1>
+            <p class="welcome-subtitle">Dashboard Sistem Informasi Kerja Praktek - Kelola semua data dengan mudah</p>
+        </div>
+
+        <!-- Statistics Cards -->
+        <div class="stats-grid">
+            <div class="stat-card mahasiswa">
+                <div class="stat-number"><%= stats.totalMahasiswa || 0 %></div>
+                <div class="stat-label">Total Mahasiswa</div>
+                <div class="stat-change">+<%= stats.newMahasiswa || 0 %> bulan ini</div>
+            </div>
+            <div class="stat-card dosen">
+                <div class="stat-number"><%= stats.totalDosen || 0 %></div>
+                <div class="stat-label">Dosen Pembimbing</div>
+                <div class="stat-change">+<%= stats.newDosen || 0 %> bulan ini</div>
+            </div>
+            <div class="stat-card perusahaan">
+                <div class="stat-number"><%= stats.totalPerusahaan || 0 %></div>
+                <div class="stat-label">Perusahaan Mitra</div>
+                <div class="stat-change">+<%= stats.newPerusahaan || 0 %> bulan ini</div>
+            </div>
+            <div class="stat-card kp">
+                <div class="stat-number"><%= stats.totalKP || 0 %></div>
+                <div class="stat-label">KP Aktif</div>
+                <div class="stat-change">+<%= stats.newKP || 0 %> bulan ini</div>
+            </div>
+        </div>
+
+        <!-- Management Section -->
+        <div class="management-section">
+            <h2 class="section-title">
+                <div class="section-icon">⚙</div>
+                Manajemen Data
+            </h2>
+            <div class="management-grid">
+                <a href="/mahasiswa" class="management-card">
+                    <h3>Kelola Mahasiswa</h3>
+                    <p>Tambah, edit, dan hapus data mahasiswa</p>
+                </a>
+                <a href="/dosen" class="management-card">
+                    <h3>Kelola Dosen</h3>
+                    <p>Manajemen data dosen pembimbing</p>
+                </a>
+                <a href="/perusahaan" class="management-card">
+                    <h3>Kelola Perusahaan</h3>
+                    <p>Daftar perusahaan mitra KP</p>
+                </a>
+                <a href="/kp" class="management-card">
+                    <h3>Kelola KP</h3>
+                    <p>Monitoring kerja praktek mahasiswa</p>
+                </a>
+            </div>
+        </div>
+
+        <!-- Recent Activity -->
+        <div class="recent-activity">
+            <h2 class="section-title">
+                <div class="section-icon">📊</div>
+                Aktivitas Terbaru
+            </h2>
+            <% if (recentActivities && recentActivities.length > 0) { %>
+                <% recentActivities.forEach(activity => { %>
+                    <div class="activity-item">
+                        <div class="activity-icon <%= activity.type %>">
+                            <% if (activity.type === 'add') { %>+<% } %>
+                            <% if (activity.type === 'edit') { %>✏<% } %>
+                            <% if (activity.type === 'delete') { %>×<% } %>
+                        </div>
+                        <div class="activity-content">
+                            <div class="activity-title"><%= activity.title %></div>
+                            <div class="activity-time"><%= activity.timeAgo %></div>
+                        </div>
+                    </div>
+                <% }); %>
+            <% } else { %>
+                <div class="no-activity">
+                    <p>Belum ada aktivitas terbaru</p>
+                </div>
+            <% } %>
+        </div>
+
+         <div class="quick-actions">
+            <h2 class="section-title">
+                <div class="section-icon">⚡</div>
+                Aksi Cepat
+            </h2>
+            <div class="quick-actions-grid">
+                <a href="/mahasiswa/tambah" class="quick-action-card add-mahasiswa">
+                    <div class="quick-action-icon">👨‍🎓</div>
+                    <div class="quick-action-content">
+                        <h3>Tambah Mahasiswa</h3>
+                        <p>Daftarkan mahasiswa baru ke sistem</p>
+                    </div>
+                </a>
+                <a href="/dosen/tambah" class="quick-action-card add-dosen">
+                    <div class="quick-action-icon">👨‍🏫</div>
+                    <div class="quick-action-content">
+                        <h3>Tambah Dosen</h3>
+                        <p>Tambahkan dosen pembimbing baru</p>
+                    </div>
+                </a>
+                <a href="/perusahaan/tambah" class="quick-action-card add-perusahaan">
+                    <div class="quick-action-icon">🏢</div>
+                    <div class="quick-action-content">
+                        <h3>Tambah Perusahaan</h3>
+                        <p>Daftarkan perusahaan mitra KP</p>
+                    </div>
+                </a>
+                <a href="/admin/reports" class="quick-action-card reports">
+                    <div class="quick-action-icon">📊</div>
+                    <div class="quick-action-content">
+                        <h3>Lihat Laporan</h3>
+                        <p>Analisis data dan statistik sistem</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+    <script src="/js/admin-dashboard.js"></script>
+</body>
+</html>

@@ -1,0 +1,361 @@
+/* Admin Dashboard CSS */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    min-height: 100vh;
+    line-height: 1.6;
+}
+
+/* Container */
+.container {
+    max-width: 1200px;
+    margin: 30px auto;
+    padding: 0 20px;
+}
+
+/* Welcome Section */
+.welcome-section {
+    background: white;
+    border-radius: 15px;
+    padding: 30px;
+    margin-bottom: 30px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+
+.welcome-title {
+    font-size: 28px;
+    margin-bottom: 10px;
+    font-weight: 700;
+}
+
+.welcome-subtitle {
+    font-size: 16px;
+    opacity: 0.9;
+}
+
+/* Statistics Grid */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.stat-card {
+    background: white;
+    border-radius: 15px;
+    padding: 25px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.stat-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(90deg, #4CAF50, #81C784);
+}
+
+.stat-card.mahasiswa::before {
+    background: linear-gradient(90deg, #4CAF50, #81C784);
+}
+
+.stat-card.dosen::before {
+    background: linear-gradient(90deg, #2196F3, #64B5F6);
+}
+
+.stat-card.perusahaan::before {
+    background: linear-gradient(90deg, #FF9800, #FFB74D);
+}
+
+.stat-card.kp::before {
+    background: linear-gradient(90deg, #9C27B0, #BA68C8);
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+}
+
+.stat-number {
+    font-size: 36px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.stat-label {
+    color: #666;
+    font-size: 16px;
+    margin-bottom: 10px;
+    font-weight: 500;
+}
+
+.stat-change {
+    font-size: 14px;
+    color: #4CAF50;
+    font-weight: 600;
+}
+
+/* Management Section */
+.management-section {
+    background: white;
+    border-radius: 15px;
+    padding: 30px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+    margin-bottom: 30px;
+}
+
+.section-title {
+    color: #333;
+    font-size: 24px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 600;
+}
+
+.section-icon {
+    width: 30px;
+    height: 30px;
+    background: #ff6b35;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 14px;
+}
+
+.management-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.management-card {
+    background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
+    border-radius: 10px;
+    padding: 20px;
+    color: white;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.management-card::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+    transform: rotate(45deg);
+    transition: all 0.5s;
+    opacity: 0;
+}
+
+.management-card:hover::before {
+    animation: shine 0.5s ease-in-out;
+}
+
+.quick-actions {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+
+        .quick-actions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .quick-action-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 15px;
+            padding: 25px;
+            text-decoration: none;
+            color: white;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .quick-action-card:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 15px 30px rgba(102, 126, 234, 0.3);
+        }
+
+        .quick-action-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .quick-action-card:hover::before {
+            left: 100%;
+        }
+
+        .quick-action-icon {
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+
+        .quick-action-content h3 {
+            font-size: 18px;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+
+        .quick-action-content p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .quick-action-card.add-mahasiswa {
+            background: linear-gradient(135deg, #4CAF50 0%, #81C784 100%);
+        }
+
+        .quick-action-card.add-dosen {
+            background: linear-gradient(135deg, #2196F3 0%, #64B5F6 100%);
+        }
+
+        .quick-action-card.add-perusahaan {
+            background: linear-gradient(135deg, #FF9800 0%, #FFB74D 100%);
+        }
+
+        .quick-action-card.reports {
+            background: linear-gradient(135deg, #9C27B0 0%, #BA68C8 100%);
+        }
+
+        .quick-action-card.add-mahasiswa:hover {
+            box-shadow: 0 15px 30px rgba(76, 175, 80, 0.3);
+        }
+
+        .quick-action-card.add-dosen:hover {
+            box-shadow: 0 15px 30px rgba(33, 150, 243, 0.3);
+        }
+
+        .quick-action-card.add-perusahaan:hover {
+            box-shadow: 0 15px 30px rgba(255, 152, 0, 0.3);
+        }
+
+        .quick-action-card.reports:hover {
+            box-shadow: 0 15px 30px rgba(156, 39, 176, 0.3);
+        }
+
+@keyframes shine {
+    0% {
+        transform: translateX(-100%) translateY(-100%) rotate(45deg);
+        opacity: 0;
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateX(100%) translateY(100%) rotate(45deg);
+        opacity: 0;
+    }
+}
+
+.management-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(255, 107, 53, 0.3);
+}
+
+.management-card h3 {
+    font-size: 18px;
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
+.management-card p {
+    font-size: 14px;
+    opacity: 0.9;
+}
+
+/* Recent Activity */
+.recent-activity {
+    background: white;
+    border-radius: 15px;
+    padding: 30px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+    margin-bottom: 30px;
+}
+
+.activity-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 15px 0;
+    border-bottom: 1px solid #eee;
+    transition: background 0.3s ease;
+}
+
+.activity-item:last-child {
+    border-bottom: none;
+}
+
+.activity-item:hover {
+    background: rgba(255, 107, 53, 0.05);
+    border-radius: 10px;
+    margin: 0 -10px;
+    padding: 15px 10px;
+}
+
+.activity-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.activity-icon.add {
+    background: linear-gradient(135deg, #4CAF50, #81C784);
+}
+
+.activity-icon.edit {
+    background: linear-gradient(135deg, #2196F3, #64B5F6);
+}
+
+.activity-icon.delete {

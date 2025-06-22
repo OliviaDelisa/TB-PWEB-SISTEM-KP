@@ -1,0 +1,34 @@
+<h2 class="title">Form Tambah Periode KP</h2>
+
+<form action="/periodeKP/tambah" method="POST" class="form-periodeKP">
+  <div class="form-group">
+    <label for="nama_periode">Nama Periode</label>
+    <input type="text" name="nama_periode" required>
+  </div>
+
+  <div class="form-group">
+    <label for="tanggal_mulai_pendaftaran">Tanggal Mulai Pendaftaran</label>
+    <input type="date" name="tanggal_mulai_pendaftaran">
+  </div>
+
+  <div class="form-group">
+    <label for="tanggal_akhir_pendaftaran">Tanggal Akhir Pendaftaran</label>
+    <input type="date" name="tanggal_akhir_pendaftaran">
+  </div>
+
+  <div class="form-group">
+    <label for="tanggal_mulai_kp">Tanggal Mulai KP</label>
+    <input type="date" name="tanggal_mulai_kp">
+  </div>
+
+  <div class="form-group">
+    <label for="tanggal_akhir_kp">Tanggal Akhir KP</label>
+    <input type="date" name="tanggal_akhir_kp">
+  </div>
+
+
+  <div class="form-buttons">
+    <a href="/perusahaan" class="btn-cancel">Batal</a>
+    <button type="submit" class="btn-submit">Simpan</button>
+  </div>
+</form>

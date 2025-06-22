@@ -1,0 +1,208 @@
+/* ===== Global Reset & Body Background ===== */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #fff;
+  overflow-x: hidden;
+  position: relative;
+}
+
+body::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('/image/LogoUnand.png');
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 30%;
+  background-attachment: fixed;
+  opacity: 0.08;
+  z-index: 0;
+}
+
+/* ===== Container Layout ===== */
+.container {
+  display: flex;
+  min-height: 100vh;
+  position: relative;
+  z-index: 1;
+}
+
+/* ===== Main Content ===== */
+.main-content {
+  flex: 1;
+  padding: 0px 40px;
+  background-color: transparent;
+  z-index: 2;
+  position: relative;
+  pointer-events: auto;
+}
+
+.main-content h1 {
+  color: #d95e00;
+  margin-bottom: 20px;
+  margin-top: 5px;
+  font-size: 28px;
+}
+
+/* ===== Form Container ===== */
+.form-container {
+  background-color: rgba(255, 243, 229, 0.95);
+  padding: 25px;
+  border-radius: 15px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  margin-top: 10px;
+  position: relative;
+  z-index: 3;
+  pointer-events: auto;
+}
+
+.form-container h2 {
+  margin-bottom: 20px;
+  color: #b45309;
+  font-size: 20px;
+}
+
+label {
+  display: block;
+  margin-bottom: 20px;
+  font-weight: 500;
+  color: #333;
+}
+
+select,
+input[type="file"] {
+  display: block;
+  margin-top: 8px;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 8px;
+  width: 100%;
+  max-width: 400px;
+}
+
+/* ===== File Upload Section ===== */
+.file-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+input[type="file"] {
+  padding: 5px;
+  font-size: 14px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.cancel-button {
+  background-color: #f44336;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  font-size: 14px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.cancel-button:hover {
+  background-color: #e53935;
+}
+
+/* ===== Buttons ===== */
+.buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 30px;
+  position: relative;
+  z-index: 4;
+}
+
+.back-button,
+.submit-button {
+  padding: 10px 25px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  text-decoration: none;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.back-button {
+  background-color: #ccc;
+  color: #333;
+}
+
+.back-button:hover {
+  background-color: #b3b3b3;
+}
+
+.submit-button {
+  background-color: #007bff;
+  color: white;
+}
+
+.submit-button:hover {
+  background-color: #0056b3;
+}
+
+/* ===== Report Section ===== */
+.report {
+  margin-top: 40px;
+  background-color: rgba(255, 243, 229, 0.95);
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+  position: relative;
+  z-index: 2;
+}
+
+.report h3 {
+  margin-bottom: 15px;
+  color: #b45309;
+}
+
+.absensi-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.absensi-table th,
+.absensi-table td {
+  padding: 12px;
+  border: 1px solid #ccc;
+  text-align: left;
+}
+
+.absensi-table th {
+  background-color: #d95e00;
+  color: white;
+}
+
+.absensi-table td a {
+  color: #007bff;
+  text-decoration: underline;
+}
+
+.absensi-table td a:hover {
+  color: #0056b3;
+}
+
+/* ===== Sidebar Collapse Effect ===== */
+.sidebar.collapsed {
+  transform: translateX(-100%);
+  transition: transform 0.3s ease;
+}
+
+#mainContent.collapsed,
+.main-content.collapsed {
+  margin-left: 0;
+  width: 100%;
+}

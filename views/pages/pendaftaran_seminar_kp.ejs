@@ -1,0 +1,70 @@
+<% if (typeof success !== 'undefined' && success) { %>
+  <script>
+    alert("Pendaftaran seminar KP berhasil diajukan.");
+    window.location.href = "/seminar_kp";
+  </script>
+<% } %>
+
+<section class="main-section">
+  <h2>Seminar KP</h2>
+
+  <% if (!status || (status !== 'diajukan' && status !== 'dijadwalkan')) { %>
+    <!-- FORM PENDAFTARAN HANYA MUNCUL JIKA BELUM DAFTAR -->
+    <div class="form-wrapper">
+      <h3>Pendaftaran Seminar KP</h3>
+      <form action="/submit_seminar" method="POST" class="kp-form" enctype="multipart/form-data">
+
+        <!-- Nama -->
+        <label>Nama</label>
+        <input type="text" name="nama" value="<%= mahasiswa.nama %>" readonly />
+
+        <!-- NIM -->
+        <label>NIM</label>
+        <input type="text" name="nim" value="<%= mahasiswa.nim %>" readonly />
+
+        <!-- Dosen Pembimbing -->
+        <label>Dosen Pembimbing</label>
+        <input type="text" name="dosen_pembimbing" value="<%= mahasiswa.dosen_pembimbing %>" readonly />
+
+        <!-- Judul Laporan -->
+        <label>Judul Laporan KP</label>
+        <input type="text" name="judul_laporan" required />
+
+        <!-- Upload File -->
+        <label>Upload Laporan KP</label>
+        <input type="file" name="laporan_kp" accept=".pdf,.doc,.docx" required />
+
+        <div class="form-actions">
+          <a href="#" class="back-btn" onclick="window.history.back()">← Back</a>
+          <button type="submit" class="submit-btn">Daftar</button>
+        </div>
+      </form>
+    </div>
+  <% } %>
+
+  <% if (status) { %>
+    <div class="seminar-status-box">
+      <h4>Status Seminar:</h4>
+      <p><strong>Status:</strong> <%= status.charAt(0).toUpperCase() + status.slice(1) %></p>
+
+      <% if (status === 'dijadwalkan' && jadwal) { %>
+        <p><strong>Jadwal Seminar:</strong>
+          <%= new Date(jadwal).toLocaleString('id-ID', {
+            weekday: 'long',
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit'
+          }) %>
+        </p>
+      <% } %>
+
+      <% if (status === 'diajukan') { %>
+        <form action="/batalkan_seminar_kp" method="POST" onsubmit="return confirm('Yakin ingin membatalkan pengajuan?');">
+          <button type="submit" class="cancel-btn">Batalkan Pengajuan</button>
+        </form>
+      <% } %>
+    </div>
+  <% } %>
+</section>

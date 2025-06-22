@@ -1,0 +1,52 @@
+<section class="main-content">
+  <h2>Daftar Pengajuan KP</h2>
+
+  <div class="pengajuan-kp-card">
+
+  <p><strong>Nama Mahasiswa</strong> <br>
+    <%= pengajuan.nama_mahasiswa %></p>
+  <p><strong>NIM</strong> <br>
+    <%= pengajuan.nim %></p>
+  <p><strong>Perusahaan</strong> <br>
+    <%= pengajuan.perusahaan %></p>
+  <p><strong>Alamat Perusahaan</strong> <br>
+    <%= pengajuan.alamatPerusahaan %></p>
+
+  <button class="dokumen-link" onclick="openDokumenModal()">📄 Lihat Dokumen</button>
+<div id="dokumenModal" class="modal" style="display: none;">
+  <div class="modal-content">
+    <span class="close" onclick="closeDokumenModal()">&times;</span>
+    <h3>Dokumen Pengajuan KP</h3>
+
+    <div class="dokumen-container">
+    
+      <p><strong>Proposal KP:</strong></p>
+<iframe src="/upload/<%= pengajuan.proposal_kp %>" width="100%" height="250px"></iframe>
+
+<p><strong>Surat Pengajuan KP:</strong></p>
+<iframe src="/upload/<%= pengajuan.surat_pengajuan_kp %>" width="100%" height="250px"></iframe>
+
+<p><strong>Transkrip Nilai:</strong></p>
+<iframe src="/upload/<%= pengajuan.transkrip_nilai %>" width="100%" height="250px"></iframe>
+
+    </div>
+  </div>
+</div>
+
+<script>
+function openDokumenModal() {
+  document.getElementById('dokumenModal').style.display = 'flex';
+}
+function closeDokumenModal() {
+  document.getElementById('dokumenModal').style.display = 'none';
+}
+</script>
+
+    <div class="form-actions">
+      <a href="/pengajuanKP" class="back-btn">← Back</a>
+      <form action="/pengajuanKP/detail/<%= pengajuan.id %>" method="POST">
+        <button type="submit" class="btn-verifikasi">Verifikasi</button>
+      </form>
+    </div>
+  </div>
+</section>

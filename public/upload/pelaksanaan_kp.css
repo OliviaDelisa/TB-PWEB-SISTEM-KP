@@ -1,0 +1,118 @@
+/* ===== Global Reset & Body Background ===== */
+/* ===== Global Reset & Body Background ===== */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #fff;
+  overflow-x: hidden;
+  position: relative;
+}
+
+body::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('/image/LogoUnand.png');
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 30%;
+  background-attachment: fixed;
+  opacity: 0.08; /* Terlihat tapi tidak mengganggu */
+  z-index: 0;
+}
+
+/* ===== Container Layout ===== */
+.container {
+  display: flex;  /* Flexbox untuk sidebar dan main content */
+  min-height: 100vh;
+  position: relative;
+  z-index: 1;
+}
+
+
+/* ===== Main Content ===== */
+.main-content {
+ /* Membuat main content menyesuaikan dengan ruang yang tersisa */
+  border-radius: 10px;
+  box-shadow: none;  /* Menghilangkan box shadow */
+  display: flex;
+  flex-direction: column;
+  align-items: left; 
+  margin-left: 50px;
+  z-index: 1;
+}
+
+/* ===== Section Box Styling (Updated) ===== */
+.section-box {
+  width: 100%;
+  max-width: 800px;  /* Ukuran yang lebih kecil agar tidak terlalu besar */
+  margin: 10px ;
+  background-color: #f5d0a9;  /* Oranye pudar untuk background */
+  border-radius: 12px;
+  text-align: left;  /* Center content inside */
+  box-shadow: none;  /* Remove box shadow */
+}
+
+/* Section heading styling */
+.laporan-kemajuan h2, .absensi h2, .unggah-dokumen h2 {
+  color: #333;
+  font-weight: bold;
+  font-size: 20px;
+  margin: 5px;
+  padding: 5px;
+}
+
+/* Button styling for each section */
+.laporan-kemajuan .btn, .absensi .btn, .unggah-dokumen .btn {
+  background-color: #007bff;  /* Tombol biru terang */
+  color: white;
+  padding: 10px 20px; /* Ukuran padding yang lebih besar */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+  width: 100%;
+  max-width: 300px;  /* Tombol dengan lebar maksimum */
+  margin: 12px;  /* Center button */
+}
+
+/* Hover effect for the button */
+.laporan-kemajuan .btn:hover, .absensi .btn:hover, .unggah-dokumen .btn:hover {
+  background-color: #0056b3;  /* Hover effect untuk tombol */
+}
+
+/* Active state for the button */
+.laporan-kemajuan .btn:active, .absensi .btn:active, .unggah-dokumen .btn:active {
+  background-color: #003c7b;
+}
+
+.btn {
+  background-color: #e87e00;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s;
+}
+
+.btn:hover {
+  background-color: #cc6f00;
+}
+
+.main-content {
+  position: relative;
+  z-index: 1;
+}
+
+.btn {
+  position: relative;
+  z-index: 2;
+  pointer-events: auto;
+}

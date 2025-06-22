@@ -1,0 +1,223 @@
+  <div class="container">
+  <aside id="sidebar" class="sidebar expanded">
+    <div class="logo">
+      <img src="/image/LogoUnand.png" alt="Logo" />
+      <span class="logo-text">SIUNAND</span>
+    </div>
+    <nav>
+      <ul>
+        <li><a href="/home"><i class="fas fa-house"></i> <span class="text">Home</span></a></li>
+        <li><i class="fas fa-check-circle"></i> <span class="text">Persetujuan KP</span></li>
+        <li><i class="fas fa-file-alt"></i> <span class="text">Penilaian Laporan</span></li>
+        <li><a href="/jadwalseminar"><i class="fas fa-calendar-alt"></i> <span class="text">Jadwal Seminar</span></a></li>
+        <li class="active"><a href="/bimbingan"><i class="fas fa-chalkboard-teacher"></i> <span class="text">Bimbingan</span></a></li>
+        <li><a href="/informasipenting"><i class="fas fa-info-circle"></i> <span class="text">Informasi Penting</span></a></li>
+      </ul>
+    </nav>
+  </aside>
+
+  <div class="main-content">
+      <header>
+        <link rel="stylesheet" href="/upload/jb_waktudekat.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+        <div class="topbar">
+          <button id="toggleSidebar"><i class="fas fa-bars"></i></button>
+          <h1>Sistem Informasi Kerja Praktik</h1>
+          <div class="icons">
+            <button class="icon-btn"><i class="fas fa-bell"></i></button>
+            <button class="icon-btn"><i class="fas fa-user-circle"></i></button>
+          </div>
+        </div>
+      </header>
+
+      <main>
+        <div class="bg-logo"></div>
+        <h2>Bimbingan</h2>
+
+        <div class="cards-wrapper">
+          <h3 class="section-title">Jadwal Bimbingan dalam Waktu Dekat</h3>
+
+          <!-- Navigation buttons for connected pages -->
+          <div class="page-navigation">
+            <a href="/jadwalbimbingan" class="nav-btn">
+              <i class="fas fa-calendar"></i> Jadwal Bimbingan
+            </a>
+            <a href="/kelola_jadwalbimbingan" class="nav-btn">
+              <i class="fas fa-cog"></i> Kelola Jadwal Bimbingan
+            </a>
+          </div>
+
+          <table>
+            <thead>
+              <tr>
+                <th>Tanggal</th>
+                <th>Waktu</th>
+                <th>Nama Mahasiswa</th>
+                <th>Aksi</th>
+              </tr>
+            </thead>
+            <tbody id="jadwalBody">
+              <!-- Data akan ditampilkan oleh JavaScript -->
+            </tbody>
+          </table>
+
+          <!-- Loading indicator -->
+          <div id="loading" style="text-align: center; padding: 20px; display: none;">
+            <i class="fas fa-spinner fa-spin"></i> Memuat data...
+          </div>
+          
+          <!-- Error message -->
+          <div id="errorMessage" style="color: red; text-align: center; padding: 10px; display: none;"></div>
+
+          <a href="jadwalbimbingan" class="back-btn">
+            <i class="fas fa-arrow-left"></i> Back
+          </a>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- Modal Konfirmasi Pembatalan -->
+  <div id="confirmCancelModal" class="modal">
+    <div class="modal-content">
+      <h3>Yakin ingin membatalkan bimbingan ini?</h3>
+      <div class="modal-actions">
+        <button class="btn modal-cancel-btn" onclick="closeModal('confirmCancelModal')">Batal</button>
+        <button class="btn submit-btn" onclick="confirmCancel()">Ya, Batalkan</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const toggleBtn = document.getElementById("toggleSidebar");
+    const sidebar = document.getElementById("sidebar");
+    const dosenId = 1; // ID dosen yang sedang login (untuk demo)
+
+    toggleBtn.addEventListener("click", () => {
+      sidebar.classList.toggle("collapsed");
+    });
+
+    // Load jadwal bimbingan waktu dekat saat halaman dimuat
+    document.addEventListener("DOMContentLoaded", () => {
+      loadJadwalWaktuDekat();
+    });
+
+    // Fungsi untuk memuat data jadwal bimbingan waktu dekat
+    async function loadJadwalWaktuDekat() {
+      showLoading(true);
+      try {
+        const response = await fetch(`/api/jadwal-bimbingan/waktu-dekat/${dosenId}`);
+        const result = await response.json();
+        
+        if (result.success) {
+          renderJadwalTable(result.data);
+        } else {
+          showError('Gagal memuat data jadwal bimbingan waktu dekat');
+        }
+      } catch (error) {
+        console.error('Error:', error);
+        showError('Terjadi kesalahan saat memuat data');
+      } finally {
+        showLoading(false);
+      }
+    }
+
+    // Fungsi untuk menampilkan loading
+    function showLoading(show) {
+      const loading = document.getElementById('loading');
+      const errorMessage = document.getElementById('errorMessage');
+      
+      if (show) {
+        loading.style.display = 'block';
+        errorMessage.style.display = 'none';
+      } else {
+        loading.style.display = 'none';
+      }
+    }
+
+    // Fungsi untuk menampilkan error
+    function showError(message) {
+      const errorMessage = document.getElementById('errorMessage');
+      errorMessage.textContent = message;
+      errorMessage.style.display = 'block';
+    }
+
+    // Fungsi untuk render tabel jadwal
+    function renderJadwalTable(data) {
+      const tbody = document.getElementById('jadwalBody');
+      tbody.innerHTML = '';
+
+      if (data.length === 0) {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="4" style="text-align: center; padding: 20px; color: #666;">
+              Tidak ada jadwal bimbingan dalam 7 hari ke depan
+            </td>
+          </tr>
+        `;
+        return;
+      }
+
+      data.forEach(jadwal => {
+        const row = document.createElement('tr');
+        row.setAttribute('data-id', jadwal.id);
+        
+        const namaMahasiswa = jadwal.nama_mahasiswa || 'Belum ada booking';
+        
+        row.innerHTML = `
+          <td>${jadwal.tanggal_formatted}</td>
+          <td>${jadwal.waktu_bimbingan}</td>
+          <td>${namaMahasiswa}</td>
+          <td>
+            ${jadwal.nama_mahasiswa ? 
+              `<button class="cancel-btn" onclick="cancelBooking(${jadwal.id})">
+                <i class="fas fa-times-circle"></i> Batalkan Bimbingan
+              </button>` : 
+              '<span style="color: #999;">Belum ada booking</span>'
+            }
+          </td>
+        `;
+        
+        tbody.appendChild(row);
+      });
+    }
+
+    // Fungsi untuk membatalkan booking
+    async function cancelBooking(jadwalId) {
+      if (confirm('Yakin ingin membatalkan bimbingan ini?')) {
+        try {
+          const response = await fetch(`/api/jadwal-bimbingan/${jadwalId}`, {
+            method: 'PUT',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              status: 'dibatalkan'
+            })
+          });
+          
+          const result = await response.json();
+          
+          if (result.success) {
+            alert('Bimbingan berhasil dibatalkan');
+            loadJadwalWaktuDekat(); // Reload data
+          } else {
+            alert('Gagal membatalkan bimbingan: ' + result.message);
+          }
+        } catch (error) {
+          console.error('Error:', error);
+          alert('Terjadi kesalahan saat membatalkan bimbingan');
+        }
+      }
+    }
+
+    function openModal(modalId) {
+      document.getElementById(modalId).style.display = 'flex';
+    }
+
+    function closeModal(modalId) {
+      document.getElementById(modalId).style.display = 'none';
+    }
+  </script>
+</body>
+</html>

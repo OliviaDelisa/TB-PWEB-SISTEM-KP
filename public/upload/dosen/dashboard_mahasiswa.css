@@ -1,0 +1,160 @@
+body {
+  font-family: sans-serif;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  position: relative; /* Make sure pseudo-element is positioned relative to the body */
+}
+
+body::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url('/image/LogoUnand.png');
+  background-size: 30%;  /* Adjust the logo size */
+  background-repeat: no-repeat;
+  background-position: center;
+  background-attachment: fixed;
+  opacity: 0.5; /* Adjust the opacity to make the logo transparent (0 = fully transparent, 1 = fully opaque) */
+  z-index: -1; /* Make sure the pseudo-element stays behind the content */
+}
+
+
+.header {
+  display: flex;
+  align-items: center;
+  padding: 1rem 2rem;
+}
+
+.title {
+  color: #d2691e;
+  font-weight: bold;
+  flex-grow: 1;
+}
+
+.nav-links a {
+  margin-left: 1.5rem;
+  text-decoration: none;
+  color: #444;
+}
+
+.nav-links a:first-child {
+  color: #d2691e;
+}
+
+.main-container {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 2rem;
+  position: relative;
+}
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;  /* This controls the spacing between all buttons */
+  transform: translateX(100px); /* Shift sidebar even further right by 100px */
+  margin-right: 2rem;
+  flex: 0 0 250px; /* Fixed width for sidebar */
+}
+
+
+
+.sidebar button {
+  background-color: #e66000;
+  color: #fff;
+  border: none;
+  padding: 1rem 2rem;
+  border-radius: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  font-weight: bold;
+  cursor: pointer;
+  width: 100%;
+}
+
+.content {
+  flex: 1;
+  min-width: 300px;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.seminar-box {
+  background: linear-gradient(to bottom right, #fca652, #ffd3a2);
+  border-radius: 30px;
+  padding: 3rem;  /* Increase padding to add height */
+  width: 260px;
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.1);
+  position: absolute; /* Move seminar box */
+  right: 30px;  /* Shift 30px from the right edge */
+  top: 80px; /* Position the seminar box 80px from the top */
+  height: auto; /* Set height to auto so it grows based on padding and content */
+}
+
+
+
+.seminar-box .status {
+  text-align: right;
+  font-weight: bold;
+  margin-top: 1rem;
+  color: #9b4800;
+}
+
+/* Menghilangkan garis bawah pada link di sidebar */
+.sidebar nav ul li a {
+  text-decoration: none !important;
+  color: inherit;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+}
+
+.sidebar nav ul li a:hover {
+  text-decoration: none !important;
+}
+
+.sidebar nav ul li a:visited {
+  text-decoration: none !important;
+}
+
+.sidebar nav ul li a:focus {
+  text-decoration: none !important;
+}
+
+/* Memastikan tidak ada garis bawah pada semua elemen sidebar */
+.sidebar * {
+  text-decoration: none;
+}
+
+.sidebar nav ul li {
+  text-decoration: none;
+}
+
+/* Reset CSS untuk sidebar - memastikan tidak ada garis bawah */
+.sidebar,
+.sidebar *,
+.sidebar nav,
+.sidebar nav ul,
+.sidebar nav ul li,
+.sidebar nav ul li a,
+.sidebar nav ul li span,
+.sidebar nav ul li i {
+  text-decoration: none !important;
+  border-bottom: none !important;
+  border: none !important;
+}
+
+.sidebar nav ul li a:hover,
+.sidebar nav ul li a:visited,
+.sidebar nav ul li a:focus,
+.sidebar nav ul li a:active {
+  text-decoration: none !important;
+  border-bottom: none !important;
+}
+
+

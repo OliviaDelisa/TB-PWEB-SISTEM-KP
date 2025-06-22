@@ -1,0 +1,125 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background: linear-gradient(to right, #fff, #fef4ec);
+  color: #333;
+}
+
+/* ========== Navbar ========== */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 50px; /* Decreased padding for a more compact look */
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  font-size: 24px; /* Reduced font size */
+  font-weight: bold;
+  color: #d26500;
+}
+
+.logo-box {
+  width: 60px; /* Smaller logo box */
+  height: 60px; /* Smaller logo box */
+  background-color: #d26500;
+  border-radius: 24px;
+  margin-right: 10px; /* Reduced spacing */
+}
+
+nav {
+  display: flex;
+  align-items: center;
+  gap: 25px; /* Reduced gap between menu items */
+}
+
+nav a {
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+  font-size: 18px; /* Reduced font size for a more compact look */
+}
+
+.dropbtn {
+  background: none;
+  border: none;
+  font-size: 18px; /* Reduced font size */
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.dropdown {
+  position: relative;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: rgb(237, 234, 231);
+  min-width: 170px; /* Increased dropdown width */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  border-radius: 12px;
+  margin-top: 10px;
+  right: 0;
+  z-index: 1;
+}
+
+.dropdown-content a {
+  display: block;
+  padding: 14px 20px; /* Added padding */
+  text-decoration: none;
+  color: #333;
+  font-size: 16px; /* Reduced font size */
+}
+
+.dropdown-content a:hover {
+  background-color: #c0801a;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+/* ========== Main Content ========== */
+.content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 80px 250px 100px;
+  gap: 60px; /* Added gap between contact info and the contact box */
+}
+.contact-info {
+  text-align: left;
+  flex: 1;
+  margin-right: 20px;  /* Adjust this value to move text closer to the contact box */
+}
+
+.contact-info h1 {
+  font-size: 60px;
+  font-weight: 800;
+  margin-bottom: 30px;
+  color: #000;
+}
+
+.contact-info p {
+  font-size: 20px;
+  color: #555;
+  margin-bottom: 20px;
+}
+
+.contact-box {
+  background-color: #ffddb3;
+  padding: 40px;  /* Increased padding */
+  width: 400px;  /* Increased width */
+  height: 400px; /* Increased height */
+  text-align: center;
+  border-radius: 50px;
+  margin-left: -50px;  /* Shift it to the left */
+}

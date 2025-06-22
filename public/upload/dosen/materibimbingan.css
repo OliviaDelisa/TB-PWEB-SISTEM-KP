@@ -1,0 +1,599 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Inter', sans-serif;
+}
+
+main {
+  position: relative;
+  z-index: 1;
+}
+
+.bg-logo {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('/image/LogoUnand.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 400px;
+  opacity: 0.1;
+  z-index: -1;
+  pointer-events: none;
+}
+
+
+body {
+  display: flex;
+  height: 100vh;
+  background-color: #f9f9f9;
+  font-size: 16px;
+}
+
+.container {
+  display: flex;
+  width: 100%;
+}
+
+/* Sidebar */
+.sidebar {
+  width: 320px;
+  background: linear-gradient(to bottom, #e88d2a, #d56b1b);
+  color: white;
+  padding: 20px;
+  transition: transform 0.3s ease;
+  font-size: 17px;
+}
+
+.sidebar.hide {
+  transform: translateX(-100%);
+}
+
+.sidebar .logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 22px;
+  font-weight: bold;
+  margin-bottom: 30px;
+}
+
+.sidebar .logo img {
+  width: 40px;
+  height: 40px;
+}
+
+.sidebar nav ul {
+  list-style: none;
+}
+
+.sidebar nav ul li {
+  padding: 14px 12px;
+  cursor: pointer;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  transition: background 0.3s;
+  font-size: 17px;
+}
+
+.sidebar nav ul li:hover,
+.sidebar nav ul .active {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.sidebar nav ul li i {
+  width: 22px;
+  font-size: 18px;
+}
+
+
+/* ketika sidebar dikompres */
+.sidebar.collapsed {
+  width: 80px;
+}
+
+.sidebar.collapsed .logo-text,
+.sidebar.collapsed nav ul li .text {
+  display: none;
+}
+
+/* opsional: sentralkan ikon saat sidebar collapse */
+.sidebar nav ul li {
+  transition: padding 0.3s;
+}
+.sidebar.collapsed nav ul li {
+  padding: 14px 10px;
+  justify-content: center;
+}
+
+
+/* Main Content */
+.main-content {
+  flex-grow: 1;
+  background-color: #fff;
+  font-size: 17px;
+}
+
+header .topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #e88d2a;
+  color: white;
+  padding: 20px 25px;
+  font-size: 18px;
+}
+
+header .topbar button {
+  background: none;
+  border: none;
+  font-size: 22px;
+  color: white;
+  cursor: pointer;
+}
+
+header .topbar h1 {
+  font-size: 20px;
+  flex-grow: 1;
+  margin-left: 25px;
+}
+
+header .topbar .icons {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.bg-logo {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 400px;
+  height: 400px;
+  background-image: url('/image/LogoUnand.png');
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  opacity: 0.07;
+  transform: translate(-50%, -50%);
+  z-index: -1;
+  pointer-events: none;
+}
+
+
+.bimbingan-section {
+  padding: 30px 40px;
+  font-family: 'Inter', sans-serif;
+  color: #727272;
+  position: relative;
+}
+
+.bimbingan-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: #e88d2a;
+  margin-bottom: 20px;
+}
+
+.bimbingan-box {
+  background-color: #feefd9;
+  border-radius: 16px;
+  padding: 24px;
+  border: 1px solid #ddd;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  align-items: center;
+  position: relative;
+}
+
+.bimbingan-box h3 {
+  margin-bottom: 16px;
+  color:#727272;
+  font-size: 20px;
+  font-weight: 1000;
+}
+
+.bimbingan-subtitle {
+  font-size: 18px;
+  font-weight: 600;
+  color: #727272;
+  margin-bottom: 20px;
+}
+
+.bimbingan-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.bimbingan-actions .button-group {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.back-btn {
+
+  color: #727272;
+  text-decoration: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: background-color 0.3s ease;
+}
+
+.back-btn:hover {
+  color: #5f5f5f;
+  text-decoration: none;
+}
+
+.bimbingan-list {
+  background-color: #ffffff;
+  border-radius: 12px;
+  padding: 20px;
+  padding-bottom: 80px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e1e5e9;
+  position: relative;
+}
+
+.bimbingan-item {
+  display: flex;
+  align-items: center;
+  padding: 15px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  position: relative;
+  border: 1px solid #e9ecef;
+}
+
+.bimbingan-item:last-child {
+  margin-bottom: 0;
+}
+
+.bimbingan-item:hover {
+  background: #f1f3f4;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s ease;
+}
+
+.bimbingan-item i {
+  font-size: 24px;
+  color: #e88d2a;
+  margin-right: 15px;
+}
+
+.bimbingan-judul {
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 5px;
+}
+
+.bimbingan-info {
+  font-size: 14px;
+  color: #666;
+}
+
+.edit-btn, .add-btn {
+  background-color: #17a2b8;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.3s ease;
+  min-width: 100px;
+  justify-content: center;
+}
+
+.add-btn {
+  background-color: #e88d2a;
+}
+
+.add-btn:hover {
+  background-color: #9c5e1c;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.edit-btn {
+  background-color: #e88d2a;
+}
+
+.edit-btn:hover {
+  background-color: #ba7224;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.edit-btn i, .add-btn i {
+  font-size: 16px;
+}
+
+.edit-back-btn {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  z-index: 10;
+}
+
+.edit-back-btn button {
+  background-color: #e88d2a;
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.edit-back-btn button:hover {
+  background-color: #d56b1b;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.edit-back-btn button i {
+  font-size: 18px;
+  color: white;
+}
+
+/* Modal Overlay */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+.modal-box {
+  background: white;
+  padding: 30px;
+  border-radius: 15px;
+  text-align: center;
+  width: 500px;
+  max-width: 90vw;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  font-family: 'Inter', sans-serif;
+}
+
+.modal-box h3 {
+  font-size: 18px;
+  margin-bottom: 20px;
+  color: #e88d2a;
+}
+
+.upload-label {
+  display: inline-block;
+  padding: 12px 18px;
+  background-color: #f6f6f6;
+  border: 1px solid #ccc;
+  color: #727272;
+  cursor: pointer;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  font-size: 14px;
+}
+
+.upload-label i {
+  margin-right: 8px;
+}
+
+.modal-buttons {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  margin-top: 20px;
+  width: 100%;
+}
+
+.modal-buttons .ok-btn {
+  order: 1;
+  flex-shrink: 0;
+}
+
+.modal-buttons .submit-btn {
+  order: 2;
+  margin-left: auto;
+  flex-shrink: 0;
+  background-color: #e88d2a; 
+  color: white; 
+  font-weight: 600;
+  padding: 12px 20px;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  min-width: 120px;
+  text-align: center;
+}
+
+.modal-buttons .submit-btn:hover { 
+  background-color: #a0601b; 
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.ok-btn, .rename-btn, .delete-btn, .download-btn {
+  padding: 10px 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  min-width: 100px;
+  text-align: center;
+}
+
+.ok-btn { 
+  background-color: #6c757d; 
+  color: white; 
+}
+.ok-btn:hover { 
+  background-color: #5a6268; 
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.rename-btn { 
+  background-color: #ffc107; 
+  color: #212529; 
+  padding: 8px 12px;
+  min-width: auto;
+}
+.rename-btn:hover { 
+  background-color: #e0a800; 
+  transform: translateY(-1px);
+}
+
+.delete-btn { 
+  background-color: #dc3545; 
+  color: white; 
+  padding: 8px 12px;
+  min-width: auto;
+}
+.delete-btn:hover { 
+  background-color: #c82333; 
+  transform: translateY(-1px);
+}
+
+.download-btn { 
+
+  color: #e88d2a; 
+  transition: all 0.3s ease;
+  padding: 0;
+  min-width: auto;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+}
+
+.download-btn i {
+  color: #e88d2a; 
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.download-btn:hover {  
+  color: #d56b1b; 
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.download-btn:hover i {
+  color: #d56b1b;
+}
+
+.file-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-left: auto;
+}
+
+.download-only {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+}
+
+button:disabled {
+  background-color: #bdc3c7 !important;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+/* Menghilangkan garis bawah pada link di sidebar */
+.sidebar nav ul li a {
+  text-decoration: none !important;
+  color: inherit;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+}
+
+.sidebar nav ul li a:hover {
+  text-decoration: none !important;
+}
+
+.sidebar nav ul li a:visited {
+  text-decoration: none !important;
+}
+
+.sidebar nav ul li a:focus {
+  text-decoration: none !important;
+}
+
+/* Memastikan tidak ada garis bawah pada semua elemen sidebar */
+.sidebar * {
+  text-decoration: none;
+}
+
+.sidebar nav ul li {
+  text-decoration: none;
+}
+
+/* Reset CSS untuk sidebar - memastikan tidak ada garis bawah */
+.sidebar,
+.sidebar *,
+.sidebar nav,
+.sidebar nav ul,
+.sidebar nav ul li,
+.sidebar nav ul li a,
+.sidebar nav ul li span,
+.sidebar nav ul li i {
+  text-decoration: none !important;
+  border-bottom: none !important;
+  border: none !important;
+}
+
+.sidebar nav ul li a:hover,
+.sidebar nav ul li a:visited,
+.sidebar nav ul li a:focus,
+.sidebar nav ul li a:active {
+  text-decoration: none !important;
+  border-bottom: none !important;
+}

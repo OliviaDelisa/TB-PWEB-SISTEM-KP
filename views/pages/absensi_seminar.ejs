@@ -1,0 +1,36 @@
+<% if (typeof message !== 'undefined' && message) { %>
+  <script>
+    alert("<%= message %>");
+  </script>
+<% } %>
+
+<section class="main-section">
+  <h2>Seminar KP</h2>
+
+  <div class="form-wrapper">
+    <h3>Absensi Seminar</h3>
+
+    <form action="/upload_absensi_seminar" method="POST" enctype="multipart/form-data" class="kp-form">
+      <label for="file_absensi">Upload File Absensi</label>
+      <input type="file" name="file_absensi" id="file_absensi" required />
+
+      <% if (typeof fileAbsensi !== 'undefined' && fileAbsensi) { %>
+        <p style="color: green; margin-bottom: 10px;">
+          File saat ini:
+          <a href="/uploads_dokumen/<%= fileAbsensi %>" target="_blank">
+            <%= namaFileAbsensi %>
+          </a>
+        </p>
+      <% } %>
+
+      <p style="margin-top: 10px; font-size: 0.9em; color: gray;">
+        Download Format Absensi pada <strong>Dokumen dan Template</strong>
+      </p>
+
+      <div class="form-actions">
+        <a href="seminar_kp" class="back-btn">← Back</a>
+        <button type="submit" class="submit-btn">Upload Dokumen</button>
+      </div>
+    </form>
+  </div>
+</section>

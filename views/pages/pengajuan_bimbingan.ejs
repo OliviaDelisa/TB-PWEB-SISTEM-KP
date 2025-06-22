@@ -1,0 +1,50 @@
+<link rel="stylesheet" href="/upload/pengajuan_bimbingan.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+<div class="content-area">
+  <h2 class="card-title">Pengajuan Bimbingan KP</h2>
+
+  <!-- Kartu Jadwal -->
+  <div class="card">
+    <h2>Jadwal Bimbingan yang Tersedia</h2>
+    <table class="schedule-table">
+      <thead>
+        <tr>
+          <th>Tanggal</th>
+          <th>Waktu</th>
+          <th>Dosen Pembimbing</th>
+          <th>Aksi</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% jadwal.forEach(item => { %>
+          <tr>
+            <td><%= item.tanggal %></td>
+            <td><%= item.waktu %></td>
+            <td>Husnil Kamil, M.T</td>
+            <td>
+              <form action="/pengajuan_bimbingan/ajukan" method="POST">
+                <input type="hidden" name="id_jadwal" value="<%= item.id %>">
+                <button type="submit" class="btn-ajukan">Ajukan Jadwal Bimbingan</button>
+              </form>
+            </td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Jadwal yang akan datang -->
+  <div class="jadwal-diajukan">
+    <h3>Jadwal Bimbingan yang akan Datang</h3>
+    <% pengajuan.forEach(item => { %>
+      <div class="item-jadwal">
+        <p><strong><%= item.tanggal %></strong> <%= item.waktu %></p>
+        <p class="status menunggu"><%= item.status %></p>
+      </div>
+    <% }) %>
+  </div>
+
+  <a href="/jadwal_pengajuanBimbingan" class="btn-ajukan">Ajukan Jadwal Bimbingan</a>
+  <a href="/bimbingan" class="btn-back"><i class="fas fa-arrow-left"></i> Kembali</a>
+</div>

@@ -29,7 +29,7 @@ h2 {
 h3 {
   margin-top: 0;
   margin-bottom: 20px;
-  color: #4a3a28;
+  color: #000000;
 }
 
 .form-wrapper {
@@ -39,6 +39,7 @@ h3 {
   max-width: 1100px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
   margin: auto;
+  color: #000000;
 }
 
 .kp-form {
@@ -52,14 +53,25 @@ h3 {
   color: #3b2f22;
 }
 
+.kp-form label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: bold;
+}
+
+
+
 .kp-form input[type="text"],
-.kp-form input[type="file"] {
+.kp-form input[type="file"],
+.kp-form select,
+.kp-form .form-control{
   padding: 10px;
   margin-top: 5px;
   border-radius: 6px;
   border: 1px solid #d18b4a;
   background-color: #fefefe;
   transition: border 0.3s;
+  width: 95%;
 }
 
 .kp-form input:focus {
@@ -96,9 +108,82 @@ h3 {
   font-weight: bold;
   border-radius: 8px;
   cursor: pointer;
-  transition: background-color 0.2s ease;
+
 }
 
 .submit-btn:hover {
   background-color: #305dcf;
+}
+.penggantian-dosen-card{
+  background-color: #ffffff;
+  padding: 25px;
+  border-radius: 16px;
+  max-width: 1100px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  margin: auto;
+}
+
+.pilihdosen {
+  margin-top: 10px;
+  background-color: #ffffff;
+  border-radius: 15px;
+  width: 400px;
+  height: 40px;
+  padding: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0.1, 0.2); /* Efek timbul */
+  border: none; /* Hilangkan border */
+  appearance: none; /* Hilangkan tampilan default browser */
+}
+
+.teksarea {
+  margin-top: 10px;
+  background-color: #ffffff;
+  border-radius: 15px;
+  height: 100px;
+  padding: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0.1, 0.2); /* Efek timbul */
+  border: none; /* Hilangkan border */
+  resize: vertical; /* Bisa diubah ukurannya ke atas/bawah jika diperlukan */
+  font-family: inherit;
+  font-size: 14px;
+}
+
+.seminar-status-box {
+  margin-top: 20px;
+  padding: 15px;
+  background: #f9f9f9;
+  border-left: 5px solid #007bff;
+}
+.seminar-status-box p {
+  margin: 5px 0;
+}
+
+.batal-tombol{
+  background-color: #e74c3c;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+ .status-box {
+    background-color: #f0f8ff;
+    padding: 20px;
+    margin-top: 20px;
+    border-left: 5px solid #007bff;
+    border-radius: 6px;
+    font-size: 16px;
+  }
+.cancel-btn {
+  background: #e74c3c;
+  color: white;
+  padding: 6px 12px;
+  border: none;
+  border-radius: 4px;
+  margin-top: 10px;
+  cursor: pointer;
+}
+.cancel-btn:hover {
+  background: #c0392b;
 }

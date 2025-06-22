@@ -1,0 +1,16 @@
+ <section class="main-content">
+        <h2>Jadwal Seminar KP</h2>
+
+        <% seminarList.forEach(function(item) { %>
+          <div class="card">
+            <div class="info">
+              <strong><%= item.namaMahasiswa %></strong>
+              <p><%= item.dosenPembimbing %></p>
+              <a href="<%= item.linkDokumen %>" class="doc-link">📄 Dokumen</a>
+            </div>
+            <div class="action">
+              <a href="/jadwalSeminar/jadwalkan/<%= item._id %>" class="btn">Jadwalkan</a>
+            </div>
+          </div>
+        <% }); %>
+      </section>

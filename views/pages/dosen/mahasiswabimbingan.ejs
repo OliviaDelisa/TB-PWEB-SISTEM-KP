@@ -1,0 +1,689 @@
+<div class="container">
+  <aside id="sidebar" class="sidebar show">
+    <div class="logo">
+      <img src="/image/LogoUnand.png" alt="Logo" />
+      <span class="logo-text">SIUNAND</span>
+    </div>
+    <nav>
+      <ul>
+        <li><a href="/home"><i class="fas fa-house"></i> <span class="text">Home</span></a></li>
+        <li><i class="fas fa-check-circle"></i> <span class="text">Persetujuan KP</span></li>
+        <li><i class="fas fa-file-alt"></i> <span class="text">Penilaian Laporan</span></li>
+        <li><a href="/jadwalseminar"><i class="fas fa-calendar-alt"></i> <span class="text">Jadwal Seminar</span></a></li>
+        <li class="active"><a href="/bimbingan"><i class="fas fa-chalkboard-teacher"></i> <span class="text">Bimbingan</span></a></li>
+        <li><a href="/informasipenting"><i class="fas fa-info-circle"></i> <span class="text">Informasi Penting</span></a></li>
+      </ul>
+    </nav>
+  </aside>
+
+  <div class="main-content">
+    <header>
+      <link rel="stylesheet" href="/upload/mahasiswabimbingan.css">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+      <div class="topbar">
+        <button id="toggleSidebar"><i class="fas fa-bars"></i></button>
+        <h1>Sistem Informasi Kerja Praktik</h1>
+        <div class="icons">
+          <button class="icon-btn"><i class="fas fa-bell"></i></button>
+          <button class="icon-btn"><i class="fas fa-user-circle"></i></button>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <div class="bg-logo"></div>
+      <h2>Bimbingan</h2>
+
+      <div class="bimbingan-box">
+        <h3>Mahasiswa Bimbingan</h3>
+        
+        <!-- Loading indicator -->
+        <div id="loading" style="text-align: center; padding: 20px; display: none;">
+          <i class="fas fa-spinner fa-spin"></i> Memuat data...
+        </div>
+        
+        <!-- Error message -->
+        <div id="errorMessage" style="color: red; text-align: center; padding: 10px; display: none;"></div>
+        
+        <table class="bimbingan-table">
+          <thead>
+            <tr>
+              <th>NIM</th>
+              <th>Nama</th>
+              <th>Email</th>
+              <th>Angkatan</th>
+              <th>Status</th>
+              <th>Aksi</th>
+            </tr>
+          </thead>
+          <tbody id="mahasiswaBody">
+            <!-- Data akan ditampilkan oleh JavaScript -->
+          </tbody>
+        </table>
+
+        <div class="button-actions">
+          <a href="bimbingan" class="back-btn"><i class="fas fa-arrow-left"></i> Back</a>
+          <button class="btn print-all" onclick="previewAllMahasiswaPdf()"><i class="fas fa-print"></i> Print Daftar Mahasiswa</button>
+          <button class="btn tambah" onclick="openAddModal()"><i class="fas fa-plus-circle"></i> Tambah</button>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<!-- Modal Tambah Mahasiswa -->
+<div class="modal-overlay" id="addModalOverlay">
+  <div class="modal-box">
+    <h3>Tambah Mahasiswa Bimbingan</h3>
+    
+    <!-- Search input -->
+    <div style="margin-bottom: 15px;">
+      <label for="searchNIM">Cari berdasarkan NIM:</label>
+      <input type="text" id="searchNIM" placeholder="Masukkan NIM mahasiswa..." style="width: 100%; padding: 8px; margin-top: 5px;">
+      <button onclick="searchMahasiswa()" style="margin-top: 5px; padding: 5px 10px; background: #e88d2a; color: white; border: none; border-radius: 3px; cursor: pointer;">Cari</button>
+    </div>
+    
+    <!-- Search results -->
+    <div id="searchResults" style="margin-bottom: 15px; display: none;">
+      <label>Hasil Pencarian:</label>
+      <div id="searchResultsList" style="max-height: 150px; overflow-y: auto; border: 1px solid #ddd; padding: 10px; margin-top: 5px;"></div>
+    </div>
+    
+    <!-- Available mahasiswa dropdown -->
+    <div style="margin-bottom: 15px;">
+      <label for="mahasiswaSelect">Atau pilih dari daftar mahasiswa yang tersedia:</label>
+      <select id="mahasiswaSelect" style="width: 100%; padding: 8px; margin-top: 5px;">
+        <option value="">Pilih mahasiswa...</option>
+    </select>
+    </div>
+    
+    <div class="modal-actions">
+      <button class="btn kembali" onclick="closeAddModal()">Kembali</button>
+      <button class="btn tambah" onclick="addMahasiswa()">Tambah</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Preview PDF -->
+<div class="modal-overlay" id="pdfPreviewModal">
+  <div class="modal-box" style="width: 90%; max-width: 800px; height: 80vh;">
+    <div class="modal-header">
+      <h3>Preview Laporan Mahasiswa Bimbingan</h3>
+      <button class="close-btn" onclick="closePdfPreview()">&times;</button>
+    </div>
+    <div class="modal-content">
+      <div id="pdfPreviewContent" style="height: 60vh; overflow-y: auto; border: 1px solid #ddd; padding: 20px; background: white;">
+        <!-- PDF preview content will be generated here -->
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn kembali" onclick="closePdfPreview()">Tutup</button>
+      <button class="btn tambah" onclick="downloadPdf()"><i class="fas fa-download"></i> Download PDF</button>
+      <button class="btn print" onclick="printPdf()"><i class="fas fa-print"></i> Print</button>
+    </div>
+  </div>
+</div>
+
+<!-- Include jsPDF library -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.29/jspdf.plugin.autotable.min.js"></script>
+
+<script>
+  const toggleSidebar = document.getElementById("toggleSidebar");
+  const sidebar = document.getElementById("sidebar");
+  const dosenId = 1; // ID dosen yang sedang login (untuk demo)
+  let currentPdfData = null; // Untuk menyimpan data PDF yang sedang di-preview
+  
+  toggleSidebar.addEventListener("click", () => {
+    sidebar.classList.toggle("collapsed");
+  });
+
+  // Load mahasiswa bimbingan saat halaman dimuat
+  document.addEventListener("DOMContentLoaded", () => {
+    loadMahasiswaBimbingan();
+    loadAvailableMahasiswa();
+  });
+
+  // Fungsi untuk memuat data mahasiswa bimbingan
+  async function loadMahasiswaBimbingan() {
+    showLoading(true);
+    try {
+      const response = await fetch(`/api/mahasiswa-bimbingan/${dosenId}`);
+      const result = await response.json();
+      
+      if (result.success) {
+        renderTable(result.data);
+      } else {
+        showError('Gagal memuat data mahasiswa bimbingan');
+      }
+    } catch (error) {
+      console.error('Error loading mahasiswa bimbingan:', error);
+      showError('Terjadi kesalahan saat memuat data');
+    } finally {
+      showLoading(false);
+    }
+  }
+
+  // Fungsi untuk memuat mahasiswa yang tersedia
+  async function loadAvailableMahasiswa() {
+    try {
+      const response = await fetch(`/api/mahasiswa-bimbingan/available/${dosenId}`);
+      const result = await response.json();
+      
+      if (result.success) {
+        updateMahasiswaSelect(result.data);
+      }
+    } catch (error) {
+      console.error('Error loading available mahasiswa:', error);
+    }
+  }
+
+  // Fungsi untuk mencari mahasiswa berdasarkan NIM
+  async function searchMahasiswa() {
+    const nim = document.getElementById('searchNIM').value.trim();
+    if (!nim) {
+      alert('Masukkan NIM untuk mencari');
+      return;
+    }
+
+    try {
+      const response = await fetch(`/api/mahasiswa-bimbingan/search/${nim}`);
+      const result = await response.json();
+      
+      if (result.success) {
+        displaySearchResults(result.data);
+      } else {
+        showError('Gagal mencari mahasiswa');
+      }
+    } catch (error) {
+      console.error('Error searching mahasiswa:', error);
+      showError('Terjadi kesalahan saat mencari');
+    }
+  }
+
+  // Fungsi untuk menampilkan hasil pencarian
+  function displaySearchResults(mahasiswaList) {
+    const resultsDiv = document.getElementById('searchResults');
+    const resultsList = document.getElementById('searchResultsList');
+    
+    if (mahasiswaList.length === 0) {
+      resultsList.innerHTML = '<p style="color: #666;">Tidak ada mahasiswa ditemukan</p>';
+    } else {
+      resultsList.innerHTML = mahasiswaList.map(mhs => `
+        <div style="padding: 8px; border-bottom: 1px solid #eee; cursor: pointer;" 
+             onclick="selectMahasiswaFromSearch(${mhs.id}, '${mhs.nim}', '${mhs.nama}')">
+          <strong>${mhs.nim}</strong> - ${mhs.nama}
+        </div>
+      `).join('');
+    }
+    
+    resultsDiv.style.display = 'block';
+  }
+
+  // Fungsi untuk memilih mahasiswa dari hasil pencarian
+  function selectMahasiswaFromSearch(id, nim, nama) {
+    document.getElementById('mahasiswaSelect').value = id;
+    document.getElementById('searchNIM').value = nim;
+    document.getElementById('searchResults').style.display = 'none';
+  }
+
+  // Fungsi untuk render tabel
+  function renderTable(mahasiswaData) {
+    const tbody = document.getElementById("mahasiswaBody");
+    tbody.innerHTML = "";
+    
+    if (mahasiswaData.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; padding: 20px; color: #666;">Belum ada mahasiswa bimbingan</td></tr>';
+      return;
+    }
+    
+    mahasiswaData.forEach((mhs, index) => {
+      tbody.innerHTML += `
+        <tr id="row-${mhs.bimbingan_id}">
+          <td><input type="text" id="nim-${mhs.bimbingan_id}" value="${mhs.nim}" disabled></td>
+          <td><input type="text" id="nama-${mhs.bimbingan_id}" value="${mhs.nama}" disabled></td>
+          <td><input type="email" id="email-${mhs.bimbingan_id}" value="${mhs.email || ''}" disabled></td>
+          <td><input type="number" id="angkatan-${mhs.bimbingan_id}" value="${mhs.angkatan || ''}" disabled></td>
+          <td><input type="text" id="status-${mhs.bimbingan_id}" value="${mhs.status || 'aktif'}" disabled></td>
+          <td>
+            <div class="action-buttons">
+              <button class="btn lihat" onclick="window.location.href='/catatanbimbingan?mahasiswa_id=${mhs.mahasiswa_id}&nim=${mhs.nim}&nama=${encodeURIComponent(mhs.nama)}'">Catatan</button>
+              <button class="btn lihat" onclick="window.location.href='/laporan'">Laporan</button>
+              <button class="btn edit" onclick="editMahasiswa(${mhs.bimbingan_id})"><i class="fas fa-edit"></i></button>
+              <button class="btn save" style="display:none" onclick="saveMahasiswa(${mhs.bimbingan_id})">Simpan</button>
+              <button class="btn kembali" style="display:none" onclick="cancelEdit(${mhs.bimbingan_id})">Batal</button>
+              <button class="btn hapus" style="display:none" onclick="hapusMahasiswa(${mhs.bimbingan_id})"><i class="fas fa-trash"></i></button>
+            </div>
+          </td>
+        </tr>`;
+    });
+  }
+
+  // Fungsi untuk mengedit mahasiswa
+  function editMahasiswa(bimbinganId) {
+    document.getElementById(`nim-${bimbinganId}`).disabled = false;
+    document.getElementById(`nama-${bimbinganId}`).disabled = false;
+    document.getElementById(`email-${bimbinganId}`).disabled = false;
+    document.getElementById(`angkatan-${bimbinganId}`).disabled = false;
+    document.getElementById(`status-${bimbinganId}`).disabled = false;
+    
+    document.querySelector(`#row-${bimbinganId} .save`).style.display = "inline-block";
+    document.querySelector(`#row-${bimbinganId} .kembali`).style.display = "inline-block";
+    document.querySelector(`#row-${bimbinganId} .hapus`).style.display = "inline-block";
+    document.querySelector(`#row-${bimbinganId} .edit`).style.display = "none";
+  }
+
+  // Fungsi untuk menyimpan perubahan mahasiswa
+  function saveMahasiswa(bimbinganId) {
+    const nim = document.getElementById(`nim-${bimbinganId}`).value;
+    const nama = document.getElementById(`nama-${bimbinganId}`).value;
+    const email = document.getElementById(`email-${bimbinganId}`).value;
+    const angkatan = document.getElementById(`angkatan-${bimbinganId}`).value;
+    const status = document.getElementById(`status-${bimbinganId}`).value;
+
+    if (!nim || !nama) {
+      alert('NIM dan nama harus diisi!');
+      return;
+    }
+
+    fetch(`/api/mahasiswa-bimbingan/${bimbinganId}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ nim, nama, email, angkatan, status })
+    })
+    .then(response => response.json())
+    .then(result => {
+      if (result.success) {
+        alert('Data mahasiswa berhasil diperbarui');
+        cancelEdit(bimbinganId);
+        loadMahasiswaBimbingan();
+      } else {
+        alert(result.message || 'Gagal memperbarui data mahasiswa');
+      }
+    })
+    .catch(error => {
+      console.error('Error updating mahasiswa:', error);
+      alert('Terjadi kesalahan saat memperbarui data');
+    });
+  }
+
+  // Fungsi untuk cancel edit
+  function cancelEdit(bimbinganId) {
+    loadMahasiswaBimbingan();
+  }
+
+  // Fungsi untuk hapus mahasiswa
+  async function hapusMahasiswa(bimbinganId) {
+    if (confirm("Yakin ingin menghapus mahasiswa ini dari daftar bimbingan?")) {
+      try {
+        const response = await fetch(`/api/mahasiswa-bimbingan/${bimbinganId}`, {
+          method: 'DELETE'
+        });
+
+        const result = await response.json();
+        
+        if (result.success) {
+          alert('Mahasiswa berhasil dihapus dari daftar bimbingan');
+          loadMahasiswaBimbingan();
+          loadAvailableMahasiswa();
+        } else {
+          alert(result.message || 'Gagal menghapus mahasiswa');
+        }
+      } catch (error) {
+        console.error('Error deleting mahasiswa:', error);
+        alert('Terjadi kesalahan saat menghapus mahasiswa');
+      }
+    }
+  }
+
+  // Fungsi untuk buka modal tambah
+  function openAddModal() {
+    document.getElementById("addModalOverlay").classList.add("show");
+    document.getElementById("searchNIM").value = "";
+    document.getElementById("searchResults").style.display = "none";
+    loadAvailableMahasiswa();
+  }
+
+  // Fungsi untuk tutup modal tambah
+  function closeAddModal() {
+    document.getElementById("addModalOverlay").classList.remove("show");
+  }
+
+  // Fungsi untuk update dropdown mahasiswa
+  function updateMahasiswaSelect(mahasiswaList) {
+    const select = document.getElementById("mahasiswaSelect");
+    select.innerHTML = '<option value="">Pilih mahasiswa...</option>';
+    
+    mahasiswaList.forEach(mhs => {
+      const option = document.createElement("option");
+      option.value = mhs.id;
+      option.textContent = `${mhs.nim} - ${mhs.nama} (Angkatan ${mhs.angkatan})`;
+      select.appendChild(option);
+    });
+  }
+
+  // Fungsi untuk tambah mahasiswa
+  async function addMahasiswa() {
+    const select = document.getElementById("mahasiswaSelect");
+    const selectedId = select.value;
+    
+    if (!selectedId) {
+      alert("Pilih mahasiswa terlebih dahulu");
+      return;
+    }
+
+    try {
+      const response = await fetch('/api/mahasiswa-bimbingan', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          dosen_id: dosenId,
+          mahasiswa_id: selectedId
+        })
+      });
+
+      const result = await response.json();
+      
+      if (result.success) {
+        alert(result.message);
+        closeAddModal();
+        loadMahasiswaBimbingan();
+        loadAvailableMahasiswa();
+      } else {
+        alert(result.message || 'Gagal menambahkan mahasiswa');
+      }
+    } catch (error) {
+      console.error('Error adding mahasiswa:', error);
+      alert('Terjadi kesalahan saat menambahkan mahasiswa');
+    }
+  }
+
+  // Fungsi untuk menampilkan loading
+  function showLoading(show) {
+    document.getElementById('loading').style.display = show ? 'block' : 'none';
+  }
+
+  // Fungsi untuk menampilkan error
+  function showError(message) {
+    const errorDiv = document.getElementById('errorMessage');
+    errorDiv.textContent = message;
+    errorDiv.style.display = 'block';
+    setTimeout(() => {
+      errorDiv.style.display = 'none';
+    }, 5000);
+  }
+
+  // Fungsi untuk preview PDF daftar semua mahasiswa
+  async function previewAllMahasiswaPdf() {
+    try {
+      // Ambil data mahasiswa bimbingan dari server
+      const response = await fetch(`/api/mahasiswa-bimbingan/${dosenId}`);
+      const result = await response.json();
+      
+      if (!result.success) {
+        alert('Gagal memuat data mahasiswa bimbingan');
+        return;
+      }
+      
+      const mahasiswaData = result.data;
+      currentPdfData = mahasiswaData; // Simpan data untuk download/print
+      
+      const previewContent = document.getElementById('pdfPreviewContent');
+      const currentDate = new Date().toLocaleDateString('id-ID', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+      });
+      
+      // Generate HTML untuk preview
+      let tableRows = '';
+      if (mahasiswaData.length === 0) {
+        tableRows = '<tr><td colspan="5" style="text-align: center; padding: 20px; color: #666;">Belum ada mahasiswa bimbingan</td></tr>';
+      } else {
+        tableRows = mahasiswaData.map((mhs, index) => `
+          <tr>
+            <td style="text-align: center;">${index + 1}</td>
+            <td>${mhs.nim}</td>
+            <td>${mhs.nama}</td>
+            <td>${mhs.email || '-'}</td>
+            <td>${mhs.angkatan || '-'}</td>
+            <td style="text-transform: capitalize;">${mhs.status || 'aktif'}</td>
+          </tr>
+        `).join('');
+      }
+      
+      previewContent.innerHTML = `
+        <div style="font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto;">
+          <!-- Header -->
+          <div style="text-align: center; margin-bottom: 30px; border-bottom: 2px solid #333; padding-bottom: 20px;">
+            <h1 style="margin: 0; color: #333;">UNIVERSITAS ANDALAS</h1>
+            <h2 style="margin: 5px 0; color: #666;">FAKULTAS TEKNOLOGI INFORMASI</h2>
+            <h3 style="margin: 5px 0; color: #888;">JURUSAN SISTEM INFORMASI</h3>
+            <p style="margin: 5px 0; color: #666;">Padang, Indonesia</p>
+          </div>
+          
+          <!-- Title -->
+          <div style="text-align: center; margin-bottom: 30px;">
+            <h2 style="margin: 0; color: #333; text-decoration: underline;">DAFTAR MAHASISWA BIMBINGAN</h2>
+            <p style="margin: 10px 0; color: #666;">Kerja Praktik</p>
+          </div>
+          
+          <!-- Date -->
+          <div style="text-align: right; margin-bottom: 30px;">
+            <p style="margin: 0; color: #666;">Padang, ${currentDate}</p>
+          </div>
+          
+          <!-- Content -->
+          <div style="margin-bottom: 30px;">
+            <p style="text-align: justify; line-height: 1.6; margin-bottom: 20px;">
+              Berikut adalah daftar mahasiswa yang sedang dalam bimbingan kerja praktik:
+            </p>
+            
+            <!-- Student Data Table -->
+            <table style="width: 100%; border-collapse: collapse; margin: 20px 0;">
+              <thead>
+                <tr style="background-color: #f5f5f5;">
+                  <th style="padding: 12px; border: 1px solid #ddd; text-align: center; width: 8%;">No</th>
+                  <th style="padding: 12px; border: 1px solid #ddd; text-align: center; width: 15%;">NIM</th>
+                  <th style="padding: 12px; border: 1px solid #ddd; text-align: center; width: 25%;">Nama Lengkap</th>
+                  <th style="padding: 12px; border: 1px solid #ddd; text-align: center; width: 25%;">Email</th>
+                  <th style="padding: 12px; border: 1px solid #ddd; text-align: center; width: 12%;">Angkatan</th>
+                  <th style="padding: 12px; border: 1px solid #ddd; text-align: center; width: 15%;">Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${tableRows}
+              </tbody>
+            </table>
+            
+            <!-- Summary -->
+            <div style="margin-top: 20px; padding: 15px; background-color: #f9f9f9; border-radius: 5px;">
+              <p style="margin: 0; font-weight: bold; color: #333;">
+                Total Mahasiswa Bimbingan: ${mahasiswaData.length} orang
+              </p>
+            </div>
+          </div>
+          
+          <!-- Footer -->
+          <div style="margin-top: 50px;">
+            <p style="text-align: justify; line-height: 1.6; margin-bottom: 30px;">
+              Demikian daftar mahasiswa bimbingan ini dibuat untuk dapat dipergunakan sebagaimana mestinya.
+            </p>
+            
+            <div style="display: flex; justify-content: space-between; margin-top: 50px;">
+              <div style="text-align: center; width: 45%;">
+                <p style="margin-bottom: 50px;">Dosen Pembimbing,</p>
+                <p style="margin-top: 50px; border-top: 1px solid #333; padding-top: 10px;">Dr. Ahmad Setiawan</p>
+                <p style="margin: 0; font-size: 12px;">NIP. 198501012010012001</p>
+              </div>
+              <div style="text-align: center; width: 45%;">
+                <p style="margin-bottom: 50px;">Ketua Jurusan,</p>
+                <p style="margin-top: 50px; border-top: 1px solid #333; padding-top: 10px;">Dr. Siti Nurhaliza</p>
+                <p style="margin: 0; font-size: 12px;">NIP. 198602022010012002</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+      
+      document.getElementById('pdfPreviewModal').classList.add('show');
+      
+    } catch (error) {
+      console.error('Error loading mahasiswa data for PDF:', error);
+      alert('Terjadi kesalahan saat memuat data untuk PDF');
+    }
+  }
+
+  // Fungsi untuk menutup preview PDF
+  function closePdfPreview() {
+    document.getElementById('pdfPreviewModal').classList.remove('show');
+    currentPdfData = null;
+  }
+
+  // Fungsi untuk download PDF
+  function downloadPdf() {
+    if (!currentPdfData || !Array.isArray(currentPdfData)) return;
+    
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+    
+    // Set font
+    doc.setFont("helvetica");
+    
+    // Header
+    doc.setFontSize(16);
+    doc.text("UNIVERSITAS ANDALAS", 105, 20, { align: "center" });
+    doc.setFontSize(14);
+    doc.text("FAKULTAS TEKNOLOGI INFORMASI", 105, 30, { align: "center" });
+    doc.setFontSize(12);
+    doc.text("JURUSAN SISTEM INFORMASI", 105, 40, { align: "center" });
+    doc.setFontSize(10);
+    doc.text("Padang, Indonesia", 105, 50, { align: "center" });
+    
+    // Title
+    doc.setFontSize(14);
+    doc.text("DAFTAR MAHASISWA BIMBINGAN", 105, 70, { align: "center" });
+    doc.setFontSize(10);
+    doc.text("Kerja Praktik", 105, 80, { align: "center" });
+    
+    // Date
+    const currentDate = new Date().toLocaleDateString('id-ID', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    });
+    doc.text(`Padang, ${currentDate}`, 150, 100);
+    
+    // Content
+    doc.setFontSize(11);
+    doc.text("Berikut adalah daftar mahasiswa yang sedang dalam bimbingan kerja praktik:", 20, 120);
+    
+    // Prepare table data
+    const tableData = currentPdfData.map((mhs, index) => [
+      index + 1,
+      mhs.nim,
+      mhs.nama,
+      mhs.email || '-',
+      mhs.angkatan || '-',
+      mhs.status || 'aktif'
+    ]);
+    
+    // Create table
+    doc.autoTable({
+      startY: 130,
+      head: [['No', 'NIM', 'Nama Lengkap', 'Email', 'Angkatan', 'Status']],
+      body: tableData,
+      theme: 'grid',
+      headStyles: { fillColor: [51, 51, 51] },
+      styles: { fontSize: 8 },
+      columnStyles: {
+        0: { cellWidth: 10 }, // No
+        1: { cellWidth: 25 }, // NIM
+        2: { cellWidth: 50 }, // Nama
+        3: { cellWidth: 45 }, // Email
+        4: { cellWidth: 20 }, // Angkatan
+        5: { cellWidth: 20 }  // Status
+      }
+    });
+    
+    // Summary
+    const finalY = doc.lastAutoTable.finalY + 10;
+    doc.setFontSize(10);
+    doc.text(`Total Mahasiswa Bimbingan: ${currentPdfData.length} orang`, 20, finalY);
+    
+    // Footer
+    doc.text("Demikian daftar mahasiswa bimbingan ini dibuat untuk dapat dipergunakan sebagaimana mestinya.", 20, finalY + 20);
+    
+    // Signatures
+    doc.text("Dosen Pembimbing,", 30, finalY + 50);
+    doc.text("Dr. Ahmad Setiawan", 30, finalY + 70);
+    doc.text("NIP. 198501012010012001", 30, finalY + 80);
+    
+    doc.text("Ketua Jurusan,", 120, finalY + 50);
+    doc.text("Dr. Siti Nurhaliza", 120, finalY + 70);
+    doc.text("NIP. 198602022010012002", 120, finalY + 80);
+    
+    // Save PDF
+    doc.save(`daftar_mahasiswa_bimbingan_${currentDate.replace(/\s+/g, '_')}.pdf`);
+  }
+
+  // Fungsi untuk print PDF
+  function printPdf() {
+    const printWindow = window.open('', '_blank');
+    const previewContent = document.getElementById('pdfPreviewContent').innerHTML;
+    
+    printWindow.document.write(`
+      <!DOCTYPE html>
+      <html>
+      <head>
+        <title>Daftar Mahasiswa Bimbingan</title>
+        <style>
+          body { 
+            font-family: Arial, sans-serif; 
+            margin: 20px; 
+            font-size: 12px;
+          }
+          @media print {
+            body { margin: 0; }
+            .no-print { display: none; }
+            table { page-break-inside: avoid; }
+          }
+          table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+          }
+          th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+          }
+          th {
+            background-color: #f5f5f5;
+            font-weight: bold;
+          }
+          .summary {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+          }
+        </style>
+      </head>
+      <body>
+        ${previewContent}
+        <div class="no-print" style="margin-top: 20px; text-align: center;">
+          <button onclick="window.print()" style="padding: 10px 20px; margin: 5px; background: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer;">Print</button>
+          <button onclick="window.close()" style="padding: 10px 20px; margin: 5px; background: #6c757d; color: white; border: none; border-radius: 5px; cursor: pointer;">Tutup</button>
+        </div>
+      </body>
+      </html>
+    `);
+    
+    printWindow.document.close();
+  }
+</script>

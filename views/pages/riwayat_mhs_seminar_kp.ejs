@@ -1,0 +1,58 @@
+<%- include('../partials/header') %>
+<link rel="stylesheet" href="/upload/riwayat_seminar_kp.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+<!-- Content Area -->
+<div class="content-area">
+  <h2>Seminar KP</h2>
+  <div class="card">
+    <div class="card-header">
+      <h3>Riwayat Seminar KP</h3>
+      <div class="search-box">
+        <input type="text" id="searchInput" placeholder="Cari berdasarkan NIM, Nama, atau Judul" />
+        <button type="button"><i class="fas fa-search"></i></button>
+      </div>
+    </div>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>NIM</th>
+          <th>Nama</th>
+          <th>Tanggal</th>
+          <th>Judul Laporan</th>
+        </tr>
+      </thead>
+<tbody id="seminarTable">
+  <% seminarList.forEach(function(item) { %>
+    <tr>
+      <td><%= item.nim %></td>
+      <td><%= item.nama %></td>
+      <td><%= item.tanggal %></td>
+      <td><%= item.judul_laporan %></td>
+    </tr>
+  <% }); %>
+</tbody>
+
+
+    </table>
+
+    <button class="btn-back" onclick="window.history.back();">&larr; Back</button>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    // Search filter
+    const searchInput = document.getElementById('searchInput');
+    const tableRows = document.querySelectorAll('#seminarTable tr');
+
+    searchInput.addEventListener('input', function () {
+      const keyword = this.value.toLowerCase();
+
+      tableRows.forEach(row => {
+        const rowText = row.textContent.toLowerCase();
+        row.style.display = rowText.includes(keyword) ? '' : 'none';
+      });
+    });
+  });
+</script>

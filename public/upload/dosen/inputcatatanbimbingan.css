@@ -1,0 +1,418 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Inter', sans-serif;
+}
+
+main {
+  position: relative;
+  z-index: 1;
+}
+
+.bg-logo {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('/image/LogoUnand.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 400px;
+  opacity: 0.1;
+  z-index: -1;
+  pointer-events: none;
+}
+
+
+body {
+  display: flex;
+  height: 100vh;
+  background-color: #f9f9f9;
+  font-size: 16px;
+}
+
+.container {
+  display: flex;
+  width: 100%;
+}
+
+/* Sidebar */
+.sidebar {
+  width: 320px;
+  background: linear-gradient(to bottom, #e88d2a, #d56b1b);
+  color: white;
+  padding: 20px;
+  transition: transform 0.3s ease;
+  font-size: 17px;
+}
+
+.sidebar.hide {
+  transform: translateX(-100%);
+}
+
+.sidebar .logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 22px;
+  font-weight: bold;
+  margin-bottom: 30px;
+}
+
+.sidebar .logo img {
+  width: 40px;
+  height: 40px;
+}
+
+.sidebar nav ul {
+  list-style: none;
+}
+
+.sidebar nav ul li {
+  padding: 14px 12px;
+  cursor: pointer;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  transition: background 0.3s;
+  font-size: 17px;
+}
+
+.sidebar nav ul li:hover,
+.sidebar nav ul .active {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.sidebar nav ul li i {
+  width: 22px;
+  font-size: 18px;
+}
+
+
+/* ketika sidebar dikompres */
+.sidebar.collapsed {
+  width: 80px;
+}
+
+.sidebar.collapsed .logo-text,
+.sidebar.collapsed nav ul li .text {
+  display: none;
+}
+
+/* opsional: sentralkan ikon saat sidebar collapse */
+.sidebar nav ul li {
+  transition: padding 0.3s;
+}
+.sidebar.collapsed nav ul li {
+  padding: 14px 10px;
+  justify-content: center;
+}
+
+/* Menghilangkan garis bawah pada link di sidebar */
+.sidebar nav ul li a {
+  text-decoration: none !important;
+  color: inherit;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+}
+
+.sidebar nav ul li a:hover {
+  text-decoration: none !important;
+}
+
+.sidebar nav ul li a:visited {
+  text-decoration: none !important;
+}
+
+.sidebar nav ul li a:focus {
+  text-decoration: none !important;
+}
+
+/* Memastikan tidak ada garis bawah pada semua elemen sidebar */
+.sidebar * {
+  text-decoration: none;
+}
+
+.sidebar nav ul li {
+  text-decoration: none;
+}
+
+/* Reset CSS untuk sidebar - memastikan tidak ada garis bawah */
+.sidebar,
+.sidebar *,
+.sidebar nav,
+.sidebar nav ul,
+.sidebar nav ul li,
+.sidebar nav ul li a,
+.sidebar nav ul li span,
+.sidebar nav ul li i {
+  text-decoration: none !important;
+  border-bottom: none !important;
+  border: none !important;
+}
+
+.sidebar nav ul li a:hover,
+.sidebar nav ul li a:visited,
+.sidebar nav ul li a:focus,
+.sidebar nav ul li a:active {
+  text-decoration: none !important;
+  border-bottom: none !important;
+}
+
+/* Main Content */
+.main-content {
+  flex-grow: 1;
+  background-color: #fff;
+  font-size: 17px;
+}
+
+header .topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #e88d2a;
+  color: white;
+  padding: 20px 25px;
+  font-size: 18px;
+}
+
+header .topbar button {
+  background: none;
+  border: none;
+  font-size: 22px;
+  color: white;
+  cursor: pointer;
+}
+
+header .topbar h1 {
+  font-size: 20px;
+  flex-grow: 1;
+  margin-left: 25px;
+}
+
+header .topbar .icons {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.bimbingan-wrapper {
+  padding: 30px;
+}
+
+.bimbingan-title {
+  font-size: 24px;
+  font-weight: 600;
+  color: #d56b1b;
+  margin-bottom: 25px;
+}
+
+.box-identitas {
+  background-color: #fff3e6;
+  padding: 20px 25px;
+  border-radius: 12px;
+  border: 1px solid #ddd;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  margin-bottom: 20px;
+}
+
+.identitas-text {
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+}
+
+.box-catatan {
+  background-color: #fff3e6;
+  padding: 25px;
+  border-radius: 12px;
+  border: 1px solid #ddd;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.judul-catatan {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  color: #727272;
+}
+
+.form-bimbingan .form-row {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.form-group {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 16px;
+}
+
+.form-group.full {
+  width: 100%;
+}
+
+
+.form-buttons {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.btn-back,
+.btn-submit {
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 16px;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.btn-back {
+  text-decoration: none;
+  color: #727272;
+  font-weight: 600;
+  font-size: 15px;
+  margin-right: 12px;
+  margin-left: 12px;
+  transition: all 0.2s ease;
+}
+
+.btn-back:hover {
+  text-decoration: underline;
+  color: #3b3b3b;
+}
+
+.btn-backs i {
+  margin-right: 6px;
+}
+
+.btn-submit {
+  background-color: #007bff;
+  color: white;
+  border: none;
+}
+
+.btn-submit:hover {
+  background-color: #005ec3;
+  color: white;
+  border: none;
+}
+
+.main-content {
+  flex-grow: 1;
+  background-color: #fff;
+  overflow-y: auto;
+}
+
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 24px;
+  background-color: #fff;
+  border-bottom: 1px solid #ddd;
+}
+
+.topbar h1 {
+  font-size: 20px;
+  color: #d56b1b;
+}
+
+.icon-btn {
+  background: none;
+  border: none;
+  font-size: 18px;
+  margin-left: 10px;
+  cursor: pointer;
+  color: #d56b1b;
+}
+
+section h2 {
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 24px;
+}
+
+.info-card {
+  display: flex;
+  align-items: flex-start;
+  background-color: #fff3e6;
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+  position: relative;
+}
+
+.info-image {
+  width: 100px;
+  height: 70px;
+  background-color: #f0f0f0;
+  border-radius: 8px;
+  margin-right: 20px;
+}
+
+.info-text {
+  flex-grow: 1;
+}
+
+.info-text h3 {
+  margin-bottom: 10px;
+  font-size: 18px;
+  color: #d56b1b;
+}
+
+.info-text p {
+  font-size: 14px;
+  color: #333;
+  line-height: 1.6;
+}
+
+.btn-edit {
+  position: absolute;
+  right: 20px;
+  bottom: 20px;
+  background-color: #f48c06;
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.btn-tambah {
+  background-color: #f48c06;
+  color: white;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 8px;
+  font-size: 15px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+

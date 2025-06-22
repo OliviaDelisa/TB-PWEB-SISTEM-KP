@@ -1,0 +1,49 @@
+<section class="main-section">
+  <h2>Pelaksanaan KP</h2>
+
+  <div class="laporan-wrapper">
+    <h3>Laporan Kemajuan</h3>
+
+    <form action="/upload_laporan" method="POST" enctype="multipart/form-data" class="laporan-form">
+      <label>Bimbingan Ke-</label>
+      <select name="bimbingan_ke" required>
+        <option value="">Pilih</option>
+        <option value="1">Bimbingan 1</option>
+        <option value="2">Bimbingan 2</option>
+        <option value="3">Bimbingan 3</option>
+      </select>
+
+      <label>Topik</label>
+      <input type="text" name="topik" required />
+
+      <label>Upload Laporan Kemajuan</label>
+      <input type="file" name="file_laporan" required />
+
+      <div class="form-actions">
+        <a href="#" class="back-btn" onclick="window.history.back()">← Back</a>
+        <button type="submit" class="submit-btn">Upload</button>
+      </div>
+    </form>
+
+    <h4>Riwayat Laporan Kemajuan</h4>
+    <table class="riwayat-table">
+      <thead>
+        <tr>
+          <th>Tanggal</th>
+          <th>Bimbingan</th>
+          <th>Topik</th>
+          <th>Laporan</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td><a href=""></a></td>
+          </tr>
+   
+      </tbody>
+    </table>
+  </div>
+</section>

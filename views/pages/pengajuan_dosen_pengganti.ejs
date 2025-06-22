@@ -1,0 +1,39 @@
+<section class="main-section">
+  <h2>Pengajuan Kerja Praktek</h2>
+
+  <% if (typeof berhasil !== 'undefined' && berhasil) { %>
+    <div class="alert">Pengajuan berhasil dikirim!</div>
+  <% } %>
+
+  <div class="form-wrapper">
+    <h3>Pembagian Dosen KP</h3>
+    <div class="penggantian-dosen-card">
+      <h3>Pengajuan Pergantian Dosen</h3>
+
+      <form action="/pengajuan/ganti-dosen" method="POST" class="kp-form">
+  
+
+
+  <label for="dosen_saat_ini">Dosen Saat Ini <span class="required">*</span></label>
+  <select name="dosen_saat_ini" id="dosen_saat_ini" required>
+    <option value="" disabled selected>Pilih Dosen</option>
+    <% dosenList.forEach(dosen => { %>
+      <option value="<%= dosen.id_dosen %>"><%= dosen.nama_dosen %></option>
+    <% }) %>
+  </select>
+
+  <label for="alasan">Alasan <span class="required">*</span></label>
+  <textarea name="alasan" class="teksarea" placeholder="Tulis alasan pergantian..." required></textarea>
+
+  <input type="hidden" name="status" value="pending">
+
+  <div class="form-actions">
+    <a href="#" class="back-btn" onclick="window.history.back()">← Kembali</a>
+    <button type="submit" class="submit-btn">Ajukan</button>
+  </div>
+
+</form>
+
+    </div>
+  </div>
+</section>

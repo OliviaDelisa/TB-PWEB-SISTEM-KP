@@ -1,0 +1,33 @@
+<section class="main-content">
+  <h2>Daftar Pengajuan Dosen Pengganti</h2>
+
+  <div class="search-bar">
+    <input type="text" placeholder="Cari" />
+    <button><i class="fas fa-search"></i></button>
+  </div>
+
+  <table class="pengajuanKP-table">
+    <thead>
+      <tr>
+        <th>NIM</th>
+        <th>Nama Mahasiswa</th>
+        <th>Dosen Sebelumnya</th>
+        <th>Status</th>
+        <th>Aksi</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% detailPengajuan.forEach(function(p) { %>
+        <tr>
+          <td><%= p.nim %></td>
+          <td><%= p.nama_mahasiswa %></td>
+          <td><%= p.dosen_sebelumnya %></td>
+          <td><%= p.status %></td>
+          <td>
+            <a href="/penggantianDosen/detail/<%= p.id %>" class="btn-detail">Lihat Detail</a>
+          </td>
+        </tr>
+      <% }); %>
+    </tbody>
+  </table>
+</section>

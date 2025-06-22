@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <%- include('../partials/header') %>
+  <link rel="stylesheet" href="/upload/home.css">
+</head>
+<body>
+  <header class="navbar">
+    <div class="logo">
+      <div class="logo-box"></div>
+      <span>Departemen Sistem Informasi</span>
+    </div>
+    <nav>
+      <a href="#">Home</a>
+      <a href="#">Contact</a>
+      <div class="dropdown">
+        <button class="dropbtn">Login ▼</button>
+        <div class="dropdown-content">
+          <a href="#">Mahasiswa</a>
+          <a href="#">Dosen</a>
+          <a href="#">Admin</a>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main class="content">
+    <div class="left">
+      <h1>Sistem Informasi<br>Kerja Praktik</h1>
+      <p>
+        Sistem ini dirancang untuk mempermudah <br> Mahasiswa dan Dosen Pembimbing dalam <br> mengelola data Kerja Praktik (KP).<br>
+        Silakan masuk ke sistem menggunakan akun Anda untuk melanjutkan.
+      </p>
+      <div class="buttons">
+        <button class="btn">Mahasiswa</button>
+        <button class="btn">Dosen</button>
+        <button class="btn">Admin</button>
+      </div>
+    </div>
+    <div class="right">
+      <img src="/image/LogoUnand.png" alt="Logo Unand">
+    </div>
+  </main>
+
+  <%- include('../partials/footer') %>
+</body>
+</html>

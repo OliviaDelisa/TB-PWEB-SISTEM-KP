@@ -1,60 +1,98 @@
+
 const express = require('express');
 const router = express.Router();
-const bcrypt = require('bcrypt');
 const db = require('../config/db');
 
-
-
-//Proses registrasi mahasiswa (cocok dengan action form)
-router.post('/signup_mahasiswa', async (req, res) => {
+// Register Mahasiswa
+router.post('/signup_mahasiswa', (req, res) => {
   const { nama, nim, email, password } = req.body;
-  const hashedPassword = await bcrypt.hash(password, 10);
 
-  db.query(
-    'INSERT INTO users (nama, nim, email, password, role) VALUES (?, ?, ?, ?, ?)',
-    [nama, nim, email, hashedPassword, 'mahasiswa'],
-    (err, result) => {
-      if (err) return res.send('Gagal mendaftar: ' + err.message);
-      res.redirect('/login/mahasiswa');
-
-// redirect ke halaman login
+  // Simpan ke tabel users
+  const insertUserSql = 'INSERT INTO users (email, password, role) VALUES (?, ?, ?)';
+  db.query(insertUserSql, [email, password, 'mahasiswa'], (err, result) => {
+    if (err) {
+      console.error('Gagal insert ke tabel users:', err);
+      return res.send('Gagal mendaftar: ' + err.message);
     }
-  );
+
+    const userId = result.insertId;
+
+    // Simpan ke tabel mahasiswa
+    const insertMahasiswaSql = 'INSERT INTO mahasiswa (user_id, nama, nim) VALUES (?, ?, ?)';
+    db.query(insertMahasiswaSql, [userId, nama, nim], (err2) => {
+      if (err2) {
+        console.error('Gagal insert ke tabel mahasiswa:', err2);
+        return res.send('Gagal simpan data mahasiswa: ' + err2.message);
+      }
+
+      // Jika berhasil
+      res.redirect('/login/mahasiswa');
+    });
+  });
 });
 
+module.exports = router;
+
+
+
+// -------------------------
+// HALAMAN LOGIN sesuai role
+// -------------------------
 router.get('/login/:role', (req, res) => {
-  const role = req.params.role.toLowerCase(); // untuk jaga-jaga kapital
+  const role = req.params.role.toLowerCase();
   if (!['mahasiswa', 'dosen', 'admin'].includes(role)) {
     return res.send('Role tidak valid');
   }
   res.render(`pages/login_${role}`, { layout: false });
 });
 
-
-//Proses login berdasarkan role
-router.post('/login/:role', async (req, res) => {
+// -------------------------
+// PROSES LOGIN sesuai role
+// -------------------------
+router.post('/login/:role', (req, res) => {
   const { email, password } = req.body;
   const role = req.params.role.toLowerCase();
 
   if (!['mahasiswa', 'dosen', 'admin'].includes(role)) {
-    return res.send('Role tidak valid');
+    return res.render(`pages/login_${role}`, {
+      layout: false,
+      error: 'Role tidak valid',
+      email
+    });
   }
 
-  db.query(
-    'SELECT * FROM users WHERE email = ? AND role = ?',
-    [email, role],
-    async (err, results) => {
-      if (err || results.length === 0) return res.send('Akun tidak ditemukan');
-
-      const user = results[0];
-      const isMatch = await bcrypt.compare(password, user.password);
-      if (!isMatch) return res.send('Password salah');
-
-      // Redirect ke dashboard sesuai role
-      res.redirect(`/dashboard_${role}`);
+  const sql = 'SELECT * FROM users WHERE email = ? AND role = ?';
+  db.query(sql, [email, role], (err, results) => {
+    if (err || results.length === 0) {
+      return res.render(`pages/login_${role}`, {
+        layout: false,
+        error: 'Email tidak ditemukan / Role salah',
+        email
+      });
     }
-  );
-});
 
+    const user = results[0];
+
+    if (user.password !== password) {
+      return res.render(`pages/login_${role}`, {
+        layout: false,
+        error: 'Password salah',
+        email
+      });
+    }
+
+    // Simpan session user
+    req.session.user = {
+      id: user.id,
+      email: user.email,
+      role: user.role
+    };
+
+    
+
+
+    res.redirect(`/dashboard_${role}`);
+  });
+});
 
 module.exports = router;

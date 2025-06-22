@@ -1,0 +1,50 @@
+.main-section {
+  padding: 20px;
+  padding-top: 0px;
+  background-color: #ffffff;
+  flex-grow: 1;
+  margin: 10px;
+}
+
+.laporan-wrapper {
+  background-color: #fff6ef;
+  padding: 25px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+h2 {
+    margin-top: 0px;
+    margin-bottom: 25px;
+    color: #d26500;
+}
+
+.dokumen-list {
+  list-style: none;
+  padding: 0;
+}
+
+.btn-print {
+  background-color: #ff8800;
+  color: rgb(255, 255, 255);
+  padding: 6px 12px;
+  border-radius: 4px;
+  text-decoration: none;
+  font-size: 0.9em;
+}
+
+.dokumen-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.dokumen-item a {
+  text-decoration: none;
+  color: #d35400;
+}
+
+
+

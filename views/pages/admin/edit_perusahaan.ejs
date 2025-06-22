@@ -1,0 +1,34 @@
+
+
+<h2 class="title">Edit Perusahaan</h2>
+
+<form class="form-container" action="/perusahaan/edit/<%= perusahaan.id %>" method="POST">
+  <div class="form-group">
+    <label for="nama_perusahaan">Nama Perusahaan</label>
+    <input type="text" name="nama_perusahaan" value="<%= perusahaan.nama_perusahaan %>" required>
+  </div>
+  <div class="form-group">
+    <label for="alamat_perusahaan">Alamat</label>
+    <input type="text" name="alamat_perusahaan" value="<%= perusahaan.alamat_perusahaan %>">
+  </div>
+  <div class="form-group">
+    <label for="email_perusahaan">Email</label>
+    <input type="email" name="email_perusahaan" value="<%= perusahaan.email_perusahaan %>">
+  </div>
+  <div class="form-group">
+    <label for="kontak">Kontak</label>
+    <input type="text" name="kontak" value="<%= perusahaan.kontak %>">
+  </div>
+  <div class="form-group">
+    <label for="kategori">Kategori</label>
+    <input type="text" name="kategori" value="<%= perusahaan.kategori %>">
+  </div>
+  <div class="form-group">
+    <label for="kuota">Kuota</label>
+    <input type="number" name="kuota" value="<%= perusahaan.kuota %>">
+  </div>
+  <div class="form-actions">
+    <a href="/perusahaan" class="btn-cancel">Batal</a>
+    <button type="submit" class="btn-submit">Selesai</button>
+  </div>
+</form>

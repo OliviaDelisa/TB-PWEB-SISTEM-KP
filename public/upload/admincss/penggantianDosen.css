@@ -1,0 +1,70 @@
+.main-content {
+  padding: 20px;
+  background-color: #ffffff;
+  flex-grow: 1;
+  padding-top: 0px;
+  margin: 10px;
+ 
+}
+
+h2 {
+  font-size: 30px;
+    margin-top: 0px;
+    margin-bottom: 25px;
+    color: #d26500;
+}
+
+.search-bar {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 10px;
+}
+
+.search-bar input {
+  padding: 6px 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px 0 0 5px;
+  outline: none;
+  font-size: 20px;
+}
+
+.search-bar button {
+  padding: 6px 10px;
+  background-color: #d26500;
+  border: none;
+  color: white;
+  border-radius: 0 5px 5px 0;
+  cursor: pointer;
+  font-size: 20px;
+}
+
+.pengajuan-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+.pengajuan-table th, .pengajuan-table td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: left;
+  font-size: 20px;
+}
+
+.pengajuan-table th {
+  background-color: #d26500;
+  color: white;
+}
+
+.btn-detail {
+  background-color: #2980b9;
+  color: white;
+  padding: 6px 17px;
+  text-decoration: none;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+.btn-detail:hover {
+  background-color: #216694;
+}

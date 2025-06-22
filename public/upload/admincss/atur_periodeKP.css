@@ -1,0 +1,109 @@
+/* atur_periodeKP.css */
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  background-color: #f4f4f4;
+}
+
+.wrapper {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* Konten utama */
+.main-content {
+  flex: 1;
+  padding: 40px;
+  background-color: #ffffff;
+}
+
+.main-content h1 {
+  font-size: 24px;
+  font-weight: bold;
+  color: #e88d2a;
+  margin-bottom: 20px;
+}
+
+/* Filter dan pencarian */
+.top-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+
+.search-wrapper {
+  display: flex;
+  align-items: center;
+}
+
+.search-box {
+  padding: 10px;
+  border-radius: 8px 0 0 8px;
+  border: 1px solid #ccc;
+  width: 200px;
+}
+
+.search-btn {
+  padding: 10px 16px;
+  background-color: #e88d2a;
+  border: none;
+  border-radius: 0 8px 8px 0;
+  color: white;
+  cursor: pointer;
+}
+
+.search-btn i {
+  font-size: 14px;
+}
+
+/* Tabel Periode KP */
+.periode-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 30px;
+  border: 1px solid #e0e0e0;
+}
+
+.periode-table th,
+.periode-table td {
+  padding: 12px 16px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.periode-table thead {
+  background-color: #e88d2a;
+  color: white;
+}
+
+.periode-table tbody tr:hover {
+  background-color: #f9f9f9;
+}
+
+/* Tombol Aksi */
+.action-buttons {
+  display: flex;
+  gap: 12px;
+}
+
+.btn-container {
+  margin-top: 10px;
+}
+
+.btn.edit, .btn.add, .btn.delete {
+  background-color: #e87c00;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  margin-right: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.btn.edit i, .btn.add i , .btn.delete i{
+  margin-right: 6px;
+  margin-top: 5px;
+}

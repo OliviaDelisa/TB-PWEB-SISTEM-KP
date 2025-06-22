@@ -1,27 +1,84 @@
 <section class="main-section">
   <h2>Pengajuan KP</h2>
-  <div class="form-wrapper">
-    <h3>Formulir Pengajuan KP</h3>
-    <form action="/submit_pengajuan" method="POST" class="kp-form">
-      <label>Nama</label>
-      <input type="text" name="nama" required />
 
-      <label>NIM</label>
-      <input type="text" name="nim" required />
+  <% if (!pengajuan) { %>
+    <!-- FORMULIR PENGAJUAN JIKA BELUM ADA PENGAJUAN -->
+    <div class="form-wrapper">
+      <h3>Formulir Pengajuan KP</h3>
+      <form action="/pengajuan_kp/submit" method="POST" class="kp-form">
+        <div class="form-group">
+          <label>Nama Mahasiswa</label>
+          <input type="text" name="nama" value="<%= mahasiswa.nama %>" readonly />
+        </div>
 
-      <label>Alamat Mahasiswa <span class="required">*</span></label>
-      <input type="text" name="alamat_mahasiswa" required />
+        <div class="form-group">
+          <label>NIM</label>
+          <input type="text" name="nim" value="<%= mahasiswa.nim %>" readonly />
+        </div>
 
-      <label>Perusahaan <span class="required">*</span></label>
-      <input type="text" name="perusahaan" required />
+        <div class="form-group">
+          <label>Alamat Mahasiswa <span class="required">*</span></label>
+          <input type="text" name="alamat_mahasiswa" required />
+        </div>
 
-      <label>Alamat Perusahaan <span class="required">*</span></label>
-      <input type="text" name="alamat_perusahaan" required />
+        <div class="form-group">
+          <label>Pilih Perusahaan <span class="required">*</span></label>
+          <select name="perusahaan_id" id="perusahaanSelect" onchange="toggleManualPerusahaan()" required>
+            <option value="">-- Pilih Perusahaan --</option>
+            <% perusahaanList.forEach(p => { %>
+              <option value="<%= p.id %>"><%= p.nama_perusahaan %></option>
+            <% }) %>
+            <option value="manual">Lainnya</option>
+          </select>
+        </div>
 
-      <div class="form-actions">
-        <a href="#" class="back-btn" onclick="window.history.back()">← Back</a>
-        <button type="submit" class="submit-btn">Ajukan KP</button>
-      </div>
-    </form>
-  </div>
+        <div id="manualFields" style="display: none;">
+          <div class="form-group">
+            <label>Nama Perusahaan <span class="required">*</span></label>
+            <input type="text" name="nama_perusahaan_manual" class="form-control" />
+          </div>
+          <div class="form-group">
+            <label>Alamat Perusahaan <span class="required">*</span></label>
+            <input type="text" name="alamat_perusahaan_manual" class="form-control" />
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <a href="#" class="back-btn" onclick="window.history.back()">← Back</a>
+          <button type="submit" class="submit-btn">Ajukan KP</button>
+        </div>
+      </form>
+    </div>
+  <% } %>
+
+  <% if (alert === 'batalkan_sukses') { %>
+    <div class="status-box" style="background-color: #f8d7da; border-left: 5px solid #dc3545;">
+      Pengajuan KP berhasil dibatalkan.
+    </div>
+  <% } %>
+
+  <% if (pengajuan) { %>
+    <!-- STATUS PENGAJUAN MUNCUL DI BAWAH FORMULIR (ATAU SENDIRI JIKA SUDAH PERNAH DIAJUKAN) -->
+    <div class="status-box">
+      <h3>Status Pengajuan KP</h3>
+      <p><strong>Status:</strong> <%= pengajuan.status %></p>
+      <p><strong>Perusahaan:</strong> <%= pengajuan.nama_perusahaan %></p>
+
+      <% if (pengajuan.status === 'diajukan') { %>
+        <form action="/pengajuan_kp/batal" method="POST" onsubmit="return confirm('Yakin ingin membatalkan pengajuan?');">
+          <button type="submit" class="batal-tombol" >Batalkan Pengajuan</button>
+        </form>
+      <% } %>
+    </div>
+  <% } %>
 </section>
+
+<script>
+  function toggleManualPerusahaan() {
+    const select = document.getElementById('perusahaanSelect');
+    const manualFields = document.getElementById('manualFields');
+    manualFields.style.display = (select.value === 'manual') ? 'block' : 'none';
+  }
+</script>
+
+

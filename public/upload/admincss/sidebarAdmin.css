@@ -1,0 +1,170 @@
+/* === Reset dan Font === */
+body {
+  font-family: 'Segoe UI', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f5f5f5;
+}
+
+/* === Sidebar === */
+.sidebar {
+  width: 250px;
+  background: #d26500;
+  color: white;
+  padding: 20px 10px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  transform: translateX(-100%);
+ font-size: 20px;
+  z-index: 1000;
+}
+
+.sidebar.open {
+  transform: translateX(0);
+}
+
+.logo {
+  font-size: 24px;
+  font-weight: bold;
+  color: white;
+  text-align: center;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.logo img {
+  width: 50px;
+  height: 50px;
+  margin-right: 10px;
+}
+
+.menu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.menu li {
+  margin: 10px 0;
+}
+
+.menu a {
+  color: white;
+  text-decoration: none;
+  padding: 10px 15px;
+  display: block;
+  border-radius: 6px;
+
+}
+
+
+.menu li.active a,
+.menu a:hover {
+  background-color: #f0d4b4;
+  color: #000;
+}
+
+/* === Navbar === */
+.navbar {
+  background-color: #d26500;
+  color: white;
+  padding: 10px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 999;
+  height: 60px;
+  
+}
+
+/* Geser navbar jika sidebar muncul */
+body.sidebar-open .navbar {
+  margin-left: 250px;
+}
+
+/* === Tombol Hamburger === */
+.hamburger {
+  font-size: 30px;
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  margin-right: 15px;
+  padding: 8px 12px;
+  border-radius: 6px;
+  transition: background-color 0.3s;
+}
+
+
+
+.hamburger:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+/* === Ikon Notifikasi dan Akun === */
+.nav-icons span {
+  margin-left: 15px;
+  font-size: 30px;
+  color: white;
+}
+
+/* === Konten Utama === */
+.content {
+  padding: 30px;
+  min-height: 100vh;
+  background-color: white;
+}
+.navbar h1 {
+  margin: 0;
+  font-size: 30px;
+  color: white;
+}
+/* Geser konten jika sidebar muncul */
+body.sidebar-open .content {
+  margin-left: 250px;
+}
+
+.nav-icons {
+  display: flex;
+  align-items: center;
+}
+
+.icon-link {
+  margin-left: 25px;
+  font-size: 30px;
+  color: white;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+
+.icon-link:hover {
+  color: #ffddaa; /* warna hover, opsional */
+}
+
+
+/* Responsive */
+@media (max-width: 768px) {
+  .sidebar {
+    transform: translateX(-100%);
+  }
+
+  .sidebar.open {
+    transform: translateX(0);
+  }
+
+  .navbar {
+    margin-left: 0 !important;
+  }
+
+  .content {
+    margin-left: 0 !important;
+    padding-top: 70px;
+  }
+}

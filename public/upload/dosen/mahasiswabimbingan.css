@@ -1,0 +1,726 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Inter', sans-serif;
+}
+
+main {
+  position: relative;
+  z-index: 1;
+}
+
+.bg-logo {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('/image/logo-unand.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 400px;
+  opacity: 0.1;
+  z-index: -1;
+  pointer-events: none;
+}
+
+body {
+  display: flex;
+  height: 100vh;
+  background-color: #f9f9f9;
+}
+
+.container {
+  display: flex;
+  width: 100%;
+}
+
+.sidebar {
+  width: 320px;
+  background: linear-gradient(to bottom, #e88d2a, #d56b1b);
+  color: white;
+  padding: 20px;
+  transition: transform 0.3s ease;
+  font-size: 17px;
+}
+
+.sidebar.hide {
+  transform: translateX(-100%);
+}
+
+.sidebar .logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 22px;
+  font-weight: bold;
+  margin-bottom: 30px;
+}
+
+.sidebar .logo img {
+  width: 40px;
+  height: 40px;
+}
+
+.sidebar nav ul {
+  list-style: none;
+}
+
+.sidebar nav ul li {
+  padding: 14px 12px;
+  cursor: pointer;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  transition: background 0.3s;
+  font-size: 17px;
+}
+
+.sidebar nav ul li:hover,
+.sidebar nav ul .active {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.sidebar nav ul li i {
+  width: 22px;
+  font-size: 18px;
+}
+
+
+.sidebar.collapsed {
+  width: 80px;
+}
+
+.sidebar.collapsed .logo-text,
+.sidebar.collapsed nav ul li .text {
+  display: none;
+}
+
+.sidebar nav ul li {
+  transition: padding 0.3s;
+}
+.sidebar.collapsed nav ul li {
+  padding: 14px 10px;
+  justify-content: center;
+}
+
+.main-content {
+  flex-grow: 1;
+  background-color: #fff;
+  font-size: 17px;
+}
+
+header .topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #e88d2a;
+  color: white;
+  padding: 20px 25px;
+  font-size: 18px;
+}
+
+header .topbar button {
+  background: none;
+  border: none;
+  font-size: 22px;
+  color: white;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+header .topbar button:hover {
+  transform: scale(1.1);
+}
+
+header .topbar h1 {
+  font-size: 20px;
+  flex-grow: 1;
+  margin-left: 25px;
+}
+
+header .topbar .icons {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.icon-btn {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 22px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.icon-btn:hover {
+  transform: scale(1.1);
+}
+
+main {
+  padding: 35px;
+  background-color: #f9f9f9;
+  min-height: calc(100vh - 70px);
+}
+
+main h2 {
+  color: #d56b1b;
+  margin-bottom: 25px;
+  font-size: 24px;
+}
+
+.bimbingan-box {
+  background-color: #feefd9;
+  border-radius: 16px;
+  padding: 24px;
+  border: 1px solid #ddd;    
+  align-items: center;
+}
+
+.bimbingan-box h3 {
+  margin-bottom: 16px;
+  color: #727272;
+  font-size: 20px;
+  
+}
+
+.bimbingan-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: white;
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 20px;
+  margin-top: 20px;
+  align-items: center;
+}
+
+.bimbingan-table thead {
+  background-color: #e88d2a;
+  color: white;
+}
+
+.bimbingan-table th,
+.bimbingan-table td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.bimbingan-table td:last-child {
+  text-align: center;
+}
+
+.bimbingan-table td button {
+  margin: 0 2px;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 5px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.btn {
+  padding: 8px 12px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.btn.tambah {
+  background-color: #28a745;
+  color: white;
+  padding: 10px 20px;
+  font-size: 14px;
+  border-radius: 8px;
+}
+
+.btn.tambah:hover {
+  background-color: #218838;
+}
+
+.btn.lihat {
+  background-color: #17a2b8;
+  color: white;
+  padding: 6px 10px;
+  font-size: 11px;
+}
+
+.btn.lihat:hover {
+  background-color: #138496;
+}
+
+.btn.edit {
+  background-color: #ffc107;
+  color: #212529;
+  padding: 6px 10px;
+  font-size: 11px;
+}
+
+.btn.edit:hover {
+  background-color: #e0a800;
+}
+
+.btn.hapus {
+  background-color: #dc3545;
+  color: white;
+  padding: 6px 10px;
+  font-size: 11px;
+}
+
+.btn.hapus:hover {
+  background-color: #c82333;
+}
+
+.btn.save {
+  background-color: #28a745;
+  color: white;
+  padding: 6px 10px;
+  font-size: 11px;
+}
+
+.btn.save:hover {
+  background-color: #218838;
+}
+
+.btn.kembali {
+  background-color: #6c757d;
+  color: white;
+  padding: 6px 10px;
+  font-size: 11px;
+}
+
+.btn.kembali:hover {
+  background-color: #5a6268;
+}
+
+/* Tombol Print */
+.btn.print {
+  background-color: #007bff;
+  color: white;
+  padding: 6px 10px;
+  font-size: 11px;
+}
+
+.btn.print:hover {
+  background-color: #0056b3;
+}
+
+/* Tombol Print All */
+.btn.print-all {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 20px;
+  font-size: 14px;
+  border-radius: 8px;
+}
+
+.btn.print-all:hover {
+  background-color: #0056b3;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Menghilangkan garis bawah pada link di sidebar */
+.sidebar nav ul li a {
+  text-decoration: none !important;
+  color: inherit;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+}
+
+.sidebar nav ul li a:hover {
+  text-decoration: none !important;
+}
+
+.sidebar nav ul li a:visited {
+  text-decoration: none !important;
+}
+
+.sidebar nav ul li a:focus {
+  text-decoration: none !important;
+}
+
+/* Memastikan tidak ada garis bawah pada semua elemen sidebar */
+.sidebar * {
+  text-decoration: none;
+}
+
+.sidebar nav ul li {
+  text-decoration: none;
+}
+
+/* Reset CSS untuk sidebar - memastikan tidak ada garis bawah */
+.sidebar,
+.sidebar *,
+.sidebar nav,
+.sidebar nav ul,
+.sidebar nav ul li,
+.sidebar nav ul li a,
+.sidebar nav ul li span,
+.sidebar nav ul li i {
+  text-decoration: none !important;
+  border-bottom: none !important;
+  border: none !important;
+}
+
+.sidebar nav ul li a:hover,
+.sidebar nav ul li a:visited,
+.sidebar nav ul li a:focus,
+.sidebar nav ul li a:active {
+  text-decoration: none !important;
+  border-bottom: none !important;
+}
+
+.bimbingan-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid #ddd;
+}
+
+.button-actions {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.back-btn {
+  background-color: #6c757d;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.back-btn:hover {
+  background-color: #5a6268;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.back-btn i {
+  font-size: 16px;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+}
+
+.modal-box {
+  background-color: white;
+  border-radius: 10px;
+  padding: 30px;
+  max-width: 500px;
+  width: 90%;
+  max-height: 80vh;
+  overflow-y: auto;
+  position: relative;
+  transform: scale(0.7);
+  transition: transform 0.3s ease;
+}
+
+.modal-box h3{
+  margin-bottom: 20px;
+  color: #333;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 600;
+  color: #555;
+}
+
+select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 14px;
+  margin-bottom: 15px;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+  margin-top: 20px;
+}
+
+.modal-actions .btn {
+  padding: 10px 20px;
+  font-size: 14px;
+}
+
+input[type="text"] {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+.btn.kembali {
+  background-color: #6c757d;
+  color: white;
+}
+
+.btn.kembali:hover {
+  background-color: #5a6268;
+}
+
+.btn.tambah {
+  background-color: #28a745;
+  color: white;
+}
+
+.btn.tambah:hover {
+  background-color: #218838;
+}
+
+.modal-overlay.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+.button-actions {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+}
+
+.modal-overlay.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+.modal-box {
+  background-color: white;
+  border-radius: 10px;
+  padding: 30px;
+  max-width: 500px;
+  width: 90%;
+  max-height: 80vh;
+  overflow-y: auto;
+  position: relative;
+  transform: scale(0.7);
+  transition: transform 0.3s ease;
+}
+
+.modal-box h3 {
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.modal-box label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 600;
+  color: #555;
+}
+
+.modal-box select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 14px;
+  margin-bottom: 15px;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+  margin-top: 20px;
+}
+
+.modal-actions .btn {
+  padding: 10px 20px;
+  font-size: 14px;
+}
+
+.btn.kembali {
+  background-color: #6c757d;
+  color: white;
+}
+
+.btn.kembali:hover {
+  background-color: #5a6268;
+}
+
+.btn.tambah-modal {
+  background-color: #28a745;
+  color: white;
+}
+
+.btn.tambah-modal:hover {
+  background-color: #218838;
+}
+
+/* Modal Preview PDF Styles */
+#pdfPreviewModal .modal-box {
+  width: 90%;
+  max-width: 800px;
+  height: 80vh;
+  display: flex;
+  flex-direction: column;
+}
+
+#pdfPreviewModal .modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #ddd;
+}
+
+#pdfPreviewModal .modal-header h3 {
+  margin: 0;
+  color: #333;
+  font-size: 18px;
+}
+
+#pdfPreviewModal .close-btn {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: #666;
+  padding: 0;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+
+#pdfPreviewModal .close-btn:hover {
+  background-color: #f0f0f0;
+  color: #333;
+}
+
+#pdfPreviewModal .modal-content {
+  flex: 1;
+  overflow: hidden;
+}
+
+#pdfPreviewContent {
+  height: 100%;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  padding: 20px;
+  background: white;
+  border-radius: 5px;
+}
+
+#pdfPreviewContent table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+}
+
+#pdfPreviewContent table td {
+  padding: 10px;
+  border: 1px solid #ddd;
+}
+
+#pdfPreviewContent table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+#pdfPreviewContent table tr:first-child {
+  background-color: #f5f5f5;
+}
+
+#pdfPreviewContent table tr:first-child td {
+  font-weight: bold;
+}
+
+/* Print button specific styles */
+.btn.print {
+  background-color: #007bff;
+  color: white;
+}
+
+.btn.print:hover {
+  background-color: #0056b3;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.7);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.modal-overlay.show .modal-box {
+  transform: scale(1);
+  animation: fadeIn 0.3s ease;
+}

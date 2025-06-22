@@ -1,0 +1,118 @@
+/* Global styles */
+body {
+    font-family: Arial, sans-serif;
+    background: radial-gradient(circle at top left, #fff 0%, #ffd58a 100%); /* Warna gradasi latar belakang */
+    margin: 0;
+    padding: 0;
+}
+
+/* Container for the login form */
+.login-container {
+    width: 100%;
+    max-width: 400px;
+    margin: 100px auto;
+    padding: 30px 40px;
+    background: linear-gradient(to bottom, #f5851f, #f7a033); /* Gradasi warna oranye untuk background form */
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Logo styling */
+.login-logo {
+    width: 100px;
+    margin: 20px auto;
+}
+
+/* Title and subtitle styles */
+h2, h3 {
+    color: white;
+    margin: 10px 0;
+}
+
+/* Input fields styling */
+input[type="email"],
+input[type="password"],
+input[type="text"] {
+    width: 100%;
+    padding: 12px;
+    margin-top: 15px;
+    border-radius: 8px;
+    border: none;
+    box-sizing: border-box;
+    font-size: 16px;
+    background-color: #ffffff; /* Background putih pada input */
+    color: #333; /* Warna teks input */
+    transition: all 0.3s ease; /* Transisi untuk perubahan tipe input */
+}
+
+/* Styling untuk kontainer input password */
+.password-container {
+    position: relative;
+    width: 100%;
+    margin-top: 10px;
+}
+
+/* Styling untuk input field password */
+input[type="password"],
+input[type="text"] {
+    width: 100%;
+    padding: 12px;
+    margin-top: 10px;
+    border-radius: 8px;
+    border: none;
+    box-sizing: border-box;
+    padding-right: 55px; /* Memberikan lebih banyak ruang untuk ikon mata di kanan */
+    font-size: 16px;
+}
+
+/* Styling untuk ikon mata */
+.password-container i {
+    position: absolute;
+    top: 60%;  /* Geser ke bawah sedikit */
+    right: 10px;  /* Menjaga jarak dari sisi kanan */
+    transform: translateY(-50%);  /* Menjaga ikon tetap di tengah vertikal */
+    cursor: pointer;
+    color: #aaa;
+    font-size: 24px;  /* Ukuran ikon mata */
+}
+
+
+/* Submit button styling */
+button {
+    width: 100%;
+    padding: 12px;
+    margin-top: 20px;
+    background-color: #006aff; /* Warna tombol biru */
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+/* Hover effect for the button */
+button:hover {
+    background-color: #004ec4; /* Efek hover lebih gelap */
+}
+
+/* Checkbox container styling */
+.checkbox-container {
+    text-align: left;
+    margin-top: 10px;
+    color: white;
+    font-size: 14px;
+}
+
+/* Forgot password link styling */
+.forgot-password {
+    margin-top: 15px;
+    font-size: 14px;
+    color: white;
+}
+
+/* Styling for the forgot password link */
+.forgot-password a {
+    color: #ffe;
+    text-decoration: underline;
+}

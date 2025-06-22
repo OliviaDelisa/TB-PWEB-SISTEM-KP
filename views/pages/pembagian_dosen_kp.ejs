@@ -1,0 +1,52 @@
+<section class="main-section">
+  <h2>Pengajuan KP</h2>
+
+  <div class="dosen-pembagian-wrapper">
+    <h3>Pembagian Dosen KP</h3>
+
+  
+    <form class="search-bar" method="GET" action="/pembagian_dosen_kp">
+  <input type="text" name="q" placeholder="Cari" value="<%= query || '' %>" />
+  <button type="submit" class="search-btn">
+    <i class="fas fa-search"></i>
+  </button>
+</form>
+
+
+
+    <table class="pembagian-table">
+      <thead>
+        <tr>
+          <th>NIM</th>
+          <th>Mahasiswa</th> 
+          <th>Perusahaan</th>
+          <th>Dosen KP</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% if (data && data.length > 0) { %>
+          <% data.forEach(row => { %>
+            <tr>
+              <td><%= row.nim %></td>
+              <td><%= row.nama_mahasiswa %></td>
+              <td><%= row.nama_perusahaan %></td>
+              <td><%= row.nama_dosen %></td>
+            </tr>
+          <% }) %>
+        <% } else { %>
+          <tr>
+            <td colspan="4" style="text-align:center;">Tidak ada data pembagian dosen KP</td>
+          </tr>
+        <% } %>
+      </tbody>
+    </table>
+
+    <div class="page-actions">
+      <a href="/pengajuan_kp" class="back-btn" onclick="window.history.back()">← Back</a>
+      <div>
+       <a href="/pembagian_dosen_kp/download-pdf?q=<%= query %>" class="submit-btn">Cetak Pembagian Dosen KP</a>
+        <a href="/pengajuan_dosen_pengganti" class="submit-btn">Ajukan Pergantian Dosen</a>
+      </div>
+    </div>
+  </div>
+</section>

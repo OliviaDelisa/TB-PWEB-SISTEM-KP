@@ -1,0 +1,174 @@
+<div class="container">
+  <aside id="sidebar" class="sidebar expanded">
+    <div class="logo">
+      <img src="/image/LogoUnand.png" alt="Logo" />
+      <span class="logo-text">SIUNAND</span>
+    </div>
+    <nav>
+      <ul>
+        <li><a href="/home"><i class="fas fa-house"></i> <span class="text">Home</span></a></li>
+        <li><i class="fas fa-check-circle"></i> <span class="text">Persetujuan KP</span></li>
+        <li><i class="fas fa-file-alt"></i> <span class="text">Penilaian Laporan</span></li>
+        <li class="active"><a href="/jadwalseminar"><i class="fas fa-calendar-alt"></i> <span class="text">Jadwal Seminar</span></a></li>
+        <li><a href="/bimbingan"><i class="fas fa-chalkboard-teacher"></i> <span class="text">Bimbingan</span></a></li>
+        <li><a href="/informasipenting"><i class="fas fa-info-circle"></i> <span class="text">Informasi Penting</span></a></li>
+      </ul>
+    </nav>
+  </aside>
+
+  <div class="main-content">
+    <header>
+    <link rel="stylesheet" href="/upload/jadwalseminar.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+      <div class="topbar">
+        <button id="toggleSidebar"><i class="fas fa-bars"></i></button>
+        <h1>Sistem Informasi Kerja Praktik</h1>
+        <div class="icons">
+          <button class="icon-btn"><i class="fas fa-bell"></i></button>
+          <button class="icon-btn"><i class="fas fa-user-circle"></i></button>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <div class="bg-logo"></div>
+      <h2>Jadwal Seminar</h2>
+
+      <div class="seminar-card-container">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+          <h3>Jadwal Seminar Mahasiswa (Yang Akan Datang)</h3>
+        </div>
+
+        <div style="display: flex; justify-content: flex-end; margin-bottom: 20px;">
+          <div class="dropdown">
+            <button class="dropbtn">Urutkan <i class="fas fa-chevron-down"></i></button>
+            <div class="dropdown-content">
+              <a href="#" onclick="sortSeminars('name', 'asc')">Nama A - Z</a>
+              <a href="#" onclick="sortSeminars('name', 'desc')">Nama Z - A</a>
+              <a href="#" onclick="sortSeminars('date', 'asc')">Tanggal Terdekat</a>
+              <a href="#" onclick="sortSeminars('date', 'desc')">Tanggal Terlama</a>
+            </div>
+          </div>
+        </div>
+
+        <div id="seminarList">
+          <!-- Data seminar akan dimuat dari database -->
+        </div>
+
+        <a href="riwayatseminar" class="riwayat-link">Riwayat Seminar</a>
+      </div>
+    </main>
+
+    <script>
+      const toggleBtn = document.getElementById("toggleSidebar");
+      const sidebar = document.getElementById("sidebar");
+      const mainContent = document.querySelector(".main-content");
+      
+      // Global variables for sorting
+      let currentSort = 'date';
+      let currentOrder = 'asc';
+
+      // Toggle sidebar
+      toggleBtn.addEventListener("click", () => {
+        sidebar.classList.toggle("collapsed");
+        
+        // Adjust main content margin when sidebar is collapsed
+        if (sidebar.classList.contains("collapsed")) {
+          mainContent.style.marginLeft = "80px";
+        } else {
+          mainContent.style.marginLeft = "320px";
+        }
+      });
+
+      // Load seminar data (only upcoming seminars)
+      async function loadSeminars() {
+        try {
+          const response = await fetch(`/api/seminar/jadwal?sort=${currentSort}&order=${currentOrder}`);
+          const seminars = await response.json();
+          
+          const seminarList = document.getElementById('seminarList');
+          seminarList.innerHTML = '';
+
+          // Filter only upcoming seminars (status = 'jadwal')
+          const upcomingSeminars = seminars.filter(seminar => seminar.status === 'jadwal');
+
+          if (upcomingSeminars.length === 0) {
+            seminarList.innerHTML = '<p style="text-align: center; color: #666;">Belum ada jadwal seminar yang akan datang</p>';
+            return;
+          }
+
+          upcomingSeminars.forEach(seminar => {
+            const seminarCard = document.createElement('div');
+            seminarCard.className = 'seminar-card';
+            
+            const formattedDate = new Date(seminar.tanggal_seminar).toLocaleString('id-ID', {
+              weekday: 'long',
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric',
+              hour: '2-digit',
+              minute: '2-digit'
+            });
+
+            seminarCard.innerHTML = `
+              <div class="profile-icon"><i class="fas fa-user-circle"></i></div>
+              <div class="seminar-info">
+                <div class="name-nim">${seminar.nama_mahasiswa} - ${seminar.nim}</div>
+                <div class="judul-seminar">${seminar.judul_seminar}</div>
+                <div class="schedule">${formattedDate}</div>
+                <div class="lokasi">${seminar.lokasi || 'Lokasi belum ditentukan'}</div>
+              </div>
+              <div class="seminar-actions">
+                <button onclick="markAsSelesai(${seminar.id})" class="btn-selesai">Selesai</button>
+              </div>
+            `;
+            
+            seminarList.appendChild(seminarCard);
+          });
+        } catch (error) {
+          console.error('Error loading seminars:', error);
+          document.getElementById('seminarList').innerHTML = 
+            '<p style="text-align: center; color: red;">Error loading data seminar</p>';
+        }
+      }
+
+      // Mark seminar as completed
+      async function markAsSelesai(seminarId) {
+        if (!confirm('Apakah Anda yakin ingin menandai seminar ini sebagai selesai?')) {
+          return;
+        }
+
+        try {
+          const response = await fetch(`/api/seminar/selesai/${seminarId}`, {
+            method: 'PUT'
+          });
+
+          const result = await response.json();
+          
+          if (response.ok) {
+            alert('Status seminar berhasil diubah menjadi selesai!');
+            loadSeminars();
+          } else {
+            alert('Error: ' + result.error);
+          }
+        } catch (error) {
+          console.error('Error updating seminar status:', error);
+          alert('Terjadi kesalahan saat mengubah status seminar');
+        }
+      }
+
+      // Sort seminars
+      function sortSeminars(type, order) {
+        currentSort = type;
+        currentOrder = order;
+        console.log('Sorting by:', type, order);
+        loadSeminars(); // Reload data with new sorting
+      }
+
+      // Load data when page loads
+      document.addEventListener('DOMContentLoaded', () => {
+        loadSeminars();
+      });
+    </script>
+  </div>
+</div>

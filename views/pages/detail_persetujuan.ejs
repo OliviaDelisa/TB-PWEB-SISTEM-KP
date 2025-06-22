@@ -1,0 +1,95 @@
+<%- include('../partials/header') %>
+<link rel="stylesheet" href="/upload/detail_persetujuan.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <div class="left">
+    <i class="fas fa-bars menu-icon" id="toggleSidebar"></i>
+    <span class="title">Sistem Informasi Kerja Praktik</span>
+  </div>
+  <div class="right">
+    <i class="fas fa-bell icon"></i>
+    <i class="fas fa-user icon"></i>
+  </div>
+</div>
+
+<!-- MAIN WRAPPER -->
+<div class="container">
+  <!-- SIDEBAR -->
+  <div class="sidebar" id="sidebar">
+    <div class="logo">
+      <img src="/image/LogoUnand.png" alt="Logo" />
+      <span>SIUNAND</span>
+    </div>
+    <ul class="menu">
+      <li><a href="/home"><i class="fas fa-home"></i> Home</a></li>
+      <li class="active"><a href="/persetujuan_kp"><i class="fas fa-check-circle"></i> Persetujuan KP</a></li>
+      <li><a href="/penilaian_kp/<%= detail.id %>"><i class="fas fa-pen-alt"></i> Penilaian</a></li>
+      <li><a href="/seminar_kp"><i class="fas fa-calendar-alt"></i> Jadwal Seminar</a></li>
+      <li><a href="/bimbingan"><i class="fas fa-user-friends"></i> Bimbingan</a></li>
+      <li><a href="/informasi"><i class="fas fa-info-circle"></i> Informasi Penting</a></li>
+    </ul>
+  </div>
+
+  <!-- CONTENT -->
+  <div class="content-box">
+    <!-- Riwayat Link -->
+    <div style="text-align: right; margin-bottom: 10px;">
+      <a href="/riwayat_persetujuan" style="color: #e87e00; font-weight: bold;">Riwayat Persetujuan</a>
+    </div>
+
+    <h2>Persetujuan KP</h2>
+
+    <div class="detail-box">
+      <div class="detail-row">
+        <strong>Nama:</strong> <span><%= detail.nama %></span><br>
+        <strong>NIM:</strong> <span><%= detail.nim %></span>
+      </div>
+
+      <p><strong>Alamat Mahasiswa</strong><br>
+        <%= detail.alamat_mahasiswa %>
+      </p>
+
+      <p><strong>Perusahaan</strong><br>
+        <%= detail.nama_perusahaan %>
+      </p>
+
+      <p><strong>Alamat Perusahaan</strong><br>
+        <%= detail.alamat_perusahaan %>
+      </p>
+
+      <p><strong>Berkas</strong></p>
+      <div class="files">
+        <% if (dokumenArray.length > 0) { %>
+          <% dokumenArray.forEach(file => { %>
+            <a href="/uploads/<%= file %>" target="_blank" download>📄 <%= file %></a>
+          <% }) %>
+        <% } else { %>
+          <p>Tidak ada berkas.</p>
+        <% } %>
+      </div>
+
+      <div class="button-row">
+        <form method="POST" action="/detail_persetujuan/setujui" style="display: inline;">
+          <input type="hidden" name="id" value="<%= detail.id %>">
+          <button type="submit" class="approve">Setujui</button>
+        </form>
+
+        <form method="POST" action="/detail_persetujuan/tolak" style="display: inline;">
+          <input type="hidden" name="id" value="<%= detail.id %>">
+          <button type="submit" class="reject">Tolak</button>
+        </form>
+      </div>
+
+      <a href="/persetujuan_kp" class="btn-back"><i class="fas fa-arrow-left"></i> Back</a>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.getElementById('toggleSidebar').addEventListener('click', () => {
+    document.getElementById('sidebar').classList.toggle('collapsed');
+    document.querySelector('.content-box').classList.toggle('full');
+  });
+</script>
